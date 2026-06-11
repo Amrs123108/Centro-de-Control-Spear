@@ -1,0 +1,336 @@
+{
+  "resumen": {
+    "fecha": "2026-06-10",
+    "total_gestiones": 14756,
+    "gestores_activos": 66,
+    "deudores_gestionados": 12633,
+    "carteras_activas": 16,
+    "contactos_efectivos": 2729,
+    "tasa_contacto_efectivo": 0.1849,
+    "promesas": 1383,
+    "pagos_confirmados": 173,
+    "tasa_conversion": 0.5702,
+    "monto_comprometido": 140759.89,
+    "ticket_promedio": 136.93
+  },
+  "por_categoria": [
+    {
+      "categoria": "NO_CONTACTO",
+      "etiqueta": "No contacto",
+      "total": 9947
+    },
+    {
+      "categoria": "PROMESA_PAGO",
+      "etiqueta": "Promesa de pago (PTP)",
+      "total": 1330
+    },
+    {
+      "categoria": "SIN_MAPEAR",
+      "etiqueta": "Sin mapear",
+      "total": 892
+    },
+    {
+      "categoria": "DISPUTA_ACLARACION",
+      "etiqueta": "Disputa / aclaración",
+      "total": 440
+    },
+    {
+      "categoria": "VOLVER_A_LLAMAR",
+      "etiqueta": "Volver a llamar",
+      "total": 419
+    },
+    {
+      "categoria": "CONTACTO_TERCERO",
+      "etiqueta": "Contacto indirecto",
+      "total": 395
+    },
+    {
+      "categoria": "GESTION_ESCRITA",
+      "etiqueta": "Gestión escrita",
+      "total": 346
+    },
+    {
+      "categoria": "CONTACTO_SIN_ACUERDO",
+      "etiqueta": "Contacto sin acuerdo",
+      "total": 314
+    },
+    {
+      "categoria": "TRAMITE_ADMIN",
+      "etiqueta": "Trámite administrativo",
+      "total": 312
+    },
+    {
+      "categoria": "PAGO_CONFIRMADO",
+      "etiqueta": "Pago confirmado",
+      "total": 173
+    },
+    {
+      "categoria": "ILOCALIZABLE",
+      "etiqueta": "Ilocalizable",
+      "total": 118
+    },
+    {
+      "categoria": "SEGUIMIENTO_PTP",
+      "etiqueta": "Seguimiento de promesa",
+      "total": 53
+    },
+    {
+      "categoria": "VISITA",
+      "etiqueta": "Visita de campo",
+      "total": 17
+    }
+  ],
+  "por_hora": [
+    {
+      "hora": 7,
+      "gestiones": 318,
+      "efectivas": 146
+    },
+    {
+      "hora": 8,
+      "gestiones": 1684,
+      "efectivas": 454
+    },
+    {
+      "hora": 9,
+      "gestiones": 1706,
+      "efectivas": 374
+    },
+    {
+      "hora": 10,
+      "gestiones": 1830,
+      "efectivas": 345
+    },
+    {
+      "hora": 11,
+      "gestiones": 2147,
+      "efectivas": 353
+    },
+    {
+      "hora": 12,
+      "gestiones": 1446,
+      "efectivas": 240
+    },
+    {
+      "hora": 13,
+      "gestiones": 2036,
+      "efectivas": 251
+    },
+    {
+      "hora": 14,
+      "gestiones": 1584,
+      "efectivas": 275
+    },
+    {
+      "hora": 15,
+      "gestiones": 1488,
+      "efectivas": 210
+    },
+    {
+      "hora": 16,
+      "gestiones": 511,
+      "efectivas": 80
+    },
+    {
+      "hora": 17,
+      "gestiones": 6,
+      "efectivas": 1
+    }
+  ],
+  "por_proyecto": [
+    {
+      "proyecto": "KREDIYA",
+      "gestiones": 3721,
+      "efectivas": 141,
+      "promesas": 100,
+      "monto": 3659.0
+    },
+    {
+      "proyecto": "TIGO",
+      "gestiones": 3438,
+      "efectivas": 446,
+      "promesas": 208,
+      "monto": 3855.05
+    },
+    {
+      "proyecto": "BANISTMO ACTIVA",
+      "gestiones": 2472,
+      "efectivas": 660,
+      "promesas": 413,
+      "monto": 62069.79
+    },
+    {
+      "proyecto": "SURA CORREDORES",
+      "gestiones": 1588,
+      "efectivas": 633,
+      "promesas": 362,
+      "monto": 40851.92
+    },
+    {
+      "proyecto": "RODELAG",
+      "gestiones": 1110,
+      "efectivas": 168,
+      "promesas": 97,
+      "monto": 9702.82
+    },
+    {
+      "proyecto": "BANISTMO S.A.",
+      "gestiones": 780,
+      "efectivas": 266,
+      "promesas": 34,
+      "monto": 932.5
+    },
+    {
+      "proyecto": "BAC CASTIGADA",
+      "gestiones": 581,
+      "efectivas": 66,
+      "promesas": 26,
+      "monto": 1051.0
+    },
+    {
+      "proyecto": "SOLVE",
+      "gestiones": 296,
+      "efectivas": 106,
+      "promesas": 37,
+      "monto": 1549.26
+    },
+    {
+      "proyecto": "BANCO LA HIPOTECARIA",
+      "gestiones": 163,
+      "efectivas": 29,
+      "promesas": 17,
+      "monto": 2275.55
+    },
+    {
+      "proyecto": "SURA BANCA INDIVIDUAL",
+      "gestiones": 132,
+      "efectivas": 34,
+      "promesas": 22,
+      "monto": 730.67
+    },
+    {
+      "proyecto": "SURA HCIS",
+      "gestiones": 132,
+      "efectivas": 22,
+      "promesas": 15,
+      "monto": 3417.04
+    },
+    {
+      "proyecto": "BANISTMO ACTIVA 61 A 90",
+      "gestiones": 108,
+      "efectivas": 45,
+      "promesas": 22,
+      "monto": 4882.77
+    },
+    {
+      "proyecto": "GLOBAL BANK",
+      "gestiones": 96,
+      "efectivas": 40,
+      "promesas": 1,
+      "monto": 15.0
+    },
+    {
+      "proyecto": "AFINITI FINANCIAL",
+      "gestiones": 81,
+      "efectivas": 38,
+      "promesas": 18,
+      "monto": 3748.23
+    },
+    {
+      "proyecto": "BANISTMO ACTIVA PREDICTIVO",
+      "gestiones": 39,
+      "efectivas": 22,
+      "promesas": 8,
+      "monto": 1954.23
+    },
+    {
+      "proyecto": "SURA TC Y ACH",
+      "gestiones": 19,
+      "efectivas": 13,
+      "promesas": 3,
+      "monto": 65.06
+    }
+  ],
+  "top_gestores": [
+    {
+      "gestor": "Gestor B97E",
+      "gestiones": 161,
+      "efectivas": 92,
+      "promesas": 61,
+      "pagos": 16,
+      "monto": 4879.17
+    },
+    {
+      "gestor": "Gestor 8050",
+      "gestiones": 128,
+      "efectivas": 62,
+      "promesas": 57,
+      "pagos": 0,
+      "monto": 2342.0
+    },
+    {
+      "gestor": "Gestor 83CD",
+      "gestiones": 125,
+      "efectivas": 76,
+      "promesas": 53,
+      "pagos": 0,
+      "monto": 832.73
+    },
+    {
+      "gestor": "Gestor B611",
+      "gestiones": 122,
+      "efectivas": 86,
+      "promesas": 52,
+      "pagos": 0,
+      "monto": 4577.77
+    },
+    {
+      "gestor": "Gestor C456",
+      "gestiones": 174,
+      "efectivas": 81,
+      "promesas": 50,
+      "pagos": 18,
+      "monto": 6396.21
+    },
+    {
+      "gestor": "Gestor F67F",
+      "gestiones": 119,
+      "efectivas": 82,
+      "promesas": 45,
+      "pagos": 0,
+      "monto": 5125.05
+    },
+    {
+      "gestor": "Gestor D035",
+      "gestiones": 141,
+      "efectivas": 70,
+      "promesas": 43,
+      "pagos": 0,
+      "monto": 519.01
+    },
+    {
+      "gestor": "Gestor EE40",
+      "gestiones": 141,
+      "efectivas": 79,
+      "promesas": 43,
+      "pagos": 0,
+      "monto": 1317.0
+    },
+    {
+      "gestor": "Gestor C431",
+      "gestiones": 161,
+      "efectivas": 77,
+      "promesas": 42,
+      "pagos": 26,
+      "monto": 5435.19
+    },
+    {
+      "gestor": "Gestor 7DAD",
+      "gestiones": 154,
+      "efectivas": 97,
+      "promesas": 42,
+      "pagos": 0,
+      "monto": 804.3
+    }
+  ]
+}

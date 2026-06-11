@@ -1,0 +1,109 @@
+{
+  "version": 1,
+  "actualizado": "2026-06-11",
+  "descripcion": "Catálogo de normalización de clasificaciones de gestión. Las reglas se evalúan EN ORDEN (la primera que coincide gana) sobre el texto en mayúsculas y sin tildes. Para agregar soporte a una cartera nueva: correr normalizar_clasificaciones.py --validar <archivo>, revisar los SIN_MAPEAR y agregar reglas aquí.",
+  "categorias": {
+    "PAGO_CONFIRMADO": {
+      "etiqueta": "Pago confirmado",
+      "contacto_efectivo": true,
+      "resultado_positivo": true,
+      "descripcion": "El cliente confirmó o completó un pago verificable"
+    },
+    "PROMESA_PAGO": {
+      "etiqueta": "Promesa de pago (PTP)",
+      "contacto_efectivo": true,
+      "resultado_positivo": true,
+      "descripcion": "Compromiso de pago con fecha, arreglo o acuerdo"
+    },
+    "SEGUIMIENTO_PTP": {
+      "etiqueta": "Seguimiento de promesa",
+      "contacto_efectivo": true,
+      "resultado_positivo": true,
+      "descripcion": "Recordatorio o confirmación de una promesa vigente"
+    },
+    "CONTACTO_SIN_ACUERDO": {
+      "etiqueta": "Contacto sin acuerdo",
+      "contacto_efectivo": true,
+      "resultado_positivo": false,
+      "descripcion": "Se habló con el titular pero no hubo compromiso"
+    },
+    "DISPUTA_ACLARACION": {
+      "etiqueta": "Disputa / aclaración",
+      "contacto_efectivo": true,
+      "resultado_positivo": false,
+      "descripcion": "Cliente alega pago previo, reclamo o no corresponde cobranza"
+    },
+    "VOLVER_A_LLAMAR": {
+      "etiqueta": "Volver a llamar",
+      "contacto_efectivo": true,
+      "resultado_positivo": false,
+      "descripcion": "El titular pidió ser contactado en otro momento"
+    },
+    "CONTACTO_TERCERO": {
+      "etiqueta": "Contacto indirecto",
+      "contacto_efectivo": false,
+      "resultado_positivo": false,
+      "descripcion": "Mensaje con tercero, buzón, recado o verificación laboral"
+    },
+    "NO_CONTACTO": {
+      "etiqueta": "No contacto",
+      "contacto_efectivo": false,
+      "resultado_positivo": false,
+      "descripcion": "No atendida, apagado, ocupado, no contesta"
+    },
+    "ILOCALIZABLE": {
+      "etiqueta": "Ilocalizable",
+      "contacto_efectivo": false,
+      "resultado_positivo": false,
+      "descripcion": "Teléfono erróneo, fuera de servicio o cliente no ubicable"
+    },
+    "GESTION_ESCRITA": {
+      "etiqueta": "Gestión escrita",
+      "contacto_efectivo": false,
+      "resultado_positivo": false,
+      "descripcion": "Envío de correo, WhatsApp, SMS o carta"
+    },
+    "VISITA": {
+      "etiqueta": "Visita de campo",
+      "contacto_efectivo": false,
+      "resultado_positivo": false,
+      "descripcion": "Visita domiciliaria efectiva o no efectiva"
+    },
+    "TRAMITE_ADMIN": {
+      "etiqueta": "Trámite administrativo",
+      "contacto_efectivo": false,
+      "resultado_positivo": false,
+      "descripcion": "Reactivaciones, condonaciones, restructuras, documentación"
+    },
+    "SIN_MAPEAR": {
+      "etiqueta": "Sin mapear",
+      "contacto_efectivo": false,
+      "resultado_positivo": false,
+      "descripcion": "Clasificación nueva no cubierta por el catálogo: agregar regla"
+    }
+  },
+  "reglas": [
+    { "patron": "RECORDAR PTP.*(NO SE CONTACTO|NO CONTACTO)", "categoria": "NO_CONTACTO", "nota": "Intento de recordatorio sin contacto" },
+    { "patron": "RECORDAR PTP.*CONFIRMA PAGO", "categoria": "PAGO_CONFIRMADO" },
+    { "patron": "RECORDAR PTP.*CAMBIA FECHA", "categoria": "PROMESA_PAGO" },
+    { "patron": "VOLVER A LLAMAR NO EFECTIVA", "categoria": "NO_CONTACTO" },
+    { "patron": "DICE YA PAG", "categoria": "DISPUTA_ACLARACION" },
+    { "patron": "\\bYA PAGO\\b", "categoria": "DISPUTA_ACLARACION", "nota": "Alegato de pago no verificado" },
+    { "patron": "CONFIRMACION DE PROMESA", "categoria": "SEGUIMIENTO_PTP" },
+    { "patron": "MANTIENE ACUERDO|RECORDATORIO DE PAGO EFECTIVO|PTP VIGENTE", "categoria": "SEGUIMIENTO_PTP" },
+    { "patron": "RECORDATORIO DE PAGO", "categoria": "SEGUIMIENTO_PTP" },
+    { "patron": "CONFIRMA PAGO|COMPLETA PAGO|CONFIRMACION DE PAGO|PAGO AL CORREDOR|YA CANCELO", "categoria": "PAGO_CONFIRMADO" },
+    { "patron": "PROMESA|PROMETE PAGAR|COMPROMISO DE PAGO|PAGARA FUERA DE PLAZO|ARREGLO DE PAGO|ACEPTA PERIODO|CAMBIA FECHA DE PAGO|CAMBIO DE FECHA DE PAGO|PRONTO PAGO|^ACEPTA\\b", "categoria": "PROMESA_PAGO" },
+    { "patron": "RENUENTE|NO PUEDE PAGAR|NO QUIERE PAGAR|PENSARA PROPUESTA|PROBLEMAS ECONOMICOS|SIN COMPROMISO|CUELGA|NEGATIVA DE PAGO|NO PROMESA|CONTACTO SIN ACUERDO|PAGO DEPENDE DE TERCERO|NO ACEPTA|RECHAZO", "categoria": "CONTACTO_SIN_ACUERDO" },
+    { "patron": "RECLAMO|NO CORRESPONDE COBRANZA|CLIENTE AL DIA|CANCELO POLIZA|INVESTIGACION|CORRECCION DE PRIMA|CUENTA CANCELADA|CLIENTE (YA )?CANCELO", "categoria": "DISPUTA_ACLARACION" },
+    { "patron": "VOLVER A LLAMAR|LLAMAR MAS TARDE|AGENDAR LLAMADA|LLAMADA AGENDA|REPROGRAMACION", "categoria": "VOLVER_A_LLAMAR" },
+    { "patron": "NO ATENDIDA|APAGADO|OCUPADO|NO CONTESTA|NO CONTACTO|SE CORTA|SIN RESPUESTA|NO LOCALIZABLE", "categoria": "NO_CONTACTO" },
+    { "patron": "EQUIVOCADO|ERRONEO|FUERA DE SERVICIO|NO PROGRAMADO|ILOCALIZ|FALLECIDO", "categoria": "ILOCALIZABLE" },
+    { "patron": "MENSAJE CON|MENSAJE A TERCERO|BUZON|RECADO|SE DEJO MENSAJE|SE DEJA MENSAJE|EMPRESA CONFIRMA|> TERCERO", "categoria": "CONTACTO_TERCERO" },
+    { "patron": "VISITA", "categoria": "VISITA" },
+    { "patron": "ENVIO DE CORREO|ENVIO CORREO|WHATSAPP|ENVIO DE CARTA|SE ENVIA CARTA|SOLO MANTIENE CORREO|\\bSMS\\b", "categoria": "GESTION_ESCRITA" },
+    { "patron": "REACTIVACION|CONDONACION|RESTRUCTURA|DOCUMENTACION|DESCUENTO DIRECTO|TRAMITE|GESTIONADO|PERDIDA TOTAL|GRILLA|PROSPECTO|APLICACION DE PAGOS|DIRECCION DE EMPRESA", "categoria": "TRAMITE_ADMIN" },
+    { "patron": "SI CONTACTO|CONTACTO CON CLIENTE|CLIENTE CONTACTADO|LOCALIZADO", "categoria": "CONTACTO_SIN_ACUERDO", "nota": "Contacto efectivo sin resultado detallado" }
+  ],
+  "default": "SIN_MAPEAR"
+}

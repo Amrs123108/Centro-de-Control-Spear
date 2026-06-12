@@ -11,6 +11,7 @@ import {
   Users,
 } from "lucide-react";
 import type { Sesion } from "@/lib/auth";
+import { EmblemaSpear } from "@/components/emblema";
 
 const NAV = [
   { href: "/dashboard", etiqueta: "Dashboard", icono: LayoutDashboard, activo: true },
@@ -38,17 +39,24 @@ export default function Sidebar({ sesion }: { sesion: Sesion }) {
 
   return (
     <aside className="flex w-60 shrink-0 flex-col bg-navy">
-      <div className="flex items-center gap-3 px-5 pb-6 pt-6">
-        <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent text-sm font-bold text-white">
-          S
+      <div className="px-5 pb-5 pt-6">
+        <div className="flex items-center gap-3">
+          <EmblemaSpear className="h-10 w-9 drop-shadow-[0_0_12px_rgba(27,79,216,0.45)]" />
+          <div>
+            <div className="text-xs font-semibold tracking-[0.16em] text-white">
+              SPEAR CONTACT
+            </div>
+            <div className="text-[11px] tracking-wide text-white/45">
+              Centro de Control
+            </div>
+          </div>
         </div>
-        <div>
-          <div className="text-xs font-semibold tracking-[0.16em] text-white">
-            SPEAR CONTACT
-          </div>
-          <div className="text-[11px] tracking-wide text-white/45">
-            Centro de Control
-          </div>
+        <div className="mt-4 flex items-center gap-2">
+          <span className="h-px flex-1 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+          <span className="text-[9px] font-bold uppercase tracking-[0.22em] text-gold/80">
+            Somos guerreros
+          </span>
+          <span className="h-px flex-1 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
         </div>
       </div>
 
@@ -76,8 +84,8 @@ export default function Sidebar({ sesion }: { sesion: Sesion }) {
               href={href}
               className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition ${
                 actual
-                  ? "bg-accent font-medium text-white"
-                  : "text-white/60 hover:bg-white/5 hover:text-white"
+                  ? "bg-accent font-medium text-white shadow-[0_0_18px_rgba(27,79,216,0.5)]"
+                  : "text-white/60 hover:translate-x-0.5 hover:bg-white/5 hover:text-white"
               }`}
             >
               <Icono className="h-[18px] w-[18px]" />

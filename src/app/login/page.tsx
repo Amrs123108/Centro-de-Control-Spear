@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 import { Loader2, Lock, Mail, ShieldCheck } from "lucide-react";
+import { EmblemaSpear, Hexagono } from "@/components/emblema";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -33,19 +34,25 @@ export default function LoginPage() {
   return (
     <div className="flex min-h-screen">
       {/* Panel de marca */}
-      <div className="relative hidden w-[45%] flex-col justify-between overflow-hidden bg-navy p-12 lg:flex">
+      <div className="hero-navy relative hidden w-[45%] flex-col justify-between overflow-hidden p-12 lg:flex">
         <div
-          className="pointer-events-none absolute inset-0 opacity-40"
-          style={{
-            background:
-              "radial-gradient(ellipse 80% 60% at 20% 0%, #1a3158 0%, transparent 60%), radial-gradient(ellipse 60% 50% at 100% 100%, #1b4fd8 0%, transparent 55%)",
-          }}
+          className="aurora aurora-a h-[460px] w-[460px] opacity-50"
+          style={{ top: "-180px", left: "-120px", background: "#1a3158" }}
         />
+        <div
+          className="aurora aurora-b h-[420px] w-[420px] opacity-40"
+          style={{ bottom: "-220px", right: "-100px", background: "#1b4fd8" }}
+        />
+        <Hexagono className="flotante absolute right-16 top-24 h-8 w-8" />
+        <Hexagono className="flotante-lento absolute bottom-40 left-12 h-5 w-5" />
+        <Hexagono
+          className="flotante absolute right-32 bottom-24 h-4 w-4"
+          color="rgba(232,185,49,0.3)"
+        />
+
         <div className="relative">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-accent font-bold text-white">
-              S
-            </div>
+            <EmblemaSpear className="h-11 w-10 drop-shadow-[0_0_16px_rgba(27,79,216,0.5)]" />
             <div>
               <div className="text-sm font-semibold tracking-[0.18em] text-white">
                 SPEAR CONTACT
@@ -57,9 +64,15 @@ export default function LoginPage() {
           </div>
         </div>
         <div className="relative max-w-md">
+          <div className="mb-4 flex items-center gap-2">
+            <span className="h-px w-10 bg-gold/60" />
+            <span className="text-[10px] font-bold uppercase tracking-[0.24em] text-gold">
+              Somos más que operadores
+            </span>
+          </div>
           <h1 className="text-4xl font-light leading-tight text-white">
-            Inteligencia operativa para decisiones{" "}
-            <span className="font-semibold text-white">estratégicas</span>.
+            Somos <span className="font-semibold">guerreros</span> de la
+            recuperación.
           </h1>
           <p className="mt-5 text-sm leading-relaxed text-white/60">
             Indicadores de recuperación, productividad y comportamiento de
@@ -78,9 +91,7 @@ export default function LoginPage() {
         <div className="w-full max-w-sm">
           <div className="mb-8 lg:hidden">
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-accent font-bold text-white">
-                S
-              </div>
+              <EmblemaSpear className="h-11 w-10" tono="oscuro" />
               <div>
                 <div className="text-sm font-semibold tracking-[0.18em] text-navy">
                   SPEAR CONTACT

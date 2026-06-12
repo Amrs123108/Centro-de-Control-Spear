@@ -68,6 +68,368 @@
       "detalle": "Cuando el equipo logra hablar con el titular, cierra. El cuello de botella no es la negociación: es la contactabilidad."
     }
   ],
+  "flujo_vivo": [
+    {
+      "hora": "17:04",
+      "tipo": "PAGO",
+      "cartera": "AFINITI FINANCIAL",
+      "monto": null
+    },
+    {
+      "hora": "16:17",
+      "tipo": "PROMESA",
+      "cartera": "TIGO",
+      "monto": 55.31
+    },
+    {
+      "hora": "16:07",
+      "tipo": "PAGO",
+      "cartera": "SOLVE",
+      "monto": null
+    },
+    {
+      "hora": "16:02",
+      "tipo": "PROMESA",
+      "cartera": "TIGO",
+      "monto": null
+    },
+    {
+      "hora": "16:01",
+      "tipo": "PROMESA",
+      "cartera": "BANISTMO ACTIVA",
+      "monto": 22.48
+    },
+    {
+      "hora": "15:50",
+      "tipo": "CONTACTO",
+      "cartera": "SURA CORREDORES",
+      "monto": null
+    },
+    {
+      "hora": "15:48",
+      "tipo": "PAGO",
+      "cartera": "SOLVE",
+      "monto": null
+    },
+    {
+      "hora": "15:44",
+      "tipo": "CONTACTO",
+      "cartera": "RODELAG",
+      "monto": null
+    },
+    {
+      "hora": "15:36",
+      "tipo": "PROMESA",
+      "cartera": "SURA CORREDORES",
+      "monto": 29.14
+    },
+    {
+      "hora": "15:30",
+      "tipo": "PAGO",
+      "cartera": "BANISTMO ACTIVA 61 A 90",
+      "monto": null
+    },
+    {
+      "hora": "15:23",
+      "tipo": "CONTACTO",
+      "cartera": "BANISTMO ACTIVA",
+      "monto": null
+    },
+    {
+      "hora": "15:20",
+      "tipo": "PAGO",
+      "cartera": "SURA CORREDORES",
+      "monto": null
+    },
+    {
+      "hora": "15:19",
+      "tipo": "PAGO",
+      "cartera": "BANISTMO ACTIVA",
+      "monto": null
+    },
+    {
+      "hora": "15:18",
+      "tipo": "PROMESA",
+      "cartera": "SURA CORREDORES",
+      "monto": 45.19
+    },
+    {
+      "hora": "15:09",
+      "tipo": "PAGO",
+      "cartera": "SURA CORREDORES",
+      "monto": 66.99
+    },
+    {
+      "hora": "15:09",
+      "tipo": "PAGO",
+      "cartera": "SURA CORREDORES",
+      "monto": 74.67
+    },
+    {
+      "hora": "15:09",
+      "tipo": "PAGO",
+      "cartera": "SURA HCIS",
+      "monto": 95.28
+    },
+    {
+      "hora": "15:02",
+      "tipo": "PAGO",
+      "cartera": "SURA TC Y ACH",
+      "monto": null
+    },
+    {
+      "hora": "15:00",
+      "tipo": "PAGO",
+      "cartera": "SURA CORREDORES",
+      "monto": 691.09
+    },
+    {
+      "hora": "14:58",
+      "tipo": "PAGO",
+      "cartera": "SURA TC Y ACH",
+      "monto": null
+    },
+    {
+      "hora": "14:58",
+      "tipo": "PAGO",
+      "cartera": "SURA HCIS",
+      "monto": 209.59
+    },
+    {
+      "hora": "14:53",
+      "tipo": "PAGO",
+      "cartera": "SURA CORREDORES",
+      "monto": 45.4
+    },
+    {
+      "hora": "14:46",
+      "tipo": "PAGO",
+      "cartera": "SURA CORREDORES",
+      "monto": 91.68
+    },
+    {
+      "hora": "14:43",
+      "tipo": "PAGO",
+      "cartera": "SURA CORREDORES",
+      "monto": 66.84
+    },
+    {
+      "hora": "14:41",
+      "tipo": "PAGO",
+      "cartera": "SURA CORREDORES",
+      "monto": 56.2
+    },
+    {
+      "hora": "14:35",
+      "tipo": "PAGO",
+      "cartera": "SURA CORREDORES",
+      "monto": null
+    },
+    {
+      "hora": "14:32",
+      "tipo": "PAGO",
+      "cartera": "SURA CORREDORES",
+      "monto": 177.61
+    },
+    {
+      "hora": "14:31",
+      "tipo": "PAGO",
+      "cartera": "SURA CORREDORES",
+      "monto": 317.07
+    },
+    {
+      "hora": "14:26",
+      "tipo": "PROMESA",
+      "cartera": "TIGO",
+      "monto": 25.2
+    },
+    {
+      "hora": "14:25",
+      "tipo": "PROMESA",
+      "cartera": "SURA CORREDORES",
+      "monto": 51.14
+    },
+    {
+      "hora": "14:14",
+      "tipo": "PAGO",
+      "cartera": "SURA TC Y ACH",
+      "monto": null
+    },
+    {
+      "hora": "14:11",
+      "tipo": "PROMESA",
+      "cartera": "BANISTMO ACTIVA",
+      "monto": null
+    },
+    {
+      "hora": "14:09",
+      "tipo": "PROMESA",
+      "cartera": "BANISTMO ACTIVA",
+      "monto": 280.0
+    },
+    {
+      "hora": "14:08",
+      "tipo": "PAGO",
+      "cartera": "BANISTMO ACTIVA",
+      "monto": null
+    },
+    {
+      "hora": "14:05",
+      "tipo": "PAGO",
+      "cartera": "SURA CORREDORES",
+      "monto": 48.87
+    },
+    {
+      "hora": "14:02",
+      "tipo": "PAGO",
+      "cartera": "BANCO LA HIPOTECARIA",
+      "monto": null
+    },
+    {
+      "hora": "13:58",
+      "tipo": "PROMESA",
+      "cartera": "AFINITI FINANCIAL",
+      "monto": 282.17
+    },
+    {
+      "hora": "13:55",
+      "tipo": "PAGO",
+      "cartera": "SURA CORREDORES",
+      "monto": 90.47
+    },
+    {
+      "hora": "13:53",
+      "tipo": "PAGO",
+      "cartera": "SURA TC Y ACH",
+      "monto": null
+    },
+    {
+      "hora": "13:52",
+      "tipo": "CONTACTO",
+      "cartera": "BANISTMO S.A.",
+      "monto": null
+    },
+    {
+      "hora": "13:43",
+      "tipo": "PAGO",
+      "cartera": "SURA TC Y ACH",
+      "monto": null
+    },
+    {
+      "hora": "13:43",
+      "tipo": "PROMESA",
+      "cartera": "BANISTMO ACTIVA",
+      "monto": 600.3
+    },
+    {
+      "hora": "13:42",
+      "tipo": "PAGO",
+      "cartera": "SURA TC Y ACH",
+      "monto": null
+    },
+    {
+      "hora": "13:39",
+      "tipo": "PROMESA",
+      "cartera": "BANISTMO ACTIVA",
+      "monto": 106.73
+    },
+    {
+      "hora": "13:31",
+      "tipo": "PROMESA",
+      "cartera": "BANISTMO ACTIVA",
+      "monto": 146.64
+    },
+    {
+      "hora": "13:28",
+      "tipo": "PROMESA",
+      "cartera": "BANISTMO ACTIVA",
+      "monto": null
+    },
+    {
+      "hora": "13:28",
+      "tipo": "PROMESA",
+      "cartera": "BANISTMO ACTIVA",
+      "monto": 142.58
+    },
+    {
+      "hora": "13:27",
+      "tipo": "PROMESA",
+      "cartera": "SURA CORREDORES",
+      "monto": 98.1
+    },
+    {
+      "hora": "13:27",
+      "tipo": "PROMESA",
+      "cartera": "BANISTMO ACTIVA",
+      "monto": null
+    },
+    {
+      "hora": "13:27",
+      "tipo": "PROMESA",
+      "cartera": "SURA CORREDORES",
+      "monto": 44.38
+    },
+    {
+      "hora": "13:25",
+      "tipo": "PROMESA",
+      "cartera": "BANISTMO ACTIVA",
+      "monto": 40.0
+    },
+    {
+      "hora": "13:23",
+      "tipo": "PAGO",
+      "cartera": "BAC CASTIGADA",
+      "monto": null
+    },
+    {
+      "hora": "13:07",
+      "tipo": "PAGO",
+      "cartera": "SOLVE",
+      "monto": null
+    },
+    {
+      "hora": "13:01",
+      "tipo": "CONTACTO",
+      "cartera": "TIGO",
+      "monto": null
+    },
+    {
+      "hora": "12:51",
+      "tipo": "PAGO",
+      "cartera": "SURA TC Y ACH",
+      "monto": null
+    },
+    {
+      "hora": "12:51",
+      "tipo": "PAGO",
+      "cartera": "SURA CORREDORES",
+      "monto": 46.27
+    },
+    {
+      "hora": "12:49",
+      "tipo": "PAGO",
+      "cartera": "SURA TC Y ACH",
+      "monto": null
+    },
+    {
+      "hora": "12:28",
+      "tipo": "PAGO",
+      "cartera": "SURA CORREDORES",
+      "monto": 40.21
+    },
+    {
+      "hora": "12:28",
+      "tipo": "PAGO",
+      "cartera": "SOLVE",
+      "monto": null
+    },
+    {
+      "hora": "12:21",
+      "tipo": "PAGO",
+      "cartera": "SURA CORREDORES",
+      "monto": 46.35
+    }
+  ],
   "por_categoria": [
     {
       "categoria": "NO_CONTACTO",

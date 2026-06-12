@@ -196,11 +196,34 @@ def main(ruta: str) -> None:
 
     insights = construir_insights(df, por_proyecto, por_hora, total, efectivas, es_promesa)
 
+    # Flujo en vivo: eventos anónimos para el ticker (sin ningún dato del deudor)
+    def evento(row, tipo):
+        return {
+            "hora": row["FECHA_DT"].strftime("%H:%M"),
+            "tipo": tipo,
+            "cartera": str(row["PROYECTO"]),
+            "monto": round(float(row["MONTO_NUM"]), 2) if pd.notna(row["MONTO_NUM"]) else None,
+        }
+
+    con_fecha = df[df["FECHA_DT"].notna()]
+    eventos = []
+    for _, x in con_fecha[es_pago].iterrows():
+        eventos.append(evento(x, "PAGO"))
+    prom = con_fecha[es_promesa]
+    for _, x in prom.sample(min(40, len(prom)), random_state=7).iterrows():
+        eventos.append(evento(x, "PROMESA"))
+    cont = con_fecha[con_fecha["EFECTIVO"] & ~es_promesa & ~es_pago]
+    for _, x in cont.sample(min(15, len(cont)), random_state=7).iterrows():
+        eventos.append(evento(x, "CONTACTO"))
+    eventos.sort(key=lambda e: e["hora"], reverse=True)
+    flujo_vivo = eventos[:60]
+
     salida = {
         "resumen": resumen,
         "meta": meta,
         "funnel": funnel,
         "insights": insights,
+        "flujo_vivo": flujo_vivo,
         "por_categoria": por_categoria,
         "por_hora": por_hora.to_dict(orient="records"),
         "por_proyecto": por_proyecto.to_dict(orient="records"),

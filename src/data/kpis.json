@@ -1,6 +1,7 @@
 {
   "resumen": {
     "fecha": "2026-06-10",
+    "hora_corte": "17:04",
     "total_gestiones": 14756,
     "gestores_activos": 66,
     "deudores_gestionados": 12633,
@@ -11,8 +12,62 @@
     "pagos_confirmados": 173,
     "tasa_conversion": 0.5702,
     "monto_comprometido": 140759.89,
-    "ticket_promedio": 136.93
+    "ticket_promedio": 136.93,
+    "gestiones_por_gestor": 223.6
   },
+  "meta": {
+    "monto_diario": 150000,
+    "avance": 0.9384
+  },
+  "funnel": [
+    {
+      "etapa": "Gestiones realizadas",
+      "valor": 14756,
+      "tasa": 1.0
+    },
+    {
+      "etapa": "Contactos efectivos",
+      "valor": 2729,
+      "tasa": 0.1849
+    },
+    {
+      "etapa": "Promesas de pago",
+      "valor": 1383,
+      "tasa": 0.5068
+    },
+    {
+      "etapa": "Pagos confirmados",
+      "valor": 173,
+      "tasa": 0.1251
+    }
+  ],
+  "insights": [
+    {
+      "tipo": "alerta",
+      "titulo": "82% de las gestiones no logra contacto efectivo",
+      "detalle": "12 027 intentos sin hablar con el titular. Mejorar la calidad de las bases telefónicas y los horarios de marcación es la palanca de mayor impacto."
+    },
+    {
+      "tipo": "oportunidad",
+      "titulo": "La franja de 7:00 es la más efectiva (46% de contacto)",
+      "detalle": "Concentrar a los mejores gestores y las cuentas de mayor saldo en las franjas de alta contactabilidad eleva la recuperación sin aumentar nómina."
+    },
+    {
+      "tipo": "alerta",
+      "titulo": "BANISTMO S.A. convierte 13% de sus contactos en promesa",
+      "detalle": "Contra 71% de KREDIYA, la mejor cartera del día. Revisar guion, perfil de cuentas o gestores asignados."
+    },
+    {
+      "tipo": "info",
+      "titulo": "3 carteras concentran 65% de la operación",
+      "detalle": "KREDIYA, TIGO, BANISTMO ACTIVA. Diversificar reduce el riesgo de ingresos ante la salida de un cliente."
+    },
+    {
+      "tipo": "logro",
+      "titulo": "57% de los contactos efectivos termina en promesa o pago",
+      "detalle": "Cuando el equipo logra hablar con el titular, cierra. El cuello de botella no es la negociación: es la contactabilidad."
+    }
+  ],
   "por_categoria": [
     {
       "categoria": "NO_CONTACTO",
@@ -143,112 +198,160 @@
       "gestiones": 3721,
       "efectivas": 141,
       "promesas": 100,
-      "monto": 3659.0
+      "pagos": 0,
+      "monto": 3659.0,
+      "tasa_contacto": 0.0379,
+      "tasa_conversion": 0.7092
     },
     {
       "proyecto": "TIGO",
       "gestiones": 3438,
       "efectivas": 446,
       "promesas": 208,
-      "monto": 3855.05
+      "pagos": 0,
+      "monto": 3855.05,
+      "tasa_contacto": 0.1297,
+      "tasa_conversion": 0.4664
     },
     {
       "proyecto": "BANISTMO ACTIVA",
       "gestiones": 2472,
       "efectivas": 660,
       "promesas": 413,
-      "monto": 62069.79
+      "pagos": 25,
+      "monto": 62069.79,
+      "tasa_contacto": 0.267,
+      "tasa_conversion": 0.6258
     },
     {
       "proyecto": "SURA CORREDORES",
       "gestiones": 1588,
       "efectivas": 633,
       "promesas": 362,
-      "monto": 40851.92
+      "pagos": 114,
+      "monto": 40851.92,
+      "tasa_contacto": 0.3986,
+      "tasa_conversion": 0.5719
     },
     {
       "proyecto": "RODELAG",
       "gestiones": 1110,
       "efectivas": 168,
       "promesas": 97,
-      "monto": 9702.82
+      "pagos": 0,
+      "monto": 9702.82,
+      "tasa_contacto": 0.1514,
+      "tasa_conversion": 0.5774
     },
     {
       "proyecto": "BANISTMO S.A.",
       "gestiones": 780,
       "efectivas": 266,
       "promesas": 34,
-      "monto": 932.5
+      "pagos": 2,
+      "monto": 932.5,
+      "tasa_contacto": 0.341,
+      "tasa_conversion": 0.1278
     },
     {
       "proyecto": "BAC CASTIGADA",
       "gestiones": 581,
       "efectivas": 66,
       "promesas": 26,
-      "monto": 1051.0
+      "pagos": 3,
+      "monto": 1051.0,
+      "tasa_contacto": 0.1136,
+      "tasa_conversion": 0.3939
     },
     {
       "proyecto": "SOLVE",
       "gestiones": 296,
       "efectivas": 106,
       "promesas": 37,
-      "monto": 1549.26
+      "pagos": 7,
+      "monto": 1549.26,
+      "tasa_contacto": 0.3581,
+      "tasa_conversion": 0.3491
     },
     {
       "proyecto": "BANCO LA HIPOTECARIA",
       "gestiones": 163,
       "efectivas": 29,
       "promesas": 17,
-      "monto": 2275.55
+      "pagos": 1,
+      "monto": 2275.55,
+      "tasa_contacto": 0.1779,
+      "tasa_conversion": 0.5862
     },
     {
       "proyecto": "SURA BANCA INDIVIDUAL",
       "gestiones": 132,
       "efectivas": 34,
       "promesas": 22,
-      "monto": 730.67
+      "pagos": 7,
+      "monto": 730.67,
+      "tasa_contacto": 0.2576,
+      "tasa_conversion": 0.6471
     },
     {
       "proyecto": "SURA HCIS",
       "gestiones": 132,
       "efectivas": 22,
       "promesas": 15,
-      "monto": 3417.04
+      "pagos": 3,
+      "monto": 3417.04,
+      "tasa_contacto": 0.1667,
+      "tasa_conversion": 0.6818
     },
     {
       "proyecto": "BANISTMO ACTIVA 61 A 90",
       "gestiones": 108,
       "efectivas": 45,
       "promesas": 22,
-      "monto": 4882.77
+      "pagos": 2,
+      "monto": 4882.77,
+      "tasa_contacto": 0.4167,
+      "tasa_conversion": 0.4889
     },
     {
       "proyecto": "GLOBAL BANK",
       "gestiones": 96,
       "efectivas": 40,
       "promesas": 1,
-      "monto": 15.0
+      "pagos": 0,
+      "monto": 15.0,
+      "tasa_contacto": 0.4167,
+      "tasa_conversion": 0.025
     },
     {
       "proyecto": "AFINITI FINANCIAL",
       "gestiones": 81,
       "efectivas": 38,
       "promesas": 18,
-      "monto": 3748.23
+      "pagos": 1,
+      "monto": 3748.23,
+      "tasa_contacto": 0.4691,
+      "tasa_conversion": 0.4737
     },
     {
       "proyecto": "BANISTMO ACTIVA PREDICTIVO",
       "gestiones": 39,
       "efectivas": 22,
       "promesas": 8,
-      "monto": 1954.23
+      "pagos": 0,
+      "monto": 1954.23,
+      "tasa_contacto": 0.5641,
+      "tasa_conversion": 0.3636
     },
     {
       "proyecto": "SURA TC Y ACH",
       "gestiones": 19,
       "efectivas": 13,
       "promesas": 3,
-      "monto": 65.06
+      "pagos": 8,
+      "monto": 65.06,
+      "tasa_contacto": 0.6842,
+      "tasa_conversion": 0.2308
     }
   ],
   "top_gestores": [
@@ -258,7 +361,8 @@
       "efectivas": 92,
       "promesas": 61,
       "pagos": 16,
-      "monto": 4879.17
+      "monto": 4879.17,
+      "eficiencia": 47.8
     },
     {
       "gestor": "Gestor 8050",
@@ -266,7 +370,8 @@
       "efectivas": 62,
       "promesas": 57,
       "pagos": 0,
-      "monto": 2342.0
+      "monto": 2342.0,
+      "eficiencia": 44.5
     },
     {
       "gestor": "Gestor 83CD",
@@ -274,7 +379,8 @@
       "efectivas": 76,
       "promesas": 53,
       "pagos": 0,
-      "monto": 832.73
+      "monto": 832.73,
+      "eficiencia": 42.4
     },
     {
       "gestor": "Gestor B611",
@@ -282,7 +388,8 @@
       "efectivas": 86,
       "promesas": 52,
       "pagos": 0,
-      "monto": 4577.77
+      "monto": 4577.77,
+      "eficiencia": 42.6
     },
     {
       "gestor": "Gestor C456",
@@ -290,7 +397,8 @@
       "efectivas": 81,
       "promesas": 50,
       "pagos": 18,
-      "monto": 6396.21
+      "monto": 6396.21,
+      "eficiencia": 39.1
     },
     {
       "gestor": "Gestor F67F",
@@ -298,7 +406,8 @@
       "efectivas": 82,
       "promesas": 45,
       "pagos": 0,
-      "monto": 5125.05
+      "monto": 5125.05,
+      "eficiencia": 37.8
     },
     {
       "gestor": "Gestor D035",
@@ -306,7 +415,8 @@
       "efectivas": 70,
       "promesas": 43,
       "pagos": 0,
-      "monto": 519.01
+      "monto": 519.01,
+      "eficiencia": 30.5
     },
     {
       "gestor": "Gestor EE40",
@@ -314,7 +424,8 @@
       "efectivas": 79,
       "promesas": 43,
       "pagos": 0,
-      "monto": 1317.0
+      "monto": 1317.0,
+      "eficiencia": 30.5
     },
     {
       "gestor": "Gestor C431",
@@ -322,7 +433,8 @@
       "efectivas": 77,
       "promesas": 42,
       "pagos": 26,
-      "monto": 5435.19
+      "monto": 5435.19,
+      "eficiencia": 42.2
     },
     {
       "gestor": "Gestor 7DAD",
@@ -330,7 +442,8 @@
       "efectivas": 97,
       "promesas": 42,
       "pagos": 0,
-      "monto": 804.3
+      "monto": 804.3,
+      "eficiencia": 27.3
     }
   ]
 }

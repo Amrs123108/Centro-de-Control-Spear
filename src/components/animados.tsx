@@ -183,6 +183,60 @@ export function TickerVivo({ eventos }: { eventos: Evento[] }) {
   );
 }
 
+/* ── Cinta de resumen: las cifras reales del corte, a paso de lectura ───── */
+
+export function CintaResumen({
+  titulo,
+  items,
+  duracion = 80,
+}: {
+  titulo: string;
+  items: { etiqueta: string; valor: string; tono?: "oro" | "azul" | "verde" }[];
+  /** Segundos por vuelta — lento, para que se pueda leer */
+  duracion?: number;
+}) {
+  const tonoClase: Record<string, string> = {
+    oro: "text-gold",
+    azul: "text-accent-claro",
+    verde: "text-pos",
+  };
+  const pista = [...items, ...items]; // duplicado para bucle continuo
+  return (
+    <div className="flex items-stretch overflow-hidden rounded-xl border border-line bg-surface shadow-card">
+      <div className="z-10 flex shrink-0 items-center gap-2 border-r border-line bg-navy px-4 py-3">
+        <span className="relative flex h-2 w-2">
+          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-gold opacity-60"></span>
+          <span className="relative inline-flex h-2 w-2 rounded-full bg-gold"></span>
+        </span>
+        <span className="whitespace-nowrap text-[11px] font-bold uppercase tracking-[0.18em] text-white">
+          {titulo}
+        </span>
+      </div>
+      <div className="relative flex-1 overflow-hidden">
+        <div
+          className="ticker-pista items-center gap-12 py-3 pl-12"
+          style={{ animationDuration: `${duracion}s` }}
+        >
+          {pista.map((it, i) => (
+            <span key={i} className="flex shrink-0 items-baseline gap-2.5">
+              <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-ink-ter">
+                {it.etiqueta}
+              </span>
+              <span
+                className={`tnum text-sm font-bold ${tonoClase[it.tono ?? ""] ?? "text-ink"}`}
+              >
+                {it.valor}
+              </span>
+            </span>
+          ))}
+        </div>
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-surface to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-surface to-transparent" />
+      </div>
+    </div>
+  );
+}
+
 /* ── Embudo cuyas barras crecen al revelarse ────────────────────────────── */
 
 interface EtapaFunnel {
@@ -193,7 +247,7 @@ interface EtapaFunnel {
 
 export function FunnelAnimado({ funnel }: { funnel: EtapaFunnel[] }) {
   const { ref, visible } = useVisible<HTMLDivElement>();
-  const colores = ["bg-navy", "bg-accent", "bg-pos", "bg-gold"];
+  const colores = ["bg-navy-light", "bg-accent", "bg-pos", "bg-gold"];
   return (
     <div ref={ref} className="space-y-1">
       {funnel.map((f, i) => {

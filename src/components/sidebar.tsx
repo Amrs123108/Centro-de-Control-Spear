@@ -11,7 +11,7 @@ import {
   Users,
 } from "lucide-react";
 import type { Sesion } from "@/lib/auth";
-import { CascoGuerrero, LogoSpear } from "@/components/marca";
+import { CascoGuerrero, LogoSpearAnimado } from "@/components/marca";
 
 const NAV = [
   { href: "/dashboard", etiqueta: "Dashboard", icono: LayoutDashboard, activo: true },
@@ -38,15 +38,15 @@ export default function Sidebar({ sesion }: { sesion: Sesion }) {
   }
 
   return (
-    <aside className="flex w-60 shrink-0 flex-col bg-navy">
+    <aside className="relative flex w-60 shrink-0 flex-col border-r border-white/5 bg-navy">
       <div className="px-5 pb-5 pt-6">
-        <LogoSpear className="h-12 w-full drop-shadow-[0_0_14px_rgba(27,79,216,0.35)]" />
+        <LogoSpearAnimado className="h-12 w-full drop-shadow-[0_0_14px_rgba(27,79,216,0.35)]" />
         <div className="mt-1 text-center text-[10px] uppercase tracking-[0.3em] text-white/40">
           Centro de Control
         </div>
         <div className="mt-4 flex items-center gap-2">
           <span className="h-px flex-1 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-          <CascoGuerrero className="h-7 w-7" />
+          <CascoGuerrero className="h-7 w-7" animado />
           <span className="text-[9px] font-bold uppercase tracking-[0.22em] text-gold/80">
             Somos guerreros
           </span>

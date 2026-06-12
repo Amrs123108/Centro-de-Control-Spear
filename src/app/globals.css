@@ -6,35 +6,36 @@
   --color-navy-mid: #132340;
   --color-navy-light: #1a3158;
   --color-accent: #1b4fd8;
-  --color-accent-soft: #eaf0fd;
+  --color-accent-claro: #5b8cff;
+  --color-accent-soft: #14264a;
 
-  /* Lienzo y superficies */
-  --color-canvas: #f4f6fa;
-  --color-surface: #ffffff;
-  --color-line: #e2e7ef;
-  --color-line-dark: #c8d0dc;
+  /* Lienzo y superficies — sala de mando oscura */
+  --color-canvas: #070f1d;
+  --color-surface: #0e1c31;
+  --color-line: #1d2e49;
+  --color-line-dark: #2c4061;
 
   /* Texto */
-  --color-ink: #0d1b2e;
-  --color-ink-sec: #4a5568;
-  --color-ink-ter: #8a97a8;
+  --color-ink: #eef3fa;
+  --color-ink-sec: #aebdd2;
+  --color-ink-ter: #6e8099;
 
   /* Dinero / metas */
   --color-gold: #e8b931;
-  --color-gold-soft: #fdf6e3;
+  --color-gold-soft: #2b2410;
 
   /* Semánticos */
-  --color-pos: #1d9e75;
-  --color-pos-soft: #e6f5ef;
-  --color-neg: #e24b4a;
-  --color-neg-soft: #fdeeee;
-  --color-warn: #d97706;
-  --color-warn-soft: #fdf3e7;
+  --color-pos: #22b683;
+  --color-pos-soft: #0d2b23;
+  --color-neg: #f0605e;
+  --color-neg-soft: #34191d;
+  --color-warn: #f2a23c;
+  --color-warn-soft: #2f2412;
 
   --font-sans: var(--font-dm-sans), system-ui, -apple-system, sans-serif;
 
-  --shadow-card: 0 1px 3px rgb(13 27 46 / 0.06), 0 1px 2px rgb(13 27 46 / 0.04);
-  --shadow-float: 0 8px 24px rgb(13 27 46 / 0.12);
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.5), 0 0 0 1px rgb(255 255 255 / 0.02);
+  --shadow-float: 0 16px 40px rgb(0 0 0 / 0.55);
 }
 
 body {
@@ -65,6 +66,15 @@ body {
     radial-gradient(ellipse 70% 90% at 8% 0%, #1a3158 0%, transparent 55%),
     radial-gradient(ellipse 50% 80% at 100% 110%, rgba(27, 79, 216, 0.55) 0%, transparent 55%),
     #0d1b2e;
+}
+
+/* Malla de fondo de la sala de mando */
+.malla-fondo {
+  background-image:
+    linear-gradient(rgba(91, 140, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(91, 140, 255, 0.045) 1px, transparent 1px);
+  background-size: 54px 54px;
+  mask-image: radial-gradient(ellipse 90% 75% at 50% 0%, black 25%, transparent 78%);
 }
 
 @keyframes subir {
@@ -180,7 +190,7 @@ body {
   animation: barrido 5.5s ease-in-out infinite;
 }
 
-/* Ticker bursátil */
+/* Cinta de resumen (pausa al pasar el cursor) */
 @keyframes marquesina {
   from {
     transform: translateX(0);
@@ -203,11 +213,11 @@ body {
   0%,
   100% {
     opacity: 1;
-    box-shadow: 0 0 0 0 rgba(226, 75, 74, 0.55);
+    box-shadow: 0 0 0 0 rgba(240, 96, 94, 0.55);
   }
   50% {
     opacity: 0.55;
-    box-shadow: 0 0 0 6px rgba(226, 75, 74, 0);
+    box-shadow: 0 0 0 6px rgba(240, 96, 94, 0);
   }
 }
 .luz-roja {
@@ -216,10 +226,10 @@ body {
 @keyframes parpadeo-chip {
   0%,
   100% {
-    box-shadow: 0 0 0 0 rgba(226, 75, 74, 0.35);
+    box-shadow: 0 0 0 0 rgba(240, 96, 94, 0.35);
   }
   50% {
-    box-shadow: 0 0 0 4px rgba(226, 75, 74, 0);
+    box-shadow: 0 0 0 4px rgba(240, 96, 94, 0);
   }
 }
 .chip-critico {
@@ -324,7 +334,7 @@ html.lenis body {
 /* Texto hueco (solo contorno), estilo agencia */
 .texto-trazo {
   color: transparent;
-  -webkit-text-stroke: 1.5px rgba(13, 27, 46, 0.22);
+  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.16);
 }
 .texto-trazo-claro {
   color: transparent;
@@ -366,6 +376,128 @@ html.lenis body {
   letter-spacing: 0.18em;
 }
 
+/* ── Marca en movimiento ─────────────────────────────────────────────────── */
+
+/* Logo que se dibuja: letras suben, la lanza se traza y la punta dispara */
+.logo-letras,
+.logo-lanza-asta,
+.logo-lanza-punta,
+.logo-contact,
+.logo-brillo {
+  transform-box: fill-box;
+}
+@keyframes logo-aparece {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.logo-letras {
+  animation: logo-aparece 0.8s ease 0.1s both;
+}
+.logo-contact {
+  animation: logo-aparece 0.7s ease 1.15s both;
+}
+@keyframes logo-traza-lanza {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+.logo-lanza-asta {
+  transform-origin: left center;
+  animation: logo-traza-lanza 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.5s both;
+}
+@keyframes logo-dispara-punta {
+  from {
+    opacity: 0;
+    transform: translateX(-16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+.logo-lanza-punta {
+  animation: logo-dispara-punta 0.45s cubic-bezier(0.22, 1, 0.36, 1) 1.05s both;
+}
+/* Destello que recorre la lanza en bucle */
+@keyframes logo-brillo {
+  0% {
+    transform: translateX(-36px);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.85;
+  }
+  32% {
+    transform: translateX(238px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(238px);
+    opacity: 0;
+  }
+}
+.logo-brillo {
+  opacity: 0;
+  animation: logo-brillo 5.5s ease-in-out 2s infinite;
+}
+
+/* El guerrero vivo: mirada que se enciende y estrella que destella */
+@keyframes mirada-enciende {
+  0%,
+  100% {
+    opacity: 0.12;
+  }
+  50% {
+    opacity: 0.85;
+  }
+}
+.casco-mirada {
+  animation: mirada-enciende 3.6s ease-in-out infinite;
+}
+@keyframes estrella-destella {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 0 rgba(232, 185, 49, 0));
+  }
+  50% {
+    filter: drop-shadow(0 0 7px rgba(232, 185, 49, 0.95));
+  }
+}
+.casco-estrella {
+  animation: estrella-destella 2.8s ease-in-out infinite;
+}
+
+/* Lanzas que cruzan la pantalla */
+@keyframes lanza-cruza {
+  0% {
+    transform: translateX(-22vw);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  88% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(118vw);
+    opacity: 0;
+  }
+}
+.lanza-vuela {
+  opacity: 0;
+  animation: lanza-cruza linear infinite;
+}
+
 /* Respeto a usuarios con movimiento reducido */
 @media (prefers-reduced-motion: reduce) {
   .aurora-a,
@@ -380,8 +512,19 @@ html.lenis body {
   .intro-logo,
   .intro-linea,
   .intro-lema,
-  .marquesina-pista {
+  .marquesina-pista,
+  .logo-letras,
+  .logo-contact,
+  .logo-lanza-asta,
+  .logo-lanza-punta,
+  .logo-brillo,
+  .casco-mirada,
+  .casco-estrella,
+  .lanza-vuela {
     animation: none;
+  }
+  .casco-mirada {
+    opacity: 0.3;
   }
   .revelar {
     opacity: 1;

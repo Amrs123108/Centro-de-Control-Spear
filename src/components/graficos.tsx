@@ -20,30 +20,35 @@ import {
   YAxis,
 } from "recharts";
 
-const NAVY = "#0d1b2e";
-const ACCENT = "#1b4fd8";
-const POS = "#1d9e75";
+const ACCENT = "#4f7df8";
+const POS = "#22b683";
 const GOLD = "#e8b931";
-const LINE = "#e2e7ef";
-const INK_TER = "#8a97a8";
+const LINE = "#22344f";
+const INK = "#dbe4f0";
+const INK_TER = "#7d8da3";
 
 const PALETA = [
-  "#1b4fd8",
-  "#0d1b2e",
-  "#1d9e75",
-  "#d97706",
-  "#7c3aed",
-  "#e24b4a",
-  "#0891b2",
-  "#64748b",
+  "#4f7df8",
+  "#8fb0ff",
+  "#22b683",
+  "#f2a23c",
+  "#a78bfa",
+  "#f0605e",
+  "#22b8d4",
+  "#8a9bb5",
 ];
 
 const tooltipStyle = {
   borderRadius: 10,
   border: `1px solid ${LINE}`,
-  boxShadow: "0 8px 24px rgb(13 27 46 / 0.12)",
+  backgroundColor: "#0e1c31",
+  color: INK,
+  boxShadow: "0 12px 32px rgb(0 0 0 / 0.5)",
   fontSize: 12,
 };
+
+const tooltipLabelStyle = { color: INK, fontWeight: 600 };
+const legendStyle = { fontSize: 12, color: "#aebdd2" };
 
 /** Medidor semicircular de avance de meta (para fondo oscuro). */
 export function GaugeMeta({ avance }: { avance: number }) {
@@ -118,9 +123,10 @@ export function GraficoHoras({
         />
         <Tooltip
           contentStyle={tooltipStyle}
+          labelStyle={tooltipLabelStyle}
           labelFormatter={(h) => `${h}:00 — ${Number(h) + 1}:00`}
         />
-        <Legend wrapperStyle={{ fontSize: 12 }} />
+        <Legend wrapperStyle={legendStyle} />
         {mejorHora !== undefined && (
           <ReferenceLine
             x={mejorHora}
@@ -130,7 +136,7 @@ export function GraficoHoras({
             label={{
               value: "Mejor franja",
               position: "top",
-              fill: "#b08a14",
+              fill: GOLD,
               fontSize: 10,
             }}
           />
@@ -177,14 +183,14 @@ export function GraficoCategorias({
             <Cell key={i} fill={PALETA[i % PALETA.length]} />
           ))}
         </Pie>
-        <Tooltip contentStyle={tooltipStyle} />
+        <Tooltip contentStyle={tooltipStyle} labelStyle={tooltipLabelStyle} />
         <Legend
           layout="vertical"
           align="right"
           verticalAlign="middle"
           iconType="circle"
           iconSize={8}
-          wrapperStyle={{ fontSize: 11, lineHeight: "20px" }}
+          wrapperStyle={{ fontSize: 11, lineHeight: "20px", color: "#aebdd2" }}
         />
       </PieChart>
     </ResponsiveContainer>
@@ -214,12 +220,12 @@ export function GraficoCarteras({
           type="category"
           dataKey="proyecto"
           width={120}
-          tick={{ fontSize: 11, fill: NAVY }}
+          tick={{ fontSize: 11, fill: INK }}
           axisLine={false}
           tickLine={false}
         />
-        <Tooltip contentStyle={tooltipStyle} />
-        <Legend wrapperStyle={{ fontSize: 12 }} />
+        <Tooltip contentStyle={tooltipStyle} labelStyle={tooltipLabelStyle} />
+        <Legend wrapperStyle={legendStyle} />
         <Bar
           dataKey="gestiones"
           name="Gestiones"

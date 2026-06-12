@@ -47,12 +47,126 @@ export function LogoSpear({
   );
 }
 
-export function CascoGuerrero({
-  className = "h-24 w-24",
+/**
+ * Logo que cobra vida: las letras suben, la lanza se traza, la punta se
+ * dispara y un destello recorre el asta en bucle. Misma geometría que
+ * LogoSpear — las clases logo-* viven en globals.css.
+ */
+export function LogoSpearAnimado({
+  className = "h-12 w-auto",
   tono = "claro",
 }: {
   className?: string;
   tono?: "claro" | "oscuro";
+}) {
+  const letra = tono === "claro" ? "#ffffff" : "#3d4348";
+  const azul = tono === "claro" ? "#3b6cf0" : "#1b4fd8";
+  return (
+    <svg viewBox="0 0 300 96" className={className} aria-label="Spear Contact">
+      <text
+        className="logo-letras"
+        x="20"
+        y="58"
+        fontFamily="var(--font-dm-sans), system-ui, sans-serif"
+        fontWeight="800"
+        fontSize="56"
+        letterSpacing="2"
+        fill={letra}
+      >
+        SPEAR
+      </text>
+      <rect className="logo-lanza-asta" x="0" y="36" width="232" height="7" fill={azul} />
+      <path className="logo-lanza-punta" d="M226 26 268 39.5 226 53 236 39.5Z" fill={azul} />
+      <rect
+        className="logo-brillo"
+        x="0"
+        y="36"
+        width="34"
+        height="7"
+        rx="3"
+        fill="rgba(255,255,255,0.8)"
+      />
+      <text
+        className="logo-contact"
+        x="222"
+        y="82"
+        textAnchor="end"
+        fontFamily="var(--font-dm-sans), system-ui, sans-serif"
+        fontWeight="800"
+        fontSize="22"
+        letterSpacing="3"
+        fill={azul}
+      >
+        CONTACT
+      </text>
+    </svg>
+  );
+}
+
+/** La lanza de la marca, sola — para divisores y lanzas en vuelo. */
+export function LanzaSpear({
+  className = "h-3 w-auto",
+  color = "#3b6cf0",
+}: {
+  className?: string;
+  color?: string;
+}) {
+  return (
+    <svg viewBox="0 0 240 18" className={className} aria-hidden="true">
+      <rect x="0" y="7" width="196" height="4" rx="2" fill={color} />
+      <path d="M192 2 234 9 192 16 200 9Z" fill={color} />
+    </svg>
+  );
+}
+
+/** Lanzas que cruzan la pantalla en bucle, como proyectiles de fondo. */
+export function LanzasVoladoras({
+  lanzas,
+  className = "",
+}: {
+  lanzas: {
+    top: string;
+    duracion: number;
+    retraso?: number;
+    ancho?: string;
+    color?: string;
+  }[];
+  className?: string;
+}) {
+  return (
+    <div
+      className={`pointer-events-none absolute inset-0 overflow-hidden ${className}`}
+      aria-hidden="true"
+    >
+      {lanzas.map((l, i) => (
+        <div
+          key={i}
+          className="lanza-vuela absolute left-0"
+          style={{
+            top: l.top,
+            animationDuration: `${l.duracion}s`,
+            animationDelay: `${l.retraso ?? 0}s`,
+          }}
+        >
+          <LanzaSpear
+            className={l.ancho ?? "h-auto w-40"}
+            color={l.color ?? "rgba(91,140,255,0.45)"}
+          />
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export function CascoGuerrero({
+  className = "h-24 w-24",
+  tono = "claro",
+  animado = false,
+}: {
+  className?: string;
+  tono?: "claro" | "oscuro";
+  /** true: la mirada se enciende y la estrella destella */
+  animado?: boolean;
 }) {
   const casco = tono === "claro" ? "#1b4fd8" : "#143ba6";
   const ojo = "#0d1b2e";
@@ -92,6 +206,12 @@ export function CascoGuerrero({
       <path d="M37 86 Q45 79 53 86 Q45 94 37 86 Z" fill={ojo} />
       <path d="M67 86 Q75 79 83 86 Q75 94 67 86 Z" fill={ojo} />
       <rect x="55.5" y="96" width="9" height="18" rx="3.5" fill={ojo} />
+      {animado && (
+        <g className="casco-mirada" fill="#9cc4ff">
+          <path d="M39 86 Q45 81.5 51 86 Q45 91 39 86 Z" />
+          <path d="M69 86 Q75 81.5 81 86 Q75 91 69 86 Z" />
+        </g>
+      )}
       {/* Brillo del domo */}
       <path
         d="M33 76 C35 62 43 51 55 47 C45 53 38 64 36 77 Z"
@@ -99,6 +219,7 @@ export function CascoGuerrero({
       />
       {/* Estrella de la frente (la marca de las mascotas) */}
       <path
+        className={animado ? "casco-estrella" : undefined}
         d="m60 56 2.4 4.2h4.8l-2.4 4.2 2.4 4.2h-4.8L60 73l-2.4-4.2h-4.8l2.4-4.2-2.4-4.2h4.8Z"
         fill="#e8b931"
       />

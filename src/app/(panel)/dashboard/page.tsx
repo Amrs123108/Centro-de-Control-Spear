@@ -18,18 +18,24 @@ import {
 } from "@/components/graficos";
 import {
   BarraProgreso,
+  CintaResumen,
   Contador,
   FunnelAnimado,
   LuzAlerta,
   Revelar,
-  TickerVivo,
 } from "@/components/animados";
 import {
   MarquesinaGigante,
   PalabrasReveladas,
   Parallax,
 } from "@/components/cinetica";
-import { CascoGuerrero, Hexagono, LogoSpear } from "@/components/marca";
+import {
+  CascoGuerrero,
+  Hexagono,
+  LanzaSpear,
+  LanzasVoladoras,
+  LogoSpearAnimado,
+} from "@/components/marca";
 
 /* ── Utilidades de presentación ─────────────────────────────────────────── */
 
@@ -147,11 +153,11 @@ function TituloSeccion({
   nota?: string;
 }) {
   return (
-    <div className="mb-6 mt-14 flex flex-wrap items-end justify-between gap-3">
+    <div className="mb-6 mt-12 flex flex-wrap items-end justify-between gap-3">
       <div>
-        <div className="numero-seccion mb-2 flex items-center gap-3 text-[11px] font-bold text-accent">
+        <div className="numero-seccion mb-2 flex items-center gap-3 text-[11px] font-bold text-accent-claro">
           <span>{numero}</span>
-          <span className="h-px w-12 bg-accent/40" />
+          <LanzaSpear className="h-2.5 w-16" color="rgba(91,140,255,0.6)" />
         </div>
         <h2 className="text-4xl font-extrabold leading-[1.02] tracking-tight text-ink lg:text-5xl">
           <PalabrasReveladas texto={titulo} doradas={doradas} />
@@ -206,7 +212,7 @@ export default async function DashboardPage() {
       </header>
 
       {/* HERO — el pulso del negocio */}
-      <section className="hero-navy anim-subir relative overflow-hidden rounded-2xl p-8 text-white shadow-float lg:p-12">
+      <section className="hero-navy anim-subir relative overflow-hidden rounded-2xl border border-white/5 p-8 text-white shadow-float lg:p-12">
         {/* Atmósfera viva */}
         <div
           className="aurora aurora-a h-[420px] w-[420px] opacity-50"
@@ -227,14 +233,22 @@ export default async function DashboardPage() {
           velocidad={0.07}
           className="pointer-events-none absolute -right-10 -top-8"
         >
-          <CascoGuerrero className="flotante-lento h-80 w-80 opacity-[0.14]" />
+          <CascoGuerrero className="flotante-lento h-80 w-80 opacity-[0.14]" animado />
         </Parallax>
+        {/* Lanzas cruzando la sala de mando */}
+        <LanzasVoladoras
+          lanzas={[
+            { top: "18%", duracion: 13, retraso: 1, ancho: "h-auto w-44" },
+            { top: "58%", duracion: 18, retraso: 6, ancho: "h-auto w-28", color: "rgba(232,185,49,0.35)" },
+            { top: "82%", duracion: 15, retraso: 10, ancho: "h-auto w-36", color: "rgba(91,140,255,0.3)" },
+          ]}
+        />
 
         {/* Titular de la sala de mando */}
         <div className="relative z-10 mb-10 max-w-3xl">
           <div className="mb-3 flex items-center gap-3 text-[11px] font-bold uppercase tracking-[0.26em] text-gold/90">
             <span className="h-px w-10 bg-gold/50" />
-            La operación, en vivo
+            El resultado del día · corte {r.hora_corte}
           </div>
           <h2 className="text-[44px] font-extrabold leading-[0.98] tracking-tight lg:text-[64px]">
             <PalabrasReveladas
@@ -332,15 +346,36 @@ export default async function DashboardPage() {
         </div>
       </section>
 
-      {/* TICKER — la operación latiendo */}
+      {/* CINTA — las cifras del corte, a paso de lectura */}
       <div className="anim-subir-2 mt-4">
-        <TickerVivo eventos={kpis.flujo_vivo} />
+        <CintaResumen
+          titulo={`Resumen del día · ${r.hora_corte}`}
+          duracion={85}
+          items={[
+            { etiqueta: "Recuperado comprometido", valor: fmtMoneda(r.monto_comprometido), tono: "oro" },
+            { etiqueta: "Avance de meta", valor: fmtPct(meta.avance, 1), tono: "oro" },
+            { etiqueta: "Gestiones", valor: fmtNum(r.total_gestiones), tono: "azul" },
+            { etiqueta: "Contactos efectivos", valor: fmtNum(r.contactos_efectivos), tono: "verde" },
+            { etiqueta: "Promesas de pago", valor: fmtNum(r.promesas), tono: "azul" },
+            { etiqueta: "Pagos confirmados", valor: fmtNum(r.pagos_confirmados), tono: "verde" },
+            { etiqueta: "Ticket promedio", valor: fmtMoneda(r.ticket_promedio), tono: "oro" },
+            { etiqueta: "Guerreros activos", valor: fmtNum(r.gestores_activos) },
+            { etiqueta: "Carteras activas", valor: fmtNum(r.carteras_activas) },
+            ...(mejorHora !== undefined
+              ? [{ etiqueta: "Mejor franja de contacto", valor: `${mejorHora}:00`, tono: "verde" as const }]
+              : []),
+          ]}
+        />
       </div>
 
       {/* Marquesina de identidad */}
       <MarquesinaGigante
-        frases={["Somos guerreros", "Somos Spear"]}
+        frases={[
+          "Las metas de nuestros clientes son nuestras metas",
+          "Somos guerreros",
+        ]}
         trazo
+        duracion={70}
         className="-mx-8 mt-12 py-2"
       />
 
@@ -425,6 +460,43 @@ export default async function DashboardPage() {
         </Revelar>
       </div>
 
+      {/* LA PROMESA DE LA CASA — el eslogan en grande */}
+      <Revelar>
+        <section className="hero-navy relative mt-12 overflow-hidden rounded-2xl border border-white/5 p-10 text-white shadow-float lg:p-14">
+          <div
+            className="aurora aurora-a h-[380px] w-[380px] opacity-35"
+            style={{ top: "-180px", left: "20%", background: "#1b4fd8" }}
+          />
+          <LanzasVoladoras
+            lanzas={[
+              { top: "22%", duracion: 14, retraso: 2, ancho: "h-auto w-40" },
+              { top: "74%", duracion: 19, retraso: 9, ancho: "h-auto w-28", color: "rgba(232,185,49,0.35)" },
+            ]}
+          />
+          <CascoGuerrero
+            className="flotante-lento pointer-events-none absolute -left-8 -bottom-10 h-48 w-48 opacity-[0.14]"
+            animado
+          />
+          <CascoGuerrero
+            className="flotante pointer-events-none absolute -right-6 -top-12 h-44 w-44 opacity-[0.12]"
+            animado
+          />
+          <div className="relative z-10 mx-auto max-w-4xl text-center">
+            <div className="mb-4 flex items-center justify-center gap-3 text-[11px] font-bold uppercase tracking-[0.26em] text-gold/90">
+              <LanzaSpear className="h-2.5 w-14" color="rgba(232,185,49,0.6)" />
+              Nuestra promesa
+            </div>
+            <h2 className="text-4xl font-extrabold leading-[1.04] tracking-tight lg:text-6xl">
+              <PalabrasReveladas
+                texto="Las metas de nuestros clientes son nuestras metas."
+                doradas={["metas"]}
+                paso={90}
+              />
+            </h2>
+          </div>
+        </section>
+      </Revelar>
+
       {/* ACTIVIDAD + RANKING */}
       <TituloSeccion
         numero="03"
@@ -455,7 +527,7 @@ export default async function DashboardPage() {
                   i === 0
                     ? "bg-gold text-navy"
                     : i === 1
-                      ? "bg-line-dark text-navy"
+                      ? "bg-[#c6d2e2] text-navy"
                       : i === 2
                         ? "bg-warn-soft text-warn"
                         : "bg-canvas text-ink-ter";
@@ -480,7 +552,7 @@ export default async function DashboardPage() {
                           pct={(g.promesas / maxPromesasGestor) * 100}
                           retraso={i * 80}
                         />
-                        <span className="tnum w-8 shrink-0 text-right text-xs font-bold text-accent">
+                        <span className="tnum w-8 shrink-0 text-right text-xs font-bold text-accent-claro">
                           {g.promesas}
                         </span>
                       </div>
@@ -534,7 +606,7 @@ export default async function DashboardPage() {
                         <div className="flex w-28">
                           <BarraProgreso
                             pct={(p.gestiones / maxGestionesCartera) * 100}
-                            clase="bg-navy"
+                            clase="bg-accent-claro/70"
                             retraso={i * 40}
                           />
                         </div>
@@ -552,7 +624,7 @@ export default async function DashboardPage() {
                         referencia={promedioConversion}
                       />
                     </td>
-                    <td className="tnum py-2.5 text-right font-semibold text-accent">
+                    <td className="tnum py-2.5 text-right font-semibold text-accent-claro">
                       {fmtNum(p.promesas)}
                     </td>
                     <td className="tnum py-2.5 text-right text-ink-sec">
@@ -584,16 +656,29 @@ export default async function DashboardPage() {
       </Revelar>
 
       {/* CIERRE — la firma de la casa */}
-      <footer className="hero-navy relative mt-14 overflow-hidden rounded-2xl p-10 text-white shadow-float lg:p-14">
+      <footer className="hero-navy relative mt-12 overflow-hidden rounded-2xl border border-white/5 p-10 text-white shadow-float lg:p-14">
         <div
           className="aurora aurora-b h-[360px] w-[360px] opacity-35"
           style={{ top: "-160px", right: "-100px", background: "#1b4fd8" }}
+        />
+        <LanzasVoladoras
+          lanzas={[
+            { top: "16%", duracion: 16, retraso: 3, ancho: "h-auto w-40" },
+            { top: "50%", duracion: 12, retraso: 0, ancho: "h-auto w-32", color: "rgba(232,185,49,0.35)" },
+            { top: "84%", duracion: 20, retraso: 8, ancho: "h-auto w-24", color: "rgba(91,140,255,0.3)" },
+          ]}
         />
         <Parallax
           velocidad={0.06}
           className="pointer-events-none absolute -left-8 bottom-[-30px]"
         >
-          <CascoGuerrero className="h-56 w-56 opacity-[0.16]" />
+          <CascoGuerrero className="h-56 w-56 opacity-[0.16]" animado />
+        </Parallax>
+        <Parallax
+          velocidad={0.09}
+          className="pointer-events-none absolute -right-6 top-[-20px]"
+        >
+          <CascoGuerrero className="flotante-lento h-40 w-40 opacity-[0.12]" animado />
         </Parallax>
         <div className="relative z-10 flex flex-col items-center text-center">
           <h2 className="text-[13vw] font-extrabold uppercase leading-[0.92] tracking-tight lg:text-[104px]">
@@ -604,10 +689,10 @@ export default async function DashboardPage() {
             />
           </h2>
           <p className="mt-4 max-w-md text-sm text-white/55">
-            Cada gestión es una lanza. Cada compromiso, una victoria para
-            nuestros clientes.
+            Cada gestión es una lanza. Las metas de nuestros clientes son
+            nuestras metas.
           </p>
-          <LogoSpear className="mt-8 h-10 w-auto opacity-90" />
+          <LogoSpearAnimado className="mt-8 h-10 w-auto opacity-90" />
           <div className="mt-6 flex items-center gap-2 text-[11px] text-white/40">
             <Banknote className="h-3.5 w-3.5" />
             Datos agregados sin información personal · Spear Contact ©{" "}

@@ -3,7 +3,12 @@
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 import { Loader2, Lock, Mail, ShieldCheck } from "lucide-react";
-import { CascoGuerrero, Hexagono, LogoSpear } from "@/components/marca";
+import {
+  CascoGuerrero,
+  Hexagono,
+  LanzasVoladoras,
+  LogoSpearAnimado,
+} from "@/components/marca";
 import { PalabrasReveladas } from "@/components/cinetica";
 
 export default function LoginPage() {
@@ -52,11 +57,23 @@ export default function LoginPage() {
         />
 
         {/* Los guerreros de la marca custodiando el acceso */}
-        <CascoGuerrero className="flotante-lento absolute -right-10 top-[30%] h-64 w-64 opacity-[0.16]" />
-        <CascoGuerrero className="flotante absolute right-28 top-[44%] h-36 w-36 opacity-[0.22]" />
+        <CascoGuerrero
+          className="flotante-lento absolute -right-10 top-[30%] h-64 w-64 opacity-[0.16]"
+          animado
+        />
+        <CascoGuerrero
+          className="flotante absolute right-28 top-[44%] h-36 w-36 opacity-[0.22]"
+          animado
+        />
+        <LanzasVoladoras
+          lanzas={[
+            { top: "14%", duracion: 15, retraso: 2, ancho: "h-auto w-36" },
+            { top: "70%", duracion: 19, retraso: 8, ancho: "h-auto w-28", color: "rgba(232,185,49,0.3)" },
+          ]}
+        />
 
         <div className="relative">
-          <LogoSpear className="h-14 w-auto drop-shadow-[0_0_16px_rgba(27,79,216,0.5)]" />
+          <LogoSpearAnimado className="h-14 w-auto drop-shadow-[0_0_16px_rgba(27,79,216,0.5)]" />
           <div className="mt-1 text-[10px] uppercase tracking-[0.32em] text-white/50">
             Centro de Control
           </div>
@@ -65,7 +82,7 @@ export default function LoginPage() {
           <div className="mb-4 flex items-center gap-2">
             <span className="h-px w-10 bg-gold/60" />
             <span className="text-[10px] font-bold uppercase tracking-[0.24em] text-gold">
-              Somos más que operadores
+              Las metas de nuestros clientes son nuestras metas
             </span>
           </div>
           <h1 className="text-[44px] font-extrabold leading-[1.05] tracking-tight text-white">
@@ -91,7 +108,7 @@ export default function LoginPage() {
       <div className="flex flex-1 items-center justify-center bg-canvas px-6">
         <div className="w-full max-w-sm">
           <div className="mb-8 lg:hidden">
-            <LogoSpear className="h-12 w-auto" tono="oscuro" />
+            <LogoSpearAnimado className="h-12 w-auto" />
             <div className="mt-1 text-[10px] uppercase tracking-[0.3em] text-ink-ter">
               Centro de Control
             </div>

@@ -2,7 +2,6 @@ import {
   AlertTriangle,
   Award,
   Banknote,
-  ChevronRight,
   Info,
   Lightbulb,
   PhoneCall,
@@ -25,7 +24,12 @@ import {
   Revelar,
   TickerVivo,
 } from "@/components/animados";
-import { Hexagono } from "@/components/emblema";
+import {
+  MarquesinaGigante,
+  PalabrasReveladas,
+  Parallax,
+} from "@/components/cinetica";
+import { CascoGuerrero, Hexagono, LogoSpear } from "@/components/marca";
 
 /* ── Utilidades de presentación ─────────────────────────────────────────── */
 
@@ -131,6 +135,37 @@ function Panel({
   );
 }
 
+function TituloSeccion({
+  numero,
+  titulo,
+  doradas = [],
+  nota,
+}: {
+  numero: string;
+  titulo: string;
+  doradas?: string[];
+  nota?: string;
+}) {
+  return (
+    <div className="mb-6 mt-14 flex flex-wrap items-end justify-between gap-3">
+      <div>
+        <div className="numero-seccion mb-2 flex items-center gap-3 text-[11px] font-bold text-accent">
+          <span>{numero}</span>
+          <span className="h-px w-12 bg-accent/40" />
+        </div>
+        <h2 className="text-4xl font-extrabold leading-[1.02] tracking-tight text-ink lg:text-5xl">
+          <PalabrasReveladas texto={titulo} doradas={doradas} />
+        </h2>
+      </div>
+      {nota && (
+        <p className="max-w-xs pb-1 text-xs leading-relaxed text-ink-ter">
+          {nota}
+        </p>
+      )}
+    </div>
+  );
+}
+
 /* ── Página ─────────────────────────────────────────────────────────────── */
 
 export default async function DashboardPage() {
@@ -171,7 +206,7 @@ export default async function DashboardPage() {
       </header>
 
       {/* HERO — el pulso del negocio */}
-      <section className="hero-navy anim-subir relative overflow-hidden rounded-2xl p-7 text-white shadow-float">
+      <section className="hero-navy anim-subir relative overflow-hidden rounded-2xl p-8 text-white shadow-float lg:p-12">
         {/* Atmósfera viva */}
         <div
           className="aurora aurora-a h-[420px] w-[420px] opacity-50"
@@ -187,6 +222,28 @@ export default async function DashboardPage() {
           className="flotante absolute right-10 top-1/2 h-4 w-4"
           color="rgba(232,185,49,0.25)"
         />
+        {/* El guerrero vigila la operación */}
+        <Parallax
+          velocidad={0.07}
+          className="pointer-events-none absolute -right-10 -top-8"
+        >
+          <CascoGuerrero className="flotante-lento h-80 w-80 opacity-[0.14]" />
+        </Parallax>
+
+        {/* Titular de la sala de mando */}
+        <div className="relative z-10 mb-10 max-w-3xl">
+          <div className="mb-3 flex items-center gap-3 text-[11px] font-bold uppercase tracking-[0.26em] text-gold/90">
+            <span className="h-px w-10 bg-gold/50" />
+            La operación, en vivo
+          </div>
+          <h2 className="text-[44px] font-extrabold leading-[0.98] tracking-tight lg:text-[64px]">
+            <PalabrasReveladas
+              texto="El pulso de la recuperación."
+              doradas={["recuperación"]}
+              paso={90}
+            />
+          </h2>
+        </div>
 
         <div className="relative z-10 grid grid-cols-1 items-center gap-8 lg:grid-cols-[1.4fr_auto_1fr]">
           {/* Monto y meta */}
@@ -280,14 +337,21 @@ export default async function DashboardPage() {
         <TickerVivo eventos={kpis.flujo_vivo} />
       </div>
 
+      {/* Marquesina de identidad */}
+      <MarquesinaGigante
+        frases={["Somos guerreros", "Somos Spear"]}
+        trazo
+        className="-mx-8 mt-12 py-2"
+      />
+
       {/* INSIGHTS — lo que requiere atención */}
-      <section className="mt-5">
-        <Revelar>
-          <h2 className="mb-3 flex items-center gap-2 text-sm font-semibold text-ink">
-            <ChevronRight className="h-4 w-4 text-accent" />
-            Lo que requiere su atención hoy
-          </h2>
-        </Revelar>
+      <section>
+        <TituloSeccion
+          numero="01"
+          titulo="Lo que exige su atención."
+          doradas={["atención"]}
+          nota="Hallazgos generados automáticamente a partir de la gestión del día. Las luces rojas parpadean: hay que actuar."
+        />
         <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">
           {kpis.insights.map((ins, i) => {
             const e = INSIGHT_ESTILO[ins.tipo] ?? INSIGHT_ESTILO.info;
@@ -325,7 +389,13 @@ export default async function DashboardPage() {
       </section>
 
       {/* EMBUDO + RESULTADOS */}
-      <div className="mt-5 grid grid-cols-1 gap-4 xl:grid-cols-5">
+      <TituloSeccion
+        numero="02"
+        titulo="Dónde se gana la batalla."
+        doradas={["batalla"]}
+        nota="El recorrido completo: del intento de contacto al compromiso de pago, y cómo se reparten los resultados."
+      />
+      <div className="grid grid-cols-1 gap-4 xl:grid-cols-5">
         <Revelar className="xl:col-span-3">
           <Panel
             titulo="Embudo de cobranza"
@@ -356,7 +426,13 @@ export default async function DashboardPage() {
       </div>
 
       {/* ACTIVIDAD + RANKING */}
-      <div className="mt-4 grid grid-cols-1 gap-4 xl:grid-cols-5">
+      <TituloSeccion
+        numero="03"
+        titulo="El ritmo y las lanzas."
+        doradas={["lanzas"]}
+        nota="Cuándo rinde más la operación y quiénes están ganando el día."
+      />
+      <div className="grid grid-cols-1 gap-4 xl:grid-cols-5">
         <Revelar className="xl:col-span-3">
           <Panel
             titulo="Ritmo de la operación"
@@ -422,7 +498,13 @@ export default async function DashboardPage() {
       </div>
 
       {/* CARTERAS — la vista del negocio */}
-      <Revelar className="mt-4">
+      <TituloSeccion
+        numero="04"
+        titulo="Cada cartera, una línea de ingreso."
+        doradas={["ingreso"]}
+        nota="Contacto y conversión de cada cliente contra el promedio de la operación. Lo que parpadea en rojo pide una conversación."
+      />
+      <Revelar>
         <Panel
           titulo="Desempeño por cartera"
           subtitulo="Cada cliente es una línea de ingreso: contacto y conversión contra el promedio de la operación"
@@ -501,10 +583,37 @@ export default async function DashboardPage() {
         </Panel>
       </Revelar>
 
-      <footer className="mt-6 flex items-center justify-center gap-2 pb-2 text-[11px] text-ink-ter">
-        <Banknote className="h-3.5 w-3.5" />
-        Datos agregados sin información personal · Spear Contact ©{" "}
-        {new Date().getFullYear()} · Centro de Control
+      {/* CIERRE — la firma de la casa */}
+      <footer className="hero-navy relative mt-14 overflow-hidden rounded-2xl p-10 text-white shadow-float lg:p-14">
+        <div
+          className="aurora aurora-b h-[360px] w-[360px] opacity-35"
+          style={{ top: "-160px", right: "-100px", background: "#1b4fd8" }}
+        />
+        <Parallax
+          velocidad={0.06}
+          className="pointer-events-none absolute -left-8 bottom-[-30px]"
+        >
+          <CascoGuerrero className="h-56 w-56 opacity-[0.16]" />
+        </Parallax>
+        <div className="relative z-10 flex flex-col items-center text-center">
+          <h2 className="text-[13vw] font-extrabold uppercase leading-[0.92] tracking-tight lg:text-[104px]">
+            <PalabrasReveladas
+              texto="Somos guerreros."
+              doradas={["guerreros"]}
+              paso={140}
+            />
+          </h2>
+          <p className="mt-4 max-w-md text-sm text-white/55">
+            Cada gestión es una lanza. Cada compromiso, una victoria para
+            nuestros clientes.
+          </p>
+          <LogoSpear className="mt-8 h-10 w-auto opacity-90" />
+          <div className="mt-6 flex items-center gap-2 text-[11px] text-white/40">
+            <Banknote className="h-3.5 w-3.5" />
+            Datos agregados sin información personal · Spear Contact ©{" "}
+            {new Date().getFullYear()} · Centro de Control
+          </div>
+        </div>
       </footer>
     </div>
   );

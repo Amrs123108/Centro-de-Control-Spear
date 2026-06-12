@@ -3,7 +3,8 @@
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 import { Loader2, Lock, Mail, ShieldCheck } from "lucide-react";
-import { EmblemaSpear, Hexagono } from "@/components/emblema";
+import { CascoGuerrero, Hexagono, LogoSpear } from "@/components/marca";
+import { PalabrasReveladas } from "@/components/cinetica";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -50,17 +51,14 @@ export default function LoginPage() {
           color="rgba(232,185,49,0.3)"
         />
 
+        {/* Los guerreros de la marca custodiando el acceso */}
+        <CascoGuerrero className="flotante-lento absolute -right-10 top-[30%] h-64 w-64 opacity-[0.16]" />
+        <CascoGuerrero className="flotante absolute right-28 top-[44%] h-36 w-36 opacity-[0.22]" />
+
         <div className="relative">
-          <div className="flex items-center gap-3">
-            <EmblemaSpear className="h-11 w-10 drop-shadow-[0_0_16px_rgba(27,79,216,0.5)]" />
-            <div>
-              <div className="text-sm font-semibold tracking-[0.18em] text-white">
-                SPEAR CONTACT
-              </div>
-              <div className="text-xs tracking-wide text-white/50">
-                Centro de Control
-              </div>
-            </div>
+          <LogoSpear className="h-14 w-auto drop-shadow-[0_0_16px_rgba(27,79,216,0.5)]" />
+          <div className="mt-1 text-[10px] uppercase tracking-[0.32em] text-white/50">
+            Centro de Control
           </div>
         </div>
         <div className="relative max-w-md">
@@ -70,9 +68,12 @@ export default function LoginPage() {
               Somos más que operadores
             </span>
           </div>
-          <h1 className="text-4xl font-light leading-tight text-white">
-            Somos <span className="font-semibold">guerreros</span> de la
-            recuperación.
+          <h1 className="text-[44px] font-extrabold leading-[1.05] tracking-tight text-white">
+            <PalabrasReveladas
+              texto="Somos guerreros de la recuperación."
+              doradas={["guerreros"]}
+              retraso={250}
+            />
           </h1>
           <p className="mt-5 text-sm leading-relaxed text-white/60">
             Indicadores de recuperación, productividad y comportamiento de
@@ -90,16 +91,9 @@ export default function LoginPage() {
       <div className="flex flex-1 items-center justify-center bg-canvas px-6">
         <div className="w-full max-w-sm">
           <div className="mb-8 lg:hidden">
-            <div className="flex items-center gap-3">
-              <EmblemaSpear className="h-11 w-10" tono="oscuro" />
-              <div>
-                <div className="text-sm font-semibold tracking-[0.18em] text-navy">
-                  SPEAR CONTACT
-                </div>
-                <div className="text-xs tracking-wide text-ink-ter">
-                  Centro de Control
-                </div>
-              </div>
+            <LogoSpear className="h-12 w-auto" tono="oscuro" />
+            <div className="mt-1 text-[10px] uppercase tracking-[0.3em] text-ink-ter">
+              Centro de Control
             </div>
           </div>
 

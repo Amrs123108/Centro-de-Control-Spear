@@ -19,11 +19,35 @@ Uso:
     python etl/generar_mtd.py 2026 Junio   (año y mes explícito)
 """
 import json
+import re
 import sys
+from datetime import date as date_type
 from datetime import datetime
 from pathlib import Path
 
 import pandas as pd
+
+# Mapeo mes español → número (para extraer fecha del nombre del archivo)
+_MESES_ES = {
+    "enero": 1, "febrero": 2, "marzo": 3, "abril": 4,
+    "mayo": 5, "junio": 6, "julio": 7, "agosto": 8,
+    "septiembre": 9, "octubre": 10, "noviembre": 11, "diciembre": 12,
+}
+
+
+def fecha_desde_nombre(nombre: str, anio: int) -> date_type | None:
+    """Extrae la fecha de '...NN de Mes...' — inequívoco, sin problemas de locale."""
+    m = re.search(r'(\d{1,2})\s+de\s+([a-zA-ZáéíóúÁÉÍÓÚ]+)', nombre, re.IGNORECASE)
+    if not m:
+        return None
+    dia = int(m.group(1))
+    mes = _MESES_ES.get(m.group(2).strip().lower())
+    if not mes:
+        return None
+    try:
+        return date_type(anio, mes, dia)
+    except ValueError:
+        return None
 
 sys.path.insert(0, str(Path(__file__).parent))
 from normalizar_clasificaciones import Normalizador  # noqa: E402
@@ -84,7 +108,7 @@ def consolidar_proyecto(proyecto: str) -> str:
     return proyecto.strip()
 
 
-def leer_dia(filepath: Path) -> pd.DataFrame | None:
+def leer_dia(filepath: Path, fecha_archivo: date_type | None = None) -> pd.DataFrame | None:
     try:
         # Leer solo columnas seguras (PII nunca toca memoria)
         df = pd.read_excel(
@@ -121,11 +145,17 @@ def leer_dia(filepath: Path) -> pd.DataFrame | None:
     else:
         df["MONTO"] = 0.0
 
-    # Fecha
-    if "FECHA_CLAS" in df.columns:
-        df["FECHA_DT"] = pd.to_datetime(df["FECHA_CLAS"], errors="coerce")
+    # Fecha: se usa fecha_archivo (del nombre del archivo) para garantizar exactitud.
+    # FECHA_CLAS tiene formatos mixtos entre archivos (ISO con hora vs DD/MM/YYYY),
+    # lo que causa errores con cualquier dayfirst fijo.
+    if fecha_archivo is not None:
+        df["FECHA_ARCHIVO"] = pd.Timestamp(fecha_archivo)
     else:
-        df["FECHA_DT"] = pd.NaT
+        # Fallback: intentar leer de FECHA_CLAS (puede tener errores de formato)
+        if "FECHA_CLAS" in df.columns:
+            df["FECHA_ARCHIVO"] = pd.to_datetime(df["FECHA_CLAS"], errors="coerce")
+        else:
+            df["FECHA_ARCHIVO"] = pd.NaT
 
     # Categorías y flags
     df["categoria"] = df["CLASIFICACION"].fillna("").map(NORM.normalizar)
@@ -205,10 +235,14 @@ def main(anio: str | None = None, mes: str | None = None) -> None:
     dias_fechas = set()
     frames = []
     for archivo in archivos:
-        df = leer_dia(archivo)
+        fecha_arch = fecha_desde_nombre(archivo.stem, int(anio))
+        df = leer_dia(archivo, fecha_arch)
         if df is not None and len(df) > 0:
-            fechas = df["FECHA_DT"].dropna().dt.date.unique()
-            dias_fechas.update(fechas)
+            if fecha_arch:
+                dias_fechas.add(fecha_arch)
+            else:
+                fechas = df["FECHA_ARCHIVO"].dropna().dt.date.unique()
+                dias_fechas.update(fechas)
             frames.append(df)
             print(f"  {archivo.name}: {len(df):,} filas")
 
@@ -229,7 +263,7 @@ def main(anio: str | None = None, mes: str | None = None) -> None:
             compromisos=("es_compromiso", "sum"),
             pagos=("es_pago", "sum"),
             recaudo=("MONTO", lambda s: round(float(s[df_mes.loc[s.index, "es_compromiso"] | df_mes.loc[s.index, "es_pago"]].sum()), 2)),
-            dias_activos=("FECHA_DT", lambda s: s.dt.date.nunique()),
+            dias_activos=("FECHA_ARCHIVO", lambda s: s.dt.date.nunique()),
         )
         .reset_index()
     )

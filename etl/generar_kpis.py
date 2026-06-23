@@ -95,7 +95,7 @@ def main(ruta: str) -> None:
 
     df["CATEGORIA"] = df["CLASIFICACION"].map(n.normalizar)
     df["EFECTIVO"] = df["CATEGORIA"].map(lambda c: n.flags(c)["contacto_efectivo"])
-    df["FECHA_DT"] = pd.to_datetime(df["FECHA_CLAS"], errors="coerce")
+    df["FECHA_DT"] = pd.to_datetime(df["FECHA_CLAS"], dayfirst=True, errors="coerce")
     df["HORA"] = df["FECHA_DT"].dt.hour
     df["MONTO_NUM"] = pd.to_numeric(df["MONTO"], errors="coerce")
     df["GESTOR_ALIAS"] = df["GESTOR"].map(alias_gestor)

@@ -1,811 +1,751 @@
 {
   "resumen": {
-    "fecha": "2026-06-10",
-    "hora_corte": "17:04",
-    "total_gestiones": 14756,
-    "gestores_activos": 66,
-    "deudores_gestionados": 12633,
-    "carteras_activas": 16,
-    "contactos_efectivos": 2729,
-    "tasa_contacto_efectivo": 0.1849,
-    "promesas": 1383,
-    "pagos_confirmados": 173,
-    "tasa_conversion": 0.5702,
-    "monto_comprometido": 140759.89,
-    "ticket_promedio": 136.93,
-    "gestiones_por_gestor": 223.6
+    "fecha": "2026-06-22",
+    "hora_corte": "00:00",
+    "total_gestiones": 16399,
+    "gestores_activos": 62,
+    "deudores_gestionados": 14430,
+    "carteras_activas": 15,
+    "contactos_efectivos": 2224,
+    "tasa_contacto_efectivo": 0.1356,
+    "promesas": 997,
+    "pagos_confirmados": 211,
+    "tasa_conversion": 0.5432,
+    "monto_comprometido": 65410.31,
+    "ticket_promedio": 111.05,
+    "gestiones_por_gestor": 264.5
   },
   "meta": {
     "monto_diario": 150000,
-    "avance": 0.9384
+    "avance": 0.4361
   },
   "funnel": [
     {
       "etapa": "Gestiones realizadas",
-      "valor": 14756,
+      "valor": 16399,
       "tasa": 1.0
     },
     {
       "etapa": "Contactos efectivos",
-      "valor": 2729,
-      "tasa": 0.1849
+      "valor": 2224,
+      "tasa": 0.1356
     },
     {
       "etapa": "Promesas de pago",
-      "valor": 1383,
-      "tasa": 0.5068
+      "valor": 997,
+      "tasa": 0.4483
     },
     {
       "etapa": "Pagos confirmados",
-      "valor": 173,
-      "tasa": 0.1251
+      "valor": 211,
+      "tasa": 0.2116
     }
   ],
   "insights": [
     {
       "tipo": "alerta",
-      "titulo": "82% de las gestiones no logra contacto efectivo",
-      "detalle": "12 027 intentos sin hablar con el titular. Mejorar la calidad de las bases telefónicas y los horarios de marcación es la palanca de mayor impacto."
+      "titulo": "86% de las gestiones no logra contacto efectivo",
+      "detalle": "14 175 intentos sin hablar con el titular. Mejorar la calidad de las bases telefónicas y los horarios de marcación es la palanca de mayor impacto."
     },
     {
       "tipo": "oportunidad",
-      "titulo": "La franja de 7:00 es la más efectiva (46% de contacto)",
+      "titulo": "La franja de 0:00 es la más efectiva (14% de contacto)",
       "detalle": "Concentrar a los mejores gestores y las cuentas de mayor saldo en las franjas de alta contactabilidad eleva la recuperación sin aumentar nómina."
     },
     {
       "tipo": "alerta",
-      "titulo": "BANISTMO S.A. convierte 13% de sus contactos en promesa",
-      "detalle": "Contra 71% de KREDIYA, la mejor cartera del día. Revisar guion, perfil de cuentas o gestores asignados."
+      "titulo": "BANISTMO S.A. convierte 30% de sus contactos en promesa",
+      "detalle": "Contra 78% de KREDIYA, la mejor cartera del día. Revisar guion, perfil de cuentas o gestores asignados."
     },
     {
       "tipo": "info",
-      "titulo": "3 carteras concentran 65% de la operación",
-      "detalle": "KREDIYA, TIGO, BANISTMO ACTIVA. Diversificar reduce el riesgo de ingresos ante la salida de un cliente."
+      "titulo": "3 carteras concentran 57% de la operación",
+      "detalle": "TIGO, KREDIYA, SOLVE. Diversificar reduce el riesgo de ingresos ante la salida de un cliente."
     },
     {
       "tipo": "logro",
-      "titulo": "57% de los contactos efectivos termina en promesa o pago",
+      "titulo": "54% de los contactos efectivos termina en promesa o pago",
       "detalle": "Cuando el equipo logra hablar con el titular, cierra. El cuello de botella no es la negociación: es la contactabilidad."
     }
   ],
   "flujo_vivo": [
     {
-      "hora": "17:04",
-      "tipo": "PAGO",
-      "cartera": "AFINITI FINANCIAL",
-      "monto": null
-    },
-    {
-      "hora": "16:17",
-      "tipo": "PROMESA",
-      "cartera": "TIGO",
-      "monto": 55.31
-    },
-    {
-      "hora": "16:07",
-      "tipo": "PAGO",
-      "cartera": "SOLVE",
-      "monto": null
-    },
-    {
-      "hora": "16:02",
-      "tipo": "PROMESA",
-      "cartera": "TIGO",
-      "monto": null
-    },
-    {
-      "hora": "16:01",
-      "tipo": "PROMESA",
-      "cartera": "BANISTMO ACTIVA",
-      "monto": 22.48
-    },
-    {
-      "hora": "15:50",
-      "tipo": "CONTACTO",
-      "cartera": "SURA CORREDORES",
-      "monto": null
-    },
-    {
-      "hora": "15:48",
-      "tipo": "PAGO",
-      "cartera": "SOLVE",
-      "monto": null
-    },
-    {
-      "hora": "15:44",
-      "tipo": "CONTACTO",
-      "cartera": "RODELAG",
-      "monto": null
-    },
-    {
-      "hora": "15:36",
-      "tipo": "PROMESA",
-      "cartera": "SURA CORREDORES",
-      "monto": 29.14
-    },
-    {
-      "hora": "15:30",
-      "tipo": "PAGO",
-      "cartera": "BANISTMO ACTIVA 61 A 90",
-      "monto": null
-    },
-    {
-      "hora": "15:23",
-      "tipo": "CONTACTO",
-      "cartera": "BANISTMO ACTIVA",
-      "monto": null
-    },
-    {
-      "hora": "15:20",
-      "tipo": "PAGO",
-      "cartera": "SURA CORREDORES",
-      "monto": null
-    },
-    {
-      "hora": "15:19",
-      "tipo": "PAGO",
-      "cartera": "BANISTMO ACTIVA",
-      "monto": null
-    },
-    {
-      "hora": "15:18",
-      "tipo": "PROMESA",
-      "cartera": "SURA CORREDORES",
-      "monto": 45.19
-    },
-    {
-      "hora": "15:09",
-      "tipo": "PAGO",
-      "cartera": "SURA CORREDORES",
-      "monto": 66.99
-    },
-    {
-      "hora": "15:09",
-      "tipo": "PAGO",
-      "cartera": "SURA CORREDORES",
-      "monto": 74.67
-    },
-    {
-      "hora": "15:09",
-      "tipo": "PAGO",
-      "cartera": "SURA HCIS",
-      "monto": 95.28
-    },
-    {
-      "hora": "15:02",
-      "tipo": "PAGO",
-      "cartera": "SURA TC Y ACH",
-      "monto": null
-    },
-    {
-      "hora": "15:00",
-      "tipo": "PAGO",
-      "cartera": "SURA CORREDORES",
-      "monto": 691.09
-    },
-    {
-      "hora": "14:58",
-      "tipo": "PAGO",
-      "cartera": "SURA TC Y ACH",
-      "monto": null
-    },
-    {
-      "hora": "14:58",
-      "tipo": "PAGO",
-      "cartera": "SURA HCIS",
-      "monto": 209.59
-    },
-    {
-      "hora": "14:53",
-      "tipo": "PAGO",
-      "cartera": "SURA CORREDORES",
-      "monto": 45.4
-    },
-    {
-      "hora": "14:46",
-      "tipo": "PAGO",
-      "cartera": "SURA CORREDORES",
-      "monto": 91.68
-    },
-    {
-      "hora": "14:43",
-      "tipo": "PAGO",
-      "cartera": "SURA CORREDORES",
-      "monto": 66.84
-    },
-    {
-      "hora": "14:41",
-      "tipo": "PAGO",
-      "cartera": "SURA CORREDORES",
-      "monto": 56.2
-    },
-    {
-      "hora": "14:35",
-      "tipo": "PAGO",
-      "cartera": "SURA CORREDORES",
-      "monto": null
-    },
-    {
-      "hora": "14:32",
-      "tipo": "PAGO",
-      "cartera": "SURA CORREDORES",
-      "monto": 177.61
-    },
-    {
-      "hora": "14:31",
-      "tipo": "PAGO",
-      "cartera": "SURA CORREDORES",
-      "monto": 317.07
-    },
-    {
-      "hora": "14:26",
-      "tipo": "PROMESA",
-      "cartera": "TIGO",
-      "monto": 25.2
-    },
-    {
-      "hora": "14:25",
-      "tipo": "PROMESA",
-      "cartera": "SURA CORREDORES",
-      "monto": 51.14
-    },
-    {
-      "hora": "14:14",
-      "tipo": "PAGO",
-      "cartera": "SURA TC Y ACH",
-      "monto": null
-    },
-    {
-      "hora": "14:11",
-      "tipo": "PROMESA",
-      "cartera": "BANISTMO ACTIVA",
-      "monto": null
-    },
-    {
-      "hora": "14:09",
-      "tipo": "PROMESA",
-      "cartera": "BANISTMO ACTIVA",
-      "monto": 280.0
-    },
-    {
-      "hora": "14:08",
-      "tipo": "PAGO",
-      "cartera": "BANISTMO ACTIVA",
-      "monto": null
-    },
-    {
-      "hora": "14:05",
-      "tipo": "PAGO",
-      "cartera": "SURA CORREDORES",
-      "monto": 48.87
-    },
-    {
-      "hora": "14:02",
-      "tipo": "PAGO",
-      "cartera": "BANCO LA HIPOTECARIA",
-      "monto": null
-    },
-    {
-      "hora": "13:58",
-      "tipo": "PROMESA",
-      "cartera": "AFINITI FINANCIAL",
-      "monto": 282.17
-    },
-    {
-      "hora": "13:55",
-      "tipo": "PAGO",
-      "cartera": "SURA CORREDORES",
-      "monto": 90.47
-    },
-    {
-      "hora": "13:53",
-      "tipo": "PAGO",
-      "cartera": "SURA TC Y ACH",
-      "monto": null
-    },
-    {
-      "hora": "13:52",
-      "tipo": "CONTACTO",
-      "cartera": "BANISTMO S.A.",
-      "monto": null
-    },
-    {
-      "hora": "13:43",
-      "tipo": "PAGO",
-      "cartera": "SURA TC Y ACH",
-      "monto": null
-    },
-    {
-      "hora": "13:43",
-      "tipo": "PROMESA",
-      "cartera": "BANISTMO ACTIVA",
-      "monto": 600.3
-    },
-    {
-      "hora": "13:42",
-      "tipo": "PAGO",
-      "cartera": "SURA TC Y ACH",
-      "monto": null
-    },
-    {
-      "hora": "13:39",
-      "tipo": "PROMESA",
-      "cartera": "BANISTMO ACTIVA",
-      "monto": 106.73
-    },
-    {
-      "hora": "13:31",
-      "tipo": "PROMESA",
-      "cartera": "BANISTMO ACTIVA",
-      "monto": 146.64
-    },
-    {
-      "hora": "13:28",
-      "tipo": "PROMESA",
-      "cartera": "BANISTMO ACTIVA",
-      "monto": null
-    },
-    {
-      "hora": "13:28",
-      "tipo": "PROMESA",
-      "cartera": "BANISTMO ACTIVA",
-      "monto": 142.58
-    },
-    {
-      "hora": "13:27",
-      "tipo": "PROMESA",
-      "cartera": "SURA CORREDORES",
-      "monto": 98.1
-    },
-    {
-      "hora": "13:27",
-      "tipo": "PROMESA",
-      "cartera": "BANISTMO ACTIVA",
-      "monto": null
-    },
-    {
-      "hora": "13:27",
-      "tipo": "PROMESA",
-      "cartera": "SURA CORREDORES",
-      "monto": 44.38
-    },
-    {
-      "hora": "13:25",
-      "tipo": "PROMESA",
-      "cartera": "BANISTMO ACTIVA",
-      "monto": 40.0
-    },
-    {
-      "hora": "13:23",
+      "hora": "00:00",
       "tipo": "PAGO",
       "cartera": "BAC CASTIGADA",
       "monto": null
     },
     {
-      "hora": "13:07",
+      "hora": "00:00",
       "tipo": "PAGO",
-      "cartera": "SOLVE",
+      "cartera": "BAC CASTIGADA",
       "monto": null
     },
     {
-      "hora": "13:01",
-      "tipo": "CONTACTO",
-      "cartera": "TIGO",
-      "monto": null
-    },
-    {
-      "hora": "12:51",
+      "hora": "00:00",
       "tipo": "PAGO",
-      "cartera": "SURA TC Y ACH",
+      "cartera": "BAC CASTIGADA",
       "monto": null
     },
     {
-      "hora": "12:51",
+      "hora": "00:00",
+      "tipo": "PAGO",
+      "cartera": "BAC CASTIGADA",
+      "monto": null
+    },
+    {
+      "hora": "00:00",
+      "tipo": "PAGO",
+      "cartera": "BAC CASTIGADA",
+      "monto": null
+    },
+    {
+      "hora": "00:00",
+      "tipo": "PAGO",
+      "cartera": "BANISTMO ACTIVA",
+      "monto": null
+    },
+    {
+      "hora": "00:00",
+      "tipo": "PAGO",
+      "cartera": "BANISTMO ACTIVA",
+      "monto": null
+    },
+    {
+      "hora": "00:00",
+      "tipo": "PAGO",
+      "cartera": "BANISTMO ACTIVA",
+      "monto": null
+    },
+    {
+      "hora": "00:00",
+      "tipo": "PAGO",
+      "cartera": "BANISTMO ACTIVA",
+      "monto": null
+    },
+    {
+      "hora": "00:00",
+      "tipo": "PAGO",
+      "cartera": "BANISTMO ACTIVA",
+      "monto": null
+    },
+    {
+      "hora": "00:00",
+      "tipo": "PAGO",
+      "cartera": "BANISTMO ACTIVA",
+      "monto": null
+    },
+    {
+      "hora": "00:00",
+      "tipo": "PAGO",
+      "cartera": "BANISTMO ACTIVA",
+      "monto": null
+    },
+    {
+      "hora": "00:00",
+      "tipo": "PAGO",
+      "cartera": "BANISTMO ACTIVA",
+      "monto": null
+    },
+    {
+      "hora": "00:00",
+      "tipo": "PAGO",
+      "cartera": "BANISTMO ACTIVA",
+      "monto": null
+    },
+    {
+      "hora": "00:00",
+      "tipo": "PAGO",
+      "cartera": "BANISTMO ACTIVA PREDICTIVO",
+      "monto": null
+    },
+    {
+      "hora": "00:00",
+      "tipo": "PAGO",
+      "cartera": "BANISTMO ACTIVA PREDICTIVO",
+      "monto": null
+    },
+    {
+      "hora": "00:00",
+      "tipo": "PAGO",
+      "cartera": "BANISTMO ACTIVA PREDICTIVO",
+      "monto": null
+    },
+    {
+      "hora": "00:00",
+      "tipo": "PAGO",
+      "cartera": "BANISTMO ACTIVA PREDICTIVO",
+      "monto": null
+    },
+    {
+      "hora": "00:00",
+      "tipo": "PAGO",
+      "cartera": "BANISTMO ACTIVA 61 A 90",
+      "monto": null
+    },
+    {
+      "hora": "00:00",
+      "tipo": "PAGO",
+      "cartera": "BANISTMO ACTIVA 61 A 90",
+      "monto": null
+    },
+    {
+      "hora": "00:00",
       "tipo": "PAGO",
       "cartera": "SURA CORREDORES",
-      "monto": 46.27
-    },
-    {
-      "hora": "12:49",
-      "tipo": "PAGO",
-      "cartera": "SURA TC Y ACH",
       "monto": null
     },
     {
-      "hora": "12:28",
+      "hora": "00:00",
       "tipo": "PAGO",
       "cartera": "SURA CORREDORES",
-      "monto": 40.21
-    },
-    {
-      "hora": "12:28",
-      "tipo": "PAGO",
-      "cartera": "SOLVE",
       "monto": null
     },
     {
-      "hora": "12:21",
+      "hora": "00:00",
       "tipo": "PAGO",
       "cartera": "SURA CORREDORES",
-      "monto": 46.35
+      "monto": 84.5
+    },
+    {
+      "hora": "00:00",
+      "tipo": "PAGO",
+      "cartera": "SURA CORREDORES",
+      "monto": null
+    },
+    {
+      "hora": "00:00",
+      "tipo": "PAGO",
+      "cartera": "SURA CORREDORES",
+      "monto": null
+    },
+    {
+      "hora": "00:00",
+      "tipo": "PAGO",
+      "cartera": "SURA CORREDORES",
+      "monto": null
+    },
+    {
+      "hora": "00:00",
+      "tipo": "PAGO",
+      "cartera": "SURA CORREDORES",
+      "monto": null
+    },
+    {
+      "hora": "00:00",
+      "tipo": "PAGO",
+      "cartera": "SURA CORREDORES",
+      "monto": null
+    },
+    {
+      "hora": "00:00",
+      "tipo": "PAGO",
+      "cartera": "SURA CORREDORES",
+      "monto": null
+    },
+    {
+      "hora": "00:00",
+      "tipo": "PAGO",
+      "cartera": "SURA CORREDORES",
+      "monto": null
+    },
+    {
+      "hora": "00:00",
+      "tipo": "PAGO",
+      "cartera": "SURA CORREDORES",
+      "monto": null
+    },
+    {
+      "hora": "00:00",
+      "tipo": "PAGO",
+      "cartera": "SURA CORREDORES",
+      "monto": null
+    },
+    {
+      "hora": "00:00",
+      "tipo": "PAGO",
+      "cartera": "SURA CORREDORES",
+      "monto": null
+    },
+    {
+      "hora": "00:00",
+      "tipo": "PAGO",
+      "cartera": "SURA CORREDORES",
+      "monto": null
+    },
+    {
+      "hora": "00:00",
+      "tipo": "PAGO",
+      "cartera": "SURA CORREDORES",
+      "monto": null
+    },
+    {
+      "hora": "00:00",
+      "tipo": "PAGO",
+      "cartera": "SURA CORREDORES",
+      "monto": null
+    },
+    {
+      "hora": "00:00",
+      "tipo": "PAGO",
+      "cartera": "SURA CORREDORES",
+      "monto": null
+    },
+    {
+      "hora": "00:00",
+      "tipo": "PAGO",
+      "cartera": "SURA CORREDORES",
+      "monto": null
+    },
+    {
+      "hora": "00:00",
+      "tipo": "PAGO",
+      "cartera": "SURA CORREDORES",
+      "monto": null
+    },
+    {
+      "hora": "00:00",
+      "tipo": "PAGO",
+      "cartera": "SURA CORREDORES",
+      "monto": null
+    },
+    {
+      "hora": "00:00",
+      "tipo": "PAGO",
+      "cartera": "SURA CORREDORES",
+      "monto": null
+    },
+    {
+      "hora": "00:00",
+      "tipo": "PAGO",
+      "cartera": "SURA CORREDORES",
+      "monto": null
+    },
+    {
+      "hora": "00:00",
+      "tipo": "PAGO",
+      "cartera": "SURA CORREDORES",
+      "monto": null
+    },
+    {
+      "hora": "00:00",
+      "tipo": "PAGO",
+      "cartera": "SURA CORREDORES",
+      "monto": null
+    },
+    {
+      "hora": "00:00",
+      "tipo": "PAGO",
+      "cartera": "SURA CORREDORES",
+      "monto": null
+    },
+    {
+      "hora": "00:00",
+      "tipo": "PAGO",
+      "cartera": "SURA CORREDORES",
+      "monto": 37.13
+    },
+    {
+      "hora": "00:00",
+      "tipo": "PAGO",
+      "cartera": "SURA CORREDORES",
+      "monto": null
+    },
+    {
+      "hora": "00:00",
+      "tipo": "PAGO",
+      "cartera": "SURA CORREDORES",
+      "monto": null
+    },
+    {
+      "hora": "00:00",
+      "tipo": "PAGO",
+      "cartera": "SURA CORREDORES",
+      "monto": null
+    },
+    {
+      "hora": "00:00",
+      "tipo": "PAGO",
+      "cartera": "SURA CORREDORES",
+      "monto": null
+    },
+    {
+      "hora": "00:00",
+      "tipo": "PAGO",
+      "cartera": "SURA CORREDORES",
+      "monto": null
+    },
+    {
+      "hora": "00:00",
+      "tipo": "PAGO",
+      "cartera": "SURA CORREDORES",
+      "monto": null
+    },
+    {
+      "hora": "00:00",
+      "tipo": "PAGO",
+      "cartera": "SURA CORREDORES",
+      "monto": null
+    },
+    {
+      "hora": "00:00",
+      "tipo": "PAGO",
+      "cartera": "SURA CORREDORES",
+      "monto": null
+    },
+    {
+      "hora": "00:00",
+      "tipo": "PAGO",
+      "cartera": "SURA CORREDORES",
+      "monto": null
+    },
+    {
+      "hora": "00:00",
+      "tipo": "PAGO",
+      "cartera": "SURA CORREDORES",
+      "monto": null
+    },
+    {
+      "hora": "00:00",
+      "tipo": "PAGO",
+      "cartera": "SURA CORREDORES",
+      "monto": null
+    },
+    {
+      "hora": "00:00",
+      "tipo": "PAGO",
+      "cartera": "SURA CORREDORES",
+      "monto": null
+    },
+    {
+      "hora": "00:00",
+      "tipo": "PAGO",
+      "cartera": "SURA CORREDORES",
+      "monto": null
+    },
+    {
+      "hora": "00:00",
+      "tipo": "PAGO",
+      "cartera": "SURA CORREDORES",
+      "monto": null
     }
   ],
   "por_categoria": [
     {
       "categoria": "NO_CONTACTO",
       "etiqueta": "No contacto",
-      "total": 9947
-    },
-    {
-      "categoria": "PROMESA_PAGO",
-      "etiqueta": "Promesa de pago (PTP)",
-      "total": 1330
+      "total": 11480
     },
     {
       "categoria": "SIN_MAPEAR",
       "etiqueta": "Sin mapear",
-      "total": 892
+      "total": 1569
     },
     {
-      "categoria": "DISPUTA_ACLARACION",
-      "etiqueta": "Disputa / aclaración",
-      "total": 440
-    },
-    {
-      "categoria": "VOLVER_A_LLAMAR",
-      "etiqueta": "Volver a llamar",
-      "total": 419
-    },
-    {
-      "categoria": "CONTACTO_TERCERO",
-      "etiqueta": "Contacto indirecto",
-      "total": 395
+      "categoria": "PROMESA_PAGO",
+      "etiqueta": "Promesa de pago (PTP)",
+      "total": 876
     },
     {
       "categoria": "GESTION_ESCRITA",
       "etiqueta": "Gestión escrita",
-      "total": 346
+      "total": 473
     },
     {
-      "categoria": "CONTACTO_SIN_ACUERDO",
-      "etiqueta": "Contacto sin acuerdo",
-      "total": 314
+      "categoria": "DISPUTA_ACLARACION",
+      "etiqueta": "Disputa / aclaración",
+      "total": 412
+    },
+    {
+      "categoria": "VOLVER_A_LLAMAR",
+      "etiqueta": "Volver a llamar",
+      "total": 367
     },
     {
       "categoria": "TRAMITE_ADMIN",
       "etiqueta": "Trámite administrativo",
-      "total": 312
+      "total": 293
+    },
+    {
+      "categoria": "CONTACTO_SIN_ACUERDO",
+      "etiqueta": "Contacto sin acuerdo",
+      "total": 237
     },
     {
       "categoria": "PAGO_CONFIRMADO",
       "etiqueta": "Pago confirmado",
-      "total": 173
+      "total": 211
     },
     {
-      "categoria": "ILOCALIZABLE",
-      "etiqueta": "Ilocalizable",
-      "total": 118
+      "categoria": "CONTACTO_TERCERO",
+      "etiqueta": "Contacto indirecto",
+      "total": 201
     },
     {
       "categoria": "SEGUIMIENTO_PTP",
       "etiqueta": "Seguimiento de promesa",
-      "total": 53
+      "total": 121
+    },
+    {
+      "categoria": "ILOCALIZABLE",
+      "etiqueta": "Ilocalizable",
+      "total": 110
     },
     {
       "categoria": "VISITA",
       "etiqueta": "Visita de campo",
-      "total": 17
+      "total": 49
     }
   ],
   "por_hora": [
     {
-      "hora": 7,
-      "gestiones": 318,
-      "efectivas": 146
-    },
-    {
-      "hora": 8,
-      "gestiones": 1684,
-      "efectivas": 454
-    },
-    {
-      "hora": 9,
-      "gestiones": 1706,
-      "efectivas": 374
-    },
-    {
-      "hora": 10,
-      "gestiones": 1830,
-      "efectivas": 345
-    },
-    {
-      "hora": 11,
-      "gestiones": 2147,
-      "efectivas": 353
-    },
-    {
-      "hora": 12,
-      "gestiones": 1446,
-      "efectivas": 240
-    },
-    {
-      "hora": 13,
-      "gestiones": 2036,
-      "efectivas": 251
-    },
-    {
-      "hora": 14,
-      "gestiones": 1584,
-      "efectivas": 275
-    },
-    {
-      "hora": 15,
-      "gestiones": 1488,
-      "efectivas": 210
-    },
-    {
-      "hora": 16,
-      "gestiones": 511,
-      "efectivas": 80
-    },
-    {
-      "hora": 17,
-      "gestiones": 6,
-      "efectivas": 1
+      "hora": 0,
+      "gestiones": 16399,
+      "efectivas": 2224
     }
   ],
   "por_proyecto": [
     {
-      "proyecto": "KREDIYA",
-      "gestiones": 3721,
-      "efectivas": 141,
-      "promesas": 100,
-      "pagos": 0,
-      "monto": 3659.0,
-      "tasa_contacto": 0.0379,
-      "tasa_conversion": 0.7092
-    },
-    {
       "proyecto": "TIGO",
-      "gestiones": 3438,
-      "efectivas": 446,
-      "promesas": 208,
+      "gestiones": 4512,
+      "efectivas": 456,
+      "promesas": 179,
       "pagos": 0,
-      "monto": 3855.05,
-      "tasa_contacto": 0.1297,
-      "tasa_conversion": 0.4664
+      "monto": 2864.49,
+      "tasa_contacto": 0.1011,
+      "tasa_conversion": 0.3925
     },
     {
-      "proyecto": "BANISTMO ACTIVA",
-      "gestiones": 2472,
-      "efectivas": 660,
-      "promesas": 413,
-      "pagos": 25,
-      "monto": 62069.79,
-      "tasa_contacto": 0.267,
-      "tasa_conversion": 0.6258
-    },
-    {
-      "proyecto": "SURA CORREDORES",
-      "gestiones": 1588,
-      "efectivas": 633,
-      "promesas": 362,
-      "pagos": 114,
-      "monto": 40851.92,
-      "tasa_contacto": 0.3986,
-      "tasa_conversion": 0.5719
-    },
-    {
-      "proyecto": "RODELAG",
-      "gestiones": 1110,
-      "efectivas": 168,
-      "promesas": 97,
+      "proyecto": "KREDIYA",
+      "gestiones": 2554,
+      "efectivas": 154,
+      "promesas": 120,
       "pagos": 0,
-      "monto": 9702.82,
-      "tasa_contacto": 0.1514,
-      "tasa_conversion": 0.5774
-    },
-    {
-      "proyecto": "BANISTMO S.A.",
-      "gestiones": 780,
-      "efectivas": 266,
-      "promesas": 34,
-      "pagos": 2,
-      "monto": 932.5,
-      "tasa_contacto": 0.341,
-      "tasa_conversion": 0.1278
-    },
-    {
-      "proyecto": "BAC CASTIGADA",
-      "gestiones": 581,
-      "efectivas": 66,
-      "promesas": 26,
-      "pagos": 3,
-      "monto": 1051.0,
-      "tasa_contacto": 0.1136,
-      "tasa_conversion": 0.3939
+      "monto": 2611.0,
+      "tasa_contacto": 0.0603,
+      "tasa_conversion": 0.7792
     },
     {
       "proyecto": "SOLVE",
-      "gestiones": 296,
-      "efectivas": 106,
-      "promesas": 37,
-      "pagos": 7,
-      "monto": 1549.26,
-      "tasa_contacto": 0.3581,
-      "tasa_conversion": 0.3491
+      "gestiones": 2360,
+      "efectivas": 103,
+      "promesas": 54,
+      "pagos": 10,
+      "monto": 2385.51,
+      "tasa_contacto": 0.0436,
+      "tasa_conversion": 0.5243
     },
     {
-      "proyecto": "BANCO LA HIPOTECARIA",
-      "gestiones": 163,
-      "efectivas": 29,
-      "promesas": 17,
-      "pagos": 1,
-      "monto": 2275.55,
-      "tasa_contacto": 0.1779,
-      "tasa_conversion": 0.5862
+      "proyecto": "SURA CORREDORES",
+      "gestiones": 1538,
+      "efectivas": 549,
+      "promesas": 225,
+      "pagos": 177,
+      "monto": 23537.24,
+      "tasa_contacto": 0.357,
+      "tasa_conversion": 0.4098
     },
     {
-      "proyecto": "SURA BANCA INDIVIDUAL",
-      "gestiones": 132,
-      "efectivas": 34,
-      "promesas": 22,
-      "pagos": 7,
-      "monto": 730.67,
-      "tasa_contacto": 0.2576,
-      "tasa_conversion": 0.6471
+      "proyecto": "RODELAG",
+      "gestiones": 1466,
+      "efectivas": 173,
+      "promesas": 69,
+      "pagos": 0,
+      "monto": 7487.63,
+      "tasa_contacto": 0.118,
+      "tasa_conversion": 0.3988
     },
     {
-      "proyecto": "SURA HCIS",
-      "gestiones": 132,
-      "efectivas": 22,
-      "promesas": 15,
-      "pagos": 3,
-      "monto": 3417.04,
-      "tasa_contacto": 0.1667,
-      "tasa_conversion": 0.6818
+      "proyecto": "BANISTMO ACTIVA",
+      "gestiones": 1276,
+      "efectivas": 263,
+      "promesas": 148,
+      "pagos": 9,
+      "monto": 11568.25,
+      "tasa_contacto": 0.2061,
+      "tasa_conversion": 0.5627
+    },
+    {
+      "proyecto": "BANISTMO S.A.",
+      "gestiones": 835,
+      "efectivas": 178,
+      "promesas": 54,
+      "pagos": 0,
+      "monto": 1757.58,
+      "tasa_contacto": 0.2132,
+      "tasa_conversion": 0.3034
     },
     {
       "proyecto": "BANISTMO ACTIVA 61 A 90",
-      "gestiones": 108,
-      "efectivas": 45,
-      "promesas": 22,
+      "gestiones": 700,
+      "efectivas": 121,
+      "promesas": 59,
       "pagos": 2,
-      "monto": 4882.77,
-      "tasa_contacto": 0.4167,
-      "tasa_conversion": 0.4889
+      "monto": 4483.7,
+      "tasa_contacto": 0.1729,
+      "tasa_conversion": 0.4876
     },
     {
-      "proyecto": "GLOBAL BANK",
-      "gestiones": 96,
-      "efectivas": 40,
-      "promesas": 1,
-      "pagos": 0,
-      "monto": 15.0,
-      "tasa_contacto": 0.4167,
-      "tasa_conversion": 0.025
+      "proyecto": "BAC CASTIGADA",
+      "gestiones": 587,
+      "efectivas": 86,
+      "promesas": 28,
+      "pagos": 5,
+      "monto": 686.67,
+      "tasa_contacto": 0.1465,
+      "tasa_conversion": 0.3256
     },
     {
-      "proyecto": "AFINITI FINANCIAL",
-      "gestiones": 81,
-      "efectivas": 38,
-      "promesas": 18,
+      "proyecto": "BANCO LA HIPOTECARIA",
+      "gestiones": 133,
+      "efectivas": 37,
+      "promesas": 26,
       "pagos": 1,
-      "monto": 3748.23,
-      "tasa_contacto": 0.4691,
-      "tasa_conversion": 0.4737
-    },
-    {
-      "proyecto": "BANISTMO ACTIVA PREDICTIVO",
-      "gestiones": 39,
-      "efectivas": 22,
-      "promesas": 8,
-      "pagos": 0,
-      "monto": 1954.23,
-      "tasa_contacto": 0.5641,
-      "tasa_conversion": 0.3636
+      "monto": 3491.3,
+      "tasa_contacto": 0.2782,
+      "tasa_conversion": 0.7027
     },
     {
       "proyecto": "SURA TC Y ACH",
-      "gestiones": 19,
-      "efectivas": 13,
+      "gestiones": 124,
+      "efectivas": 32,
+      "promesas": 0,
+      "pagos": 0,
+      "monto": 301.56,
+      "tasa_contacto": 0.2581,
+      "tasa_conversion": 0.0
+    },
+    {
+      "proyecto": "GLOBAL BANK",
+      "gestiones": 112,
+      "efectivas": 21,
       "promesas": 3,
-      "pagos": 8,
-      "monto": 65.06,
-      "tasa_contacto": 0.6842,
-      "tasa_conversion": 0.2308
+      "pagos": 2,
+      "monto": 2003.67,
+      "tasa_contacto": 0.1875,
+      "tasa_conversion": 0.1429
+    },
+    {
+      "proyecto": "BANISTMO ACTIVA PREDICTIVO",
+      "gestiones": 101,
+      "efectivas": 33,
+      "promesas": 18,
+      "pagos": 4,
+      "monto": 1245.73,
+      "tasa_contacto": 0.3267,
+      "tasa_conversion": 0.5455
+    },
+    {
+      "proyecto": "SURA HCIS",
+      "gestiones": 76,
+      "efectivas": 14,
+      "promesas": 11,
+      "pagos": 0,
+      "monto": 772.95,
+      "tasa_contacto": 0.1842,
+      "tasa_conversion": 0.7857
+    },
+    {
+      "proyecto": "SURA BANCA INDIVIDUAL",
+      "gestiones": 25,
+      "efectivas": 4,
+      "promesas": 3,
+      "pagos": 1,
+      "monto": 213.03,
+      "tasa_contacto": 0.16,
+      "tasa_conversion": 0.75
     }
   ],
   "top_gestores": [
     {
-      "gestor": "Gestor B97E",
-      "gestiones": 161,
-      "efectivas": 92,
-      "promesas": 61,
-      "pagos": 16,
-      "monto": 4879.17,
-      "eficiencia": 47.8
+      "gestor": "Gestor EE40",
+      "gestiones": 138,
+      "efectivas": 86,
+      "promesas": 63,
+      "pagos": 0,
+      "monto": 1541.0,
+      "eficiencia": 45.7
     },
     {
       "gestor": "Gestor 8050",
-      "gestiones": 128,
-      "efectivas": 62,
+      "gestiones": 123,
+      "efectivas": 68,
       "promesas": 57,
       "pagos": 0,
-      "monto": 2342.0,
-      "eficiencia": 44.5
-    },
-    {
-      "gestor": "Gestor 83CD",
-      "gestiones": 125,
-      "efectivas": 76,
-      "promesas": 53,
-      "pagos": 0,
-      "monto": 832.73,
-      "eficiencia": 42.4
-    },
-    {
-      "gestor": "Gestor B611",
-      "gestiones": 122,
-      "efectivas": 86,
-      "promesas": 52,
-      "pagos": 0,
-      "monto": 4577.77,
-      "eficiencia": 42.6
-    },
-    {
-      "gestor": "Gestor C456",
-      "gestiones": 174,
-      "efectivas": 81,
-      "promesas": 50,
-      "pagos": 18,
-      "monto": 6396.21,
-      "eficiencia": 39.1
-    },
-    {
-      "gestor": "Gestor F67F",
-      "gestiones": 119,
-      "efectivas": 82,
-      "promesas": 45,
-      "pagos": 0,
-      "monto": 5125.05,
-      "eficiencia": 37.8
-    },
-    {
-      "gestor": "Gestor D035",
-      "gestiones": 141,
-      "efectivas": 70,
-      "promesas": 43,
-      "pagos": 0,
-      "monto": 519.01,
-      "eficiencia": 30.5
-    },
-    {
-      "gestor": "Gestor EE40",
-      "gestiones": 141,
-      "efectivas": 79,
-      "promesas": 43,
-      "pagos": 0,
-      "monto": 1317.0,
-      "eficiencia": 30.5
-    },
-    {
-      "gestor": "Gestor C431",
-      "gestiones": 161,
-      "efectivas": 77,
-      "promesas": 42,
-      "pagos": 26,
-      "monto": 5435.19,
-      "eficiencia": 42.2
+      "monto": 1070.0,
+      "eficiencia": 46.3
     },
     {
       "gestor": "Gestor 7DAD",
-      "gestiones": 154,
-      "efectivas": 97,
+      "gestiones": 171,
+      "efectivas": 137,
+      "promesas": 48,
+      "pagos": 0,
+      "monto": 733.32,
+      "eficiencia": 28.1
+    },
+    {
+      "gestor": "Gestor DDA7",
+      "gestiones": 211,
+      "efectivas": 137,
+      "promesas": 46,
+      "pagos": 0,
+      "monto": 1059.33,
+      "eficiencia": 21.8
+    },
+    {
+      "gestor": "Gestor 83CD",
+      "gestiones": 150,
+      "efectivas": 106,
+      "promesas": 43,
+      "pagos": 0,
+      "monto": 682.18,
+      "eficiencia": 28.7
+    },
+    {
+      "gestor": "Gestor D035",
+      "gestiones": 132,
+      "efectivas": 76,
       "promesas": 42,
       "pagos": 0,
-      "monto": 804.3,
-      "eficiencia": 27.3
+      "monto": 389.66,
+      "eficiencia": 31.8
+    },
+    {
+      "gestor": "Gestor 6F47",
+      "gestiones": 165,
+      "efectivas": 71,
+      "promesas": 40,
+      "pagos": 23,
+      "monto": 4665.87,
+      "eficiencia": 38.2
+    },
+    {
+      "gestor": "Gestor F67F",
+      "gestiones": 170,
+      "efectivas": 93,
+      "promesas": 35,
+      "pagos": 0,
+      "monto": 3620.16,
+      "eficiencia": 20.6
+    },
+    {
+      "gestor": "Gestor B611",
+      "gestiones": 149,
+      "efectivas": 80,
+      "promesas": 34,
+      "pagos": 0,
+      "monto": 3867.47,
+      "eficiencia": 22.8
+    },
+    {
+      "gestor": "Gestor 8086",
+      "gestiones": 137,
+      "efectivas": 80,
+      "promesas": 29,
+      "pagos": 30,
+      "monto": 3399.91,
+      "eficiencia": 43.1
     }
   ]
 }

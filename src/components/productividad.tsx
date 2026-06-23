@@ -82,13 +82,6 @@ function FilaGestor({ g, idx }: { g: Gestor; idx: number }) {
       <td className="px-3 py-3">
         <BarraMeta valor={g.promesas} meta={g.meta_promesas} pct={g.pct_promesas} estado={g.estado} />
       </td>
-      <td className="px-3 py-3 text-sm text-ink-sec">
-        {g.meta_recaudo ? (
-          <BarraMeta valor={g.recaudo} meta={g.meta_recaudo} pct={g.pct_recaudo} estado={g.estado} />
-        ) : (
-          <span className="text-ink-ter">{fmtMoneda(g.recaudo)}</span>
-        )}
-      </td>
       <td className="px-3 py-3">
         <span className={`rounded-full border px-2 py-0.5 text-[10px] font-semibold ${cfg.clase}`}>
           {cfg.label}
@@ -111,6 +104,14 @@ function TarjetaKPI({ label, valor, sub }: { label: string; valor: string; sub?:
 
 // ── Componente principal ─────────────────────────────────────────────────────
 type Orden = "promesas" | "gestiones" | "efectivas" | "pct";
+
+function rangoFechas(dias: string[]): string {
+  if (!dias.length) return "—";
+  const fmt = (s: string) =>
+    new Date(`${s}T12:00:00`).toLocaleDateString("es-PA", { day: "numeric", month: "short" });
+  if (dias.length === 1) return fmt(dias[0]);
+  return `${fmt(dias[0])} – ${fmt(dias[dias.length - 1])}`;
+}
 
 export default function ScoreboardProductividad({ data }: { data: MTDData }) {
   const { resumen, gestores } = data;
@@ -207,8 +208,9 @@ export default function ScoreboardProductividad({ data }: { data: MTDData }) {
             <span className="text-xs text-ink-ter">{label}</span>
           </span>
         ))}
-        <span className="ml-auto text-[10px] text-ink-ter">
-          Progreso esperado: {resumen.pct_mes_transcurrido}% · {resumen.dias_procesados}/{resumen.dias_habiles_mes} días hábiles
+        <span className="ml-auto text-right text-[10px] text-ink-ter">
+          <span className="font-medium text-ink-sec">{rangoFechas(data.dias_procesados)}</span>
+          {" · "}Progreso esperado: {resumen.pct_mes_transcurrido}% · {resumen.dias_procesados}/{resumen.dias_habiles_mes} días hábiles
         </span>
       </div>
 
@@ -242,7 +244,6 @@ export default function ScoreboardProductividad({ data }: { data: MTDData }) {
               <Th col="gestiones" label="Gestiones" />
               <Th col="efectivas" label="Efectivas" />
               <Th col="promesas" label="Promesas" />
-              <th className="px-3 py-3 text-left text-[10px] font-bold uppercase tracking-widest text-ink-ter">Recaudo</th>
               <Th col="pct" label="Estado" />
             </tr>
           </thead>
@@ -252,7 +253,7 @@ export default function ScoreboardProductividad({ data }: { data: MTDData }) {
             ))}
             {lista.length === 0 && (
               <tr>
-                <td colSpan={8} className="px-4 py-12 text-center text-sm text-ink-ter">
+                <td colSpan={7} className="px-4 py-12 text-center text-sm text-ink-ter">
                   Sin gestores para esta cartera
                 </td>
               </tr>

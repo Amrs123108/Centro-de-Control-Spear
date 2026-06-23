@@ -15,7 +15,7 @@ import { CascoGuerrero, LogoSpearAnimado } from "@/components/marca";
 
 const NAV = [
   { href: "/dashboard", etiqueta: "Dashboard", icono: LayoutDashboard, activo: true },
-  { href: "/productividad", etiqueta: "Productividad", icono: TrendingUp, activo: false },
+  { href: "/productividad", etiqueta: "Productividad", icono: TrendingUp, activo: true },
   { href: "/carteras", etiqueta: "Carteras", icono: Briefcase, activo: false },
   { href: "/gestores", etiqueta: "Gestores", icono: Users, activo: false },
   { href: "/reportes", etiqueta: "Reportes", icono: FileBarChart, activo: false },

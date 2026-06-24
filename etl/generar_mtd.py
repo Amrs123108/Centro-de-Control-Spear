@@ -87,12 +87,16 @@ PROYECTO_MAP: dict[str, str] = {
 
 NORM = Normalizador()
 GESTOR_PREDICTIVO = "MARLIN ZELEDON"
+# Cuentas que no son asesores reales: marcador predictivo y cuentas de práctica.
+# Se excluyen del scoreboard para no contaminar los benchmarks del equipo.
+GESTORES_EXCLUIDOS = ("MARLIN ZELEDON", "CAPACITACION", "PRUEBA", "TEST", "DEMO")
 
 
 def normalizar_gestor(nombre: str) -> str | None:
     if not isinstance(nombre, str) or not nombre.strip():
         return None
-    if GESTOR_PREDICTIVO.upper() in nombre.upper():
+    upper = nombre.upper()
+    if any(excl in upper for excl in GESTORES_EXCLUIDOS):
         return None  # excluir del scoreboard
     return nombre.strip().upper()
 
@@ -206,6 +210,63 @@ def semaforo(pct: float, pct_esperado: float) -> str:
     return "lejos"
 
 
+def construir_insights_mtd(resumen, carteras, agg, n_alertas) -> list[dict]:
+    """Hallazgos accionables a partir del mes en curso."""
+    ins = []
+    total = resumen["total_gestores"]
+
+    # 1. Contactabilidad — la palanca clave
+    nc = 1 - resumen["tasa_contacto"]
+    if nc > 0.6:
+        ins.append({
+            "tipo": "alerta",
+            "titulo": f"{nc:.0%} de las gestiones no logra contacto efectivo",
+            "detalle": "La contactabilidad es el cuello de botella del mes. Mejorar horarios de marcación y calidad de las bases telefónicas es la palanca de mayor impacto.",
+        })
+
+    # 2. Mejor vs peor cartera por conversión (PTP)
+    cc = [c for c in carteras if c["efectivas"] >= 200]
+    if len(cc) >= 2:
+        lider = max(cc, key=lambda x: x["ptp_rate"])
+        rezag = min(cc, key=lambda x: x["ptp_rate"])
+        ins.append({
+            "tipo": "oportunidad",
+            "titulo": f"{lider['cartera']} convierte {lider['ptp_rate']:.0%} de contactos; {rezag['cartera']} solo {rezag['ptp_rate']:.0%}",
+            "detalle": f"Hay {(lider['ptp_rate'] - rezag['ptp_rate']) * 100:.0f} puntos de diferencia entre la mejor y la peor cartera. Replicar el guion de {lider['cartera']} en {rezag['cartera']} eleva la recuperación sin más nómina.",
+        })
+
+    # 3. Asesores que requieren atención
+    if n_alertas > 0:
+        ins.append({
+            "tipo": "alerta",
+            "titulo": f"{n_alertas} de {total} asesores tienen al menos una alerta de desempeño",
+            "detalle": "Baja actividad, baja conversión o baja contactabilidad respecto al equipo. Revisa la vista de Asesores para coaching dirigido.",
+        })
+
+    # 4. Top asesor del mes
+    if len(agg) > 0:
+        top = agg.iloc[0]
+        ins.append({
+            "tipo": "logro",
+            "titulo": f"{str(top['GESTOR']).title()} lidera el mes con {int(top['promesas'])} promesas",
+            "detalle": f"Score {top['score']:.0f}/100 · PTP {top['ptp_rate']:.0%} · {top['gestiones_dia']:.0f} gestiones/día. Documentar su método y replicarlo en el equipo.",
+        })
+
+    # 5. PTP global
+    ptp = resumen["ptp_rate"]
+    ins.append({
+        "tipo": "logro" if ptp >= 0.35 else "alerta",
+        "titulo": f"PTP Rate del mes: {ptp:.0%} de los contactos terminan en promesa",
+        "detalle": (
+            "Cuando el equipo logra hablar con el titular, cierra. El problema no es negociar: es contactar."
+            if ptp >= 0.35 else
+            "Revisar guion de negociación y perfil de cuentas asignadas: la contactabilidad no es el único problema."
+        ),
+    })
+
+    return ins[:5]
+
+
 def main(anio: str | None = None, mes: str | None = None) -> None:
     hoy = datetime.now()
     anio = anio or str(hoy.year)
@@ -291,6 +352,20 @@ def main(anio: str | None = None, mes: str | None = None) -> None:
     agg = agg.merge(cartera_principal, on="GESTOR", how="left")
     agg["cartera_principal"] = agg["cartera_principal"].fillna("OTRO")
 
+    # ── KPIs derivados por asesor ─────────────────────────────────────────────
+    agg["compromisos"] = agg["compromisos"].astype(int)
+    agg["pagos"] = agg["pagos"].astype(int)
+    g = agg["gestiones"].clip(lower=1)
+    e = agg["efectivas"].clip(lower=1)
+    d = agg["dias_activos"].clip(lower=1)
+    agg["tasa_contacto"] = (agg["efectivas"] / g).round(4)          # RPC proxy
+    agg["no_contacto"] = (1 - agg["tasa_contacto"]).round(4)
+    agg["ptp_rate"] = (agg["promesas"] / e).round(4)               # promesa por contacto
+    agg["conversion"] = (agg["promesas"] / g).round(4)             # promesa por gestión
+    agg["gestiones_dia"] = (agg["gestiones"] / d).round(1)
+    agg["promesas_dia"] = (agg["promesas"] / d).round(2)
+    agg["ticket"] = (agg["recaudo"] / agg["promesas"].clip(lower=1)).round(2)
+
     # ── Metas ─────────────────────────────────────────────────────────────────
     metas_df = leer_metas()
     if len(metas_df) > 0:
@@ -349,19 +424,101 @@ def main(anio: str | None = None, mes: str | None = None) -> None:
     agg["pct_promesas"] = agg.apply(lambda r: pct(r["promesas"], r["meta_promesas"]), axis=1)
     agg["pct_recaudo"] = agg.apply(lambda r: pct(r["recaudo"], r["meta_recaudo"]), axis=1)
 
-    # ── Ordenar por promesas desc ─────────────────────────────────────────────
-    agg = agg.sort_values("promesas", ascending=False).reset_index(drop=True)
+    # ── Motor de evaluación entre pares (benchmark de equipo) ─────────────────
+    # Sin metas absolutas, evaluamos a cada asesor contra la mediana del equipo.
+    # Para no sesgar la mediana con muestras minúsculas, se calcula sobre asesores
+    # con actividad real (>=2 días y >=30 gestiones).
+    validos = (agg["dias_activos"] >= 2) & (agg["gestiones"] >= 30)
+    base = agg[validos] if validos.any() else agg
+    bm = {
+        "tasa_contacto": float(base["tasa_contacto"].median()),
+        "ptp_rate": float(base["ptp_rate"].median()),
+        "conversion": float(base["conversion"].median()),
+        "gestiones_dia": float(base["gestiones_dia"].median()),
+        "promesas_dia": float(base["promesas_dia"].median()),
+    }
+
+    # Percentiles dentro del equipo (0–1) para el score compuesto
+    pr_vol = agg["gestiones_dia"].rank(pct=True)
+    pr_con = agg["tasa_contacto"].rank(pct=True)
+    pr_ptp = agg["ptp_rate"].rank(pct=True)
+    pr_res = agg["promesas_dia"].rank(pct=True)
+    # El resultado (promesas/día) y la conversión (PTP) pesan más que el volumen
+    agg["score"] = (
+        100 * (0.35 * pr_res + 0.30 * pr_ptp + 0.20 * pr_con + 0.15 * pr_vol)
+    ).round(1)
+
+    def nivel(score: float) -> str:
+        if score >= 70:
+            return "elite"
+        if score >= 45:
+            return "solido"
+        if score >= 25:
+            return "promedio"
+        return "bajo"
+
+    agg["nivel"] = agg["score"].apply(nivel)
+
+    # Deltas vs la mediana del equipo (para la ficha del asesor)
+    agg["delta_contacto"] = (agg["tasa_contacto"] - bm["tasa_contacto"]).round(4)
+    agg["delta_ptp"] = (agg["ptp_rate"] - bm["ptp_rate"]).round(4)
+    agg["delta_gestiones_dia"] = (agg["gestiones_dia"] - bm["gestiones_dia"]).round(1)
+
+    def alertas_de(r) -> list[str]:
+        a = []
+        # Trabaja menos: volumen diario muy por debajo de la mediana
+        if r["gestiones_dia"] < 0.5 * bm["gestiones_dia"]:
+            a.append("actividad_baja")
+        # Ausentismo: estuvo activo en menos de la mitad de los días del mes
+        if r["dias_activos"] < 0.5 * len(dias_procesados):
+            a.append("pocos_dias")
+        # No convierte al contactar (con muestra suficiente)
+        if r["efectivas"] >= 20 and r["ptp_rate"] < 0.5 * bm["ptp_rate"]:
+            a.append("conversion_baja")
+        # Marca mucho pero contacta poco
+        if r["gestiones"] >= 100 and r["tasa_contacto"] < 0.6 * bm["tasa_contacto"]:
+            a.append("contacto_bajo")
+        # Pierde tiempo: mucho volumen, poco resultado
+        if r["gestiones_dia"] > bm["gestiones_dia"] and r["promesas_dia"] < 0.5 * bm["promesas_dia"]:
+            a.append("pierde_tiempo")
+        return a
+
+    agg["alertas"] = agg.apply(alertas_de, axis=1)
+
+    # ── Ordenar por score desc ────────────────────────────────────────────────
+    agg = agg.sort_values(["score", "promesas"], ascending=False).reset_index(drop=True)
     agg["ranking"] = agg.index + 1
 
     # ── Resumen general ───────────────────────────────────────────────────────
     total = len(agg)
     estados = agg["estado"].value_counts().to_dict()
+    niveles = agg["nivel"].value_counts().to_dict()
+    t_gest = int(agg["gestiones"].sum())
+    t_efec = int(agg["efectivas"].sum())
+    t_prom = int(agg["promesas"].sum())
+    t_comp = int(agg["compromisos"].sum())
+    t_pago = int(agg["pagos"].sum())
+    t_recaudo = round(float(agg["recaudo"].sum()), 2)
+    n_alertas = int(agg["alertas"].apply(lambda a: len(a) > 0).sum())
     resumen = {
         "total_gestores": total,
-        "total_gestiones": int(agg["gestiones"].sum()),
-        "total_efectivas": int(agg["efectivas"].sum()),
-        "total_promesas": int(agg["promesas"].sum()),
-        "total_recaudo": round(float(agg["recaudo"].sum()), 2),
+        "total_gestiones": t_gest,
+        "total_efectivas": t_efec,
+        "total_promesas": t_prom,
+        "total_compromisos": t_comp,
+        "total_pagos": t_pago,
+        "total_recaudo": t_recaudo,
+        "tasa_contacto": round(t_efec / max(t_gest, 1), 4),
+        "ptp_rate": round(t_prom / max(t_efec, 1), 4),
+        "conversion": round(t_prom / max(t_gest, 1), 4),
+        "ticket_promedio": round(t_recaudo / max(t_prom, 1), 2),
+        "gestiones_por_gestor": round(t_gest / max(total, 1), 1),
+        "gestiones_por_dia": round(t_gest / max(len(dias_procesados), 1), 0),
+        "gestores_elite": int(niveles.get("elite", 0)),
+        "gestores_solido": int(niveles.get("solido", 0)),
+        "gestores_promedio": int(niveles.get("promedio", 0)),
+        "gestores_bajo": int(niveles.get("bajo", 0)),
+        "gestores_con_alerta": n_alertas,
         "gestores_cumpliendo": int(estados.get("cumpliendo", 0)),
         "gestores_cerca": int(estados.get("cerca", 0)),
         "gestores_lejos": int(estados.get("lejos", 0)),
@@ -371,6 +528,14 @@ def main(anio: str | None = None, mes: str | None = None) -> None:
         "pct_mes_transcurrido": round(pct_esperado, 1),
     }
 
+    benchmarks = {
+        "tasa_contacto": round(bm["tasa_contacto"], 4),
+        "ptp_rate": round(bm["ptp_rate"], 4),
+        "conversion": round(bm["conversion"], 4),
+        "gestiones_dia": round(bm["gestiones_dia"], 1),
+        "promesas_dia": round(bm["promesas_dia"], 2),
+    }
+
     # ── Construir lista final de gestores ─────────────────────────────────────
     gestores = []
     for _, r in agg.iterrows():
@@ -378,12 +543,27 @@ def main(anio: str | None = None, mes: str | None = None) -> None:
             "ranking": int(r["ranking"]),
             "gestor": r["GESTOR"],
             "cartera_principal": r["cartera_principal"],
+            "nivel": r["nivel"],
+            "score": float(r["score"]),
+            "alertas": list(r["alertas"]),
             "estado": r["estado"],
             "gestiones": int(r["gestiones"]),
             "efectivas": int(r["efectivas"]),
             "promesas": int(r["promesas"]),
+            "compromisos": int(r["compromisos"]),
+            "pagos": int(r["pagos"]),
             "recaudo": round(float(r["recaudo"]), 2),
             "dias_activos": int(r["dias_activos"]),
+            "tasa_contacto": float(r["tasa_contacto"]),
+            "no_contacto": float(r["no_contacto"]),
+            "ptp_rate": float(r["ptp_rate"]),
+            "conversion": float(r["conversion"]),
+            "gestiones_dia": float(r["gestiones_dia"]),
+            "promesas_dia": float(r["promesas_dia"]),
+            "ticket": float(r["ticket"]),
+            "delta_contacto": float(r["delta_contacto"]),
+            "delta_ptp": float(r["delta_ptp"]),
+            "delta_gestiones_dia": float(r["delta_gestiones_dia"]),
             "meta_gestiones": int(r["meta_gestiones"]) if r["meta_gestiones"] > 0 else None,
             "meta_efectivas": int(r["meta_efectivas"]) if r["meta_efectivas"] > 0 else None,
             "meta_promesas": int(r["meta_promesas"]) if r["meta_promesas"] > 0 else None,
@@ -423,23 +603,102 @@ def main(anio: str | None = None, mes: str | None = None) -> None:
         {**r, "fecha": str(r["fecha"])} for r in tendencia.to_dict(orient="records")
     ]
 
-    # ── PTP Rate y por cartera ────────────────────────────────────────────────
+    # ── Tendencia de promesas por cartera (sparkline) ─────────────────────────
+    tend_cart = (
+        df_mes.groupby(["PROYECTO", df_mes["FECHA_ARCHIVO"].dt.date])
+        .agg(promesas=("es_promesa", "sum"))
+        .reset_index()
+        .rename(columns={"FECHA_ARCHIVO": "fecha"})
+        .sort_values("fecha")
+    )
+    tend_por_cartera: dict[str, list] = {}
+    for _, row in tend_cart.iterrows():
+        tend_por_cartera.setdefault(row["PROYECTO"], []).append(
+            {"fecha": str(row["fecha"]), "promesas": int(row["promesas"])}
+        )
+
+    # ── Detalle por cartera (con monto, pagos, asesores y score) ──────────────
     por_cartera = (
         df_mes.groupby("PROYECTO")
         .agg(
             gestiones=("GESTOR", "size"),
             efectivas=("efectiva", "sum"),
             promesas=("es_promesa", "sum"),
+            compromisos=("es_compromiso", "sum"),
+            pagos=("es_pago", "sum"),
+            monto=("MONTO", lambda s: round(float(s[df_mes.loc[s.index, "es_compromiso"] | df_mes.loc[s.index, "es_pago"]].sum()), 2)),
+            num_asesores=("GESTOR", "nunique"),
         )
         .reset_index()
         .sort_values("gestiones", ascending=False)
         .rename(columns={"PROYECTO": "cartera"})
     )
-    por_cartera["efectivas"] = por_cartera["efectivas"].astype(int)
-    por_cartera["promesas"] = por_cartera["promesas"].astype(int)
+    for col in ["efectivas", "promesas", "compromisos", "pagos", "num_asesores"]:
+        por_cartera[col] = por_cartera[col].astype(int)
     por_cartera["tasa_contacto"] = (por_cartera["efectivas"] / por_cartera["gestiones"].clip(lower=1)).round(4)
     por_cartera["ptp_rate"] = (por_cartera["promesas"] / por_cartera["efectivas"].clip(lower=1)).round(4)
-    por_cartera_list = por_cartera.to_dict(orient="records")
+    por_cartera["conversion"] = (por_cartera["promesas"] / por_cartera["gestiones"].clip(lower=1)).round(4)
+    por_cartera["ticket"] = (por_cartera["monto"] / por_cartera["promesas"].clip(lower=1)).round(2)
+    # Score de cartera: percentiles de contacto, conversión y volumen
+    pc_con = por_cartera["tasa_contacto"].rank(pct=True)
+    pc_ptp = por_cartera["ptp_rate"].rank(pct=True)
+    pc_vol = por_cartera["gestiones"].rank(pct=True)
+    por_cartera["score"] = (100 * (0.4 * pc_ptp + 0.35 * pc_con + 0.25 * pc_vol)).round(1)
+
+    # Mejor asesor y conteo de alertas por cartera (vía cartera_principal del asesor)
+    mejor_por_cartera = (
+        agg.sort_values("promesas", ascending=False)
+        .groupby("cartera_principal")["GESTOR"].first().to_dict()
+    )
+    alerta_por_cartera = (
+        agg.assign(tiene_alerta=agg["alertas"].apply(lambda a: len(a) > 0))
+        .groupby("cartera_principal")["tiene_alerta"].sum().to_dict()
+    )
+
+    por_cartera_list = []
+    for _, r in por_cartera.iterrows():
+        c = r["cartera"]
+        por_cartera_list.append({
+            "cartera": c,
+            "gestiones": int(r["gestiones"]),
+            "efectivas": int(r["efectivas"]),
+            "promesas": int(r["promesas"]),
+            "compromisos": int(r["compromisos"]),
+            "pagos": int(r["pagos"]),
+            "monto": float(r["monto"]),
+            "num_asesores": int(r["num_asesores"]),
+            "tasa_contacto": float(r["tasa_contacto"]),
+            "ptp_rate": float(r["ptp_rate"]),
+            "conversion": float(r["conversion"]),
+            "ticket": float(r["ticket"]),
+            "score": float(r["score"]),
+            "mejor_asesor": mejor_por_cartera.get(c, "—"),
+            "asesores_alerta": int(alerta_por_cartera.get(c, 0)),
+            "tendencia": tend_por_cartera.get(c, []),
+        })
+
+    # ── Distribución de categorías (global MTD) ───────────────────────────────
+    categorias_list = [
+        {
+            "categoria": cat,
+            "etiqueta": NORM.flags(cat)["etiqueta"],
+            "contacto_efectivo": NORM.flags(cat)["contacto_efectivo"],
+            "total": int(cnt),
+        }
+        for cat, cnt in df_mes["categoria"].value_counts().items()
+    ]
+
+    # ── Funnel de cobranza (MTD) ──────────────────────────────────────────────
+    funnel = [
+        {"etapa": "Gestiones", "valor": t_gest, "tasa": 1.0},
+        {"etapa": "Contactos efectivos", "valor": t_efec, "tasa": round(t_efec / max(t_gest, 1), 4)},
+        {"etapa": "Promesas de pago", "valor": t_prom, "tasa": round(t_prom / max(t_efec, 1), 4)},
+        {"etapa": "Compromisos", "valor": t_comp, "tasa": round(t_comp / max(t_prom, 1), 4)},
+        {"etapa": "Pagos", "valor": t_pago, "tasa": round(t_pago / max(t_comp, 1), 4)},
+    ]
+
+    # ── Insights automáticos (MTD) ────────────────────────────────────────────
+    insights = construir_insights_mtd(resumen, por_cartera_list, agg, n_alertas)
 
     salida = {
         "generado": datetime.now().isoformat(timespec="seconds"),
@@ -448,17 +707,23 @@ def main(anio: str | None = None, mes: str | None = None) -> None:
         "dias_procesados": [str(d) for d in dias_procesados],
         "pct_mes_transcurrido": round(pct_esperado, 1),
         "resumen": resumen,
+        "benchmarks": benchmarks,
         "gestores": gestores,
+        "carteras": por_cartera_list,
+        "categorias": categorias_list,
+        "funnel": funnel,
+        "insights": insights,
         "por_hora": por_hora_list,
         "tendencia_diaria": tendencia_list,
+        # Compatibilidad con consumidores previos
         "por_cartera": por_cartera_list,
     }
 
     SALIDA.parent.mkdir(parents=True, exist_ok=True)
     SALIDA.write_text(json.dumps(salida, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"\nListo -> {SALIDA}")
-    print(f"Gestores: {total} | Cumpliendo: {estados.get('cumpliendo',0)} | Cerca: {estados.get('cerca',0)} | Lejos: {estados.get('lejos',0)} | Sin meta: {estados.get('sin_meta',0)}")
-    print(f"MTD: {resumen['total_gestiones']:,} gestiones | {resumen['total_efectivas']:,} efectivas | {resumen['total_promesas']:,} promesas")
+    print(f"Gestores: {total} | Elite: {niveles.get('elite',0)} | Solido: {niveles.get('solido',0)} | Promedio: {niveles.get('promedio',0)} | Bajo: {niveles.get('bajo',0)} | Con alerta: {n_alertas}")
+    print(f"MTD: {t_gest:,} gestiones | {t_efec:,} efectivas | {t_prom:,} promesas | PTP {resumen['ptp_rate']:.1%} | Contacto {resumen['tasa_contacto']:.1%}")
 
 
 if __name__ == "__main__":

@@ -1,6 +1,14 @@
 import { redirect } from "next/navigation";
-import Sidebar from "@/components/sidebar";
+import { BarraComando, RailIconos } from "@/components/nav";
 import { obtenerSesion } from "@/lib/auth";
+import mtd from "@/data/mtd_gestores.json";
+
+function fechaCorta(iso: string): string {
+  return new Date(`${iso}T12:00:00`).toLocaleDateString("es-PA", {
+    day: "numeric",
+    month: "short",
+  });
+}
 
 export default async function PanelLayout({
   children,
@@ -8,24 +16,23 @@ export default async function PanelLayout({
   const sesion = await obtenerSesion();
   if (!sesion) redirect("/login");
 
+  const dias = mtd.dias_procesados;
+  const periodo = `${mtd.mes_nombre} ${mtd.periodo.slice(0, 4)}`;
+  const corte = `Corte ${fechaCorta(dias[dias.length - 1])} · ${dias.length} días`;
+
   return (
-    <div className="flex min-h-screen">
-      {/* Atmósfera de la sala de mando: malla y masas de luz tras todo el panel */}
-      <div aria-hidden="true" className="pointer-events-none fixed inset-0">
-        <div className="malla-fondo absolute inset-0" />
-        <div
-          className="aurora aurora-a h-[560px] w-[560px] opacity-25"
-          style={{ top: "-220px", right: "10%", background: "#1b4fd8" }}
-        />
-        <div
-          className="aurora aurora-b h-[480px] w-[480px] opacity-20"
-          style={{ bottom: "-240px", left: "30%", background: "#1a3158" }}
-        />
+    <div className="flex min-h-screen flex-col">
+      <BarraComando sesion={sesion} periodo={periodo} corte={corte} />
+      <div className="flex flex-1">
+        <RailIconos />
+        <main className="relative min-w-0 flex-1 overflow-x-hidden">
+          {/* Atmósfera sutil de la sala de mando */}
+          <div aria-hidden="true" className="pointer-events-none fixed inset-0 -z-10">
+            <div className="malla-fondo absolute inset-0 opacity-60" />
+          </div>
+          <div className="mx-auto max-w-[1480px] px-5 py-6 lg:px-8">{children}</div>
+        </main>
       </div>
-      <Sidebar sesion={sesion} />
-      <main className="relative min-w-0 flex-1 overflow-x-hidden px-8 py-7">
-        {children}
-      </main>
     </div>
   );
 }

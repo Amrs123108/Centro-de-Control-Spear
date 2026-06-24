@@ -2,6 +2,7 @@ import {
   AlertTriangle,
   Award,
   Banknote,
+  Briefcase,
   Info,
   Lightbulb,
   PhoneCall,
@@ -9,39 +10,15 @@ import {
   TrendingUp,
   Users,
 } from "lucide-react";
-import kpis from "@/data/kpis.json";
+import Link from "next/link";
 import mtdData from "@/data/mtd_gestores.json";
 import { obtenerSesion } from "@/lib/auth";
 import { fmtMoneda, fmtNum, fmtPct } from "@/lib/formato";
-import {
-  GaugeMeta,
-  GraficoCategorias,
-  GraficoHoras,
-  GraficoTendencia,
-} from "@/components/graficos";
-import type { MTDData } from "@/types/mtd";
-import {
-  BarraProgreso,
-  CintaResumen,
-  Contador,
-  FunnelAnimado,
-  LuzAlerta,
-  Revelar,
-} from "@/components/animados";
-import {
-  MarquesinaGigante,
-  PalabrasReveladas,
-  Parallax,
-} from "@/components/cinetica";
-import {
-  CascoGuerrero,
-  Hexagono,
-  LanzaSpear,
-  LanzasVoladoras,
-  LogoSpearAnimado,
-} from "@/components/marca";
+import { GraficoHoras, GraficoTendencia, Sparkline } from "@/components/graficos";
+import { Barra, CeldaCalor, ChipNivel, ChipsAlerta, KPI, ScoreBar } from "@/components/ui";
+import type { Alerta, MTDData } from "@/types/mtd";
 
-/* ── Utilidades de presentación ─────────────────────────────────────────── */
+const mtd = mtdData as unknown as MTDData;
 
 function saludo(): string {
   const hora = Number(
@@ -56,696 +33,279 @@ function saludo(): string {
   return "Buenas noches";
 }
 
-type DatoHora = { hora: number; gestiones: number; efectivas: number };
-
-function mejorHoraContacto(): number | undefined {
-  const datos = kpis.por_hora as DatoHora[];
-  const candidatas = datos.filter((h) => h.gestiones >= 100);
-  if (!candidatas.length) return undefined;
-  return candidatas.reduce((a, b) =>
-    b.efectivas / b.gestiones > a.efectivas / a.gestiones ? b : a
-  ).hora;
-}
-
-const INSIGHT_ESTILO: Record<
-  string,
-  {
-    icono: React.ElementType;
-    borde: string;
-    fondo: string;
-    texto: string;
-    luz?: "rojo" | "ambar" | "verde" | "azul";
-  }
-> = {
-  alerta: {
-    icono: AlertTriangle,
-    borde: "border-neg/25",
-    fondo: "bg-neg-soft",
-    texto: "text-neg",
-    luz: "rojo",
-  },
-  oportunidad: {
-    icono: Lightbulb,
-    borde: "border-warn/25",
-    fondo: "bg-warn-soft",
-    texto: "text-warn",
-    luz: "ambar",
-  },
-  logro: {
-    icono: Award,
-    borde: "border-pos/25",
-    fondo: "bg-pos-soft",
-    texto: "text-pos",
-    luz: "verde",
-  },
-  info: {
-    icono: Info,
-    borde: "border-accent/25",
-    fondo: "bg-accent-soft",
-    texto: "text-accent",
-    luz: "azul",
-  },
+const INSIGHT_ESTILO: Record<string, { icono: React.ElementType; clase: string }> = {
+  alerta: { icono: AlertTriangle, clase: "border-neg/25 text-neg" },
+  oportunidad: { icono: Lightbulb, clase: "border-warn/25 text-warn" },
+  logro: { icono: Award, clase: "border-pos/25 text-pos" },
+  info: { icono: Info, clase: "border-accent/25 text-accent-claro" },
 };
-
-function ChipTasa({ valor, referencia }: { valor: number; referencia: number }) {
-  const ratio = referencia > 0 ? valor / referencia : 0;
-  const critico = ratio < 0.75;
-  const clase =
-    ratio >= 1
-      ? "bg-pos-soft text-pos"
-      : ratio >= 0.75
-        ? "bg-warn-soft text-warn"
-        : "bg-neg-soft text-neg chip-critico";
-  return (
-    <span
-      className={`tnum inline-block rounded-md px-2 py-0.5 text-xs font-semibold ${clase}`}
-      title={critico ? "Más de 25% bajo el promedio — revisar" : undefined}
-    >
-      {fmtPct(valor, 1)}
-    </span>
-  );
-}
 
 function Panel({
   titulo,
-  subtitulo,
+  sub,
   children,
+  accion,
   className = "",
 }: {
   titulo: string;
-  subtitulo?: string;
+  sub?: string;
   children: React.ReactNode;
+  accion?: React.ReactNode;
   className?: string;
 }) {
   return (
-    <section
-      className={`rounded-xl border border-line bg-surface p-5 shadow-card transition-shadow hover:shadow-float ${className}`}
-    >
-      <h3 className="text-sm font-semibold text-ink">{titulo}</h3>
-      {subtitulo && <p className="mt-0.5 text-xs text-ink-ter">{subtitulo}</p>}
-      <div className="mt-4">{children}</div>
+    <section className={`rounded-xl border border-line bg-surface p-5 shadow-card ${className}`}>
+      <div className="mb-4 flex items-start justify-between gap-3">
+        <div>
+          <h3 className="text-sm font-bold text-ink">{titulo}</h3>
+          {sub && <p className="mt-0.5 text-xs text-ink-ter">{sub}</p>}
+        </div>
+        {accion}
+      </div>
+      {children}
     </section>
   );
 }
 
-function TituloSeccion({
-  numero,
-  titulo,
-  doradas = [],
-  nota,
-}: {
-  numero: string;
-  titulo: string;
-  doradas?: string[];
-  nota?: string;
-}) {
+export default async function DashboardPage() {
+  const sesion = await obtenerSesion();
+  const r = mtd.resumen;
+  const bm = mtd.benchmarks;
+  const carteras = [...mtd.carteras].sort((a, b) => b.score - a.score);
+  const topAsesores = mtd.gestores.slice(0, 8);
+  const atencion = mtd.gestores
+    .filter((g) => g.alertas.length > 0)
+    .sort((a, b) => a.score - b.score)
+    .slice(0, 6);
+
+  const mejorHora =
+    mtd.por_hora.length > 1
+      ? mtd.por_hora
+          .filter((h) => h.gestiones >= 50)
+          .reduce((a, b) => (b.efectivas / b.gestiones > a.efectivas / a.gestiones ? b : a)).hora
+      : undefined;
+
+  const maxGest = Math.max(...carteras.map((c) => c.gestiones));
+  const totalNiveles = r.gestores_elite + r.gestores_solido + r.gestores_promedio + r.gestores_bajo;
+  const niveles = [
+    { k: "Élite", n: r.gestores_elite, clase: "bg-pos" },
+    { k: "Sólido", n: r.gestores_solido, clase: "bg-accent-claro" },
+    { k: "Promedio", n: r.gestores_promedio, clase: "bg-warn" },
+    { k: "Bajo", n: r.gestores_bajo, clase: "bg-neg" },
+  ];
+
   return (
-    <div className="mb-6 mt-12 flex flex-wrap items-end justify-between gap-3">
-      <div>
-        <div className="numero-seccion mb-2 flex items-center gap-3 text-[11px] font-bold text-accent-claro">
-          <span>{numero}</span>
-          <LanzaSpear className="h-2.5 w-16" color="rgba(91,140,255,0.6)" />
+    <div className="space-y-6">
+      {/* Encabezado */}
+      <header className="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <h1 className="text-lg font-bold text-ink">
+            {saludo()}, {sesion?.nombre.split(" ")[0]}
+          </h1>
+          <p className="mt-0.5 text-sm text-ink-sec">
+            Resumen operativo · {mtd.mes_nombre} {mtd.periodo.slice(0, 4)} ·{" "}
+            <span className="text-ink-ter">
+              {r.dias_procesados} días · {fmtNum(r.total_gestores)} asesores
+            </span>
+          </p>
         </div>
-        <h2 className="text-4xl font-extrabold leading-[1.02] tracking-tight text-ink lg:text-5xl">
-          <PalabrasReveladas texto={titulo} doradas={doradas} />
-        </h2>
+      </header>
+
+      {/* PULSO — la cinta de KPIs */}
+      <div className="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-6">
+        <KPI label="Gestiones" valor={fmtNum(r.total_gestiones)} sub={`${fmtNum(r.gestiones_por_dia)}/día`} icono={PhoneCall} />
+        <KPI label="Contacto efectivo" valor={fmtPct(r.tasa_contacto, 1)} sub={`${fmtNum(r.total_efectivas)} titulares`} tono="accent" icono={Users} />
+        <KPI label="PTP Rate" valor={fmtPct(r.ptp_rate, 1)} sub="promesa al contactar" tono="pos" icono={Target} />
+        <KPI label="Promesas" valor={fmtNum(r.total_promesas)} sub={`${fmtNum(r.total_pagos)} pagos`} icono={TrendingUp} />
+        <KPI label="Monto comprometido" valor={fmtMoneda(r.total_recaudo)} sub={`ticket ${fmtMoneda(r.ticket_promedio)}`} tono="gold" icono={Banknote} />
+        <KPI label="Carteras activas" valor={fmtNum(mtd.carteras.length)} sub={`${fmtNum(r.total_gestores)} asesores`} icono={Briefcase} />
       </div>
-      {nota && (
-        <p className="max-w-xs pb-1 text-xs leading-relaxed text-ink-ter">
-          {nota}
-        </p>
-      )}
+
+      {/* COMPOSICIÓN DEL EQUIPO + INSIGHTS */}
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+        <Panel
+          titulo="Composición del equipo"
+          sub={`Evaluación entre pares · ${r.gestores_con_alerta} asesores con alerta`}
+        >
+          <div className="mb-3 flex h-3 overflow-hidden rounded-full">
+            {niveles.map((nv) =>
+              nv.n > 0 ? (
+                <div
+                  key={nv.k}
+                  className={nv.clase}
+                  style={{ width: `${(nv.n / totalNiveles) * 100}%` }}
+                  title={`${nv.k}: ${nv.n}`}
+                />
+              ) : null
+            )}
+          </div>
+          <div className="grid grid-cols-2 gap-2">
+            {niveles.map((nv) => (
+              <div key={nv.k} className="flex items-center gap-2 text-xs">
+                <span className={`h-2.5 w-2.5 rounded-sm ${nv.clase}`} />
+                <span className="tnum font-bold text-ink">{nv.n}</span>
+                <span className="text-ink-ter">{nv.k}</span>
+              </div>
+            ))}
+          </div>
+          <Link
+            href="/asesores"
+            className="mt-4 block rounded-lg border border-line bg-canvas px-3 py-2 text-center text-xs font-medium text-accent-claro transition hover:border-accent/40"
+          >
+            Ver scoreboard completo →
+          </Link>
+        </Panel>
+
+        <Panel titulo="Lo que exige atención" sub="Hallazgos automáticos del mes" className="lg:col-span-2">
+          <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+            {mtd.insights.map((ins, i) => {
+              const e = INSIGHT_ESTILO[ins.tipo] ?? INSIGHT_ESTILO.info;
+              const Icono = e.icono;
+              return (
+                <div key={i} className={`rounded-lg border bg-canvas p-3 ${e.clase}`}>
+                  <div className="flex items-start gap-2">
+                    <Icono className="mt-0.5 h-4 w-4 shrink-0" />
+                    <div className="min-w-0">
+                      <p className="text-[13px] font-semibold leading-snug text-ink">{ins.titulo}</p>
+                      <p className="mt-1 text-[11px] leading-relaxed text-ink-sec">{ins.detalle}</p>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </Panel>
+      </div>
+
+      {/* MATRIZ DE CARTERAS — heatmap */}
+      <Panel
+        titulo="Matriz de carteras"
+        sub="Cada cliente contra el promedio del equipo · verde = sobre la media, rojo = bajo la media"
+        accion={
+          <Link href="/carteras" className="rounded-lg border border-line px-3 py-1.5 text-xs font-medium text-accent-claro transition hover:border-accent/40">
+            Detalle →
+          </Link>
+        }
+      >
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-[860px] text-sm">
+            <thead>
+              <tr className="border-b border-line text-left text-[10px] uppercase tracking-wider text-ink-ter">
+                <th className="pb-2 font-semibold">Cartera</th>
+                <th className="pb-2 text-center font-semibold">Asesores</th>
+                <th className="pb-2 font-semibold">Volumen</th>
+                <th className="pb-2 text-center font-semibold">Contacto</th>
+                <th className="pb-2 text-center font-semibold">PTP</th>
+                <th className="pb-2 text-center font-semibold">Conversión</th>
+                <th className="pb-2 text-right font-semibold">Promesas</th>
+                <th className="pb-2 text-right font-semibold">Monto</th>
+                <th className="pb-2 text-center font-semibold">14 días</th>
+                <th className="pb-2 font-semibold">Score</th>
+              </tr>
+            </thead>
+            <tbody>
+              {carteras.map((c) => (
+                <tr key={c.cartera} className="border-b border-line/50 last:border-0 hover:bg-canvas/50">
+                  <td className="py-2.5 pr-3 font-medium text-ink">{c.cartera}</td>
+                  <td className="tnum py-2.5 text-center text-ink-sec">{c.num_asesores}</td>
+                  <td className="py-2.5 pr-3">
+                    <div className="flex items-center gap-2">
+                      <div className="w-24"><Barra pct={(c.gestiones / maxGest) * 100} /></div>
+                      <span className="tnum text-xs text-ink-sec">{fmtNum(c.gestiones)}</span>
+                    </div>
+                  </td>
+                  <td className="py-2.5 text-center"><CeldaCalor valor={c.tasa_contacto} referencia={bm.tasa_contacto} /></td>
+                  <td className="py-2.5 text-center"><CeldaCalor valor={c.ptp_rate} referencia={bm.ptp_rate} /></td>
+                  <td className="py-2.5 text-center"><CeldaCalor valor={c.conversion} referencia={bm.conversion} /></td>
+                  <td className="tnum py-2.5 text-right font-semibold text-accent-claro">{fmtNum(c.promesas)}</td>
+                  <td className="tnum py-2.5 text-right text-ink">{c.monto > 0 ? fmtMoneda(c.monto) : "—"}</td>
+                  <td className="py-2.5">
+                    <div className="mx-auto w-24"><Sparkline data={c.tendencia.slice(-14)} /></div>
+                  </td>
+                  <td className="py-2.5"><div className="w-28"><ScoreBar score={c.score} /></div></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </Panel>
+
+      {/* TOP + ATENCIÓN */}
+      <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
+        <Panel
+          titulo="Las lanzas del mes"
+          sub="Top 8 por score compuesto (resultado + conversión + contacto + volumen)"
+          accion={<Link href="/asesores" className="text-xs font-medium text-accent-claro hover:underline">Todos →</Link>}
+        >
+          <ListaAsesores asesores={topAsesores} />
+        </Panel>
+
+        <Panel
+          titulo="Requieren atención"
+          sub={`${r.gestores_con_alerta} asesores con al menos una alerta de desempeño`}
+          accion={<Link href="/asesores" className="text-xs font-medium text-accent-claro hover:underline">Gestionar →</Link>}
+        >
+          {atencion.length > 0 ? (
+            <ListaAsesores asesores={atencion} mostrarAlertas />
+          ) : (
+            <p className="py-8 text-center text-sm text-ink-ter">Sin alertas de desempeño este mes.</p>
+          )}
+        </Panel>
+      </div>
+
+      {/* RITMO + TENDENCIA */}
+      <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
+        <Panel
+          titulo="Ritmo por hora"
+          sub={mtd.por_hora.length > 1 ? "Gestiones y contactos efectivos · franja dorada = mejor contactabilidad" : "Sin datos de hora en los archivos"}
+        >
+          {mtd.por_hora.length > 1 ? (
+            <GraficoHoras data={mtd.por_hora} mejorHora={mejorHora} />
+          ) : (
+            <p className="py-16 text-center text-sm text-ink-ter">Los archivos del mes no incluyen timestamp de hora.</p>
+          )}
+        </Panel>
+
+        <Panel titulo="Evolución del mes" sub={`Gestiones, efectivas y promesas por día · ${r.dias_procesados} días`}>
+          <GraficoTendencia data={mtd.tendencia_diaria} />
+        </Panel>
+      </div>
     </div>
   );
 }
 
-/* ── Página ─────────────────────────────────────────────────────────────── */
-
-export default async function DashboardPage() {
-  const sesion = await obtenerSesion();
-  const r = kpis.resumen;
-  const meta = kpis.meta;
-  const mtd = mtdData as unknown as MTDData;
-  const restante = Math.max(meta.monto_diario - r.monto_comprometido, 0);
-  const mejorHora = mejorHoraContacto();
-  const maxGestionesCartera = Math.max(...kpis.por_proyecto.map((p) => p.gestiones));
-  const maxPromesasGestor = Math.max(...kpis.top_gestores.map((g) => g.promesas));
-  const promedioConversion = r.tasa_conversion;
-  const promedioContacto = r.tasa_contacto_efectivo;
-  // Si el archivo diario no tiene timestamps de hora, usar el patrón horario del MTD
-  const kpisExt = kpis as { tiene_hora?: boolean; por_hora: DatoHora[] };
-  const datosHora: DatoHora[] = kpisExt.tiene_hora === false
-    ? (mtd.por_hora as DatoHora[])
-    : kpisExt.por_hora;
-
-  const fecha = new Date(`${r.fecha}T12:00:00`).toLocaleDateString("es-PA", {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
-
+/* Lista compacta de asesores reutilizable */
+function ListaAsesores({
+  asesores,
+  mostrarAlertas = false,
+}: {
+  asesores: MTDData["gestores"];
+  mostrarAlertas?: boolean;
+}) {
+  const maxProm = Math.max(...asesores.map((a) => a.promesas), 1);
   return (
-    <div className="mx-auto max-w-[1320px]">
-      {/* Encabezado */}
-      <header className="anim-subir mb-5 flex flex-wrap items-end justify-between gap-3">
-        <div>
-          <h1 className="text-xl font-semibold text-ink">
-            {saludo()}, {sesion?.nombre.split(" ")[0]}
-          </h1>
-          <p className="mt-0.5 text-sm capitalize text-ink-sec">{fecha}</p>
-        </div>
-        <div className="flex items-center gap-2 rounded-lg border border-line bg-surface px-3 py-1.5 text-xs text-ink-sec shadow-card">
-          <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-pos opacity-60"></span>
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-pos"></span>
-          </span>
-          Corte de datos: {r.fecha} · {r.hora_corte}
-        </div>
-      </header>
-
-      {/* HERO — el pulso del negocio */}
-      <section className="hero-navy anim-subir relative overflow-hidden rounded-2xl border border-white/5 p-8 text-white shadow-float lg:p-12">
-        {/* Atmósfera viva */}
-        <div
-          className="aurora aurora-a h-[420px] w-[420px] opacity-50"
-          style={{ top: "-160px", left: "-80px", background: "#1a3158" }}
-        />
-        <div
-          className="aurora aurora-b h-[380px] w-[380px] opacity-40"
-          style={{ bottom: "-200px", right: "-60px", background: "#1b4fd8" }}
-        />
-        <Hexagono className="flotante absolute right-[28%] top-6 h-7 w-7" />
-        <Hexagono className="flotante-lento absolute bottom-8 left-[38%] h-5 w-5" />
-        <Hexagono
-          className="flotante absolute right-10 top-1/2 h-4 w-4"
-          color="rgba(232,185,49,0.25)"
-        />
-        {/* El guerrero vigila la operación */}
-        <Parallax
-          velocidad={0.07}
-          className="pointer-events-none absolute -right-10 -top-8"
-        >
-          <CascoGuerrero className="flotante-lento h-80 w-80 opacity-[0.14]" animado />
-        </Parallax>
-        {/* Lanzas cruzando la sala de mando */}
-        <LanzasVoladoras
-          lanzas={[
-            { top: "18%", duracion: 13, retraso: 1, ancho: "h-auto w-44" },
-            { top: "58%", duracion: 18, retraso: 6, ancho: "h-auto w-28", color: "rgba(232,185,49,0.35)" },
-            { top: "82%", duracion: 15, retraso: 10, ancho: "h-auto w-36", color: "rgba(91,140,255,0.3)" },
-          ]}
-        />
-
-        {/* Titular de la sala de mando */}
-        <div className="relative z-10 mb-10 max-w-3xl">
-          <div className="mb-3 flex items-center gap-3 text-[11px] font-bold uppercase tracking-[0.26em] text-gold/90">
-            <span className="h-px w-10 bg-gold/50" />
-            El resultado del día · corte {r.hora_corte}
-          </div>
-          <h2 className="text-[44px] font-extrabold leading-[0.98] tracking-tight lg:text-[64px]">
-            <PalabrasReveladas
-              texto="El pulso de la recuperación."
-              doradas={["recuperación"]}
-              paso={90}
-            />
-          </h2>
-        </div>
-
-        <div className="relative z-10 grid grid-cols-1 items-center gap-8 lg:grid-cols-[1.4fr_auto_1fr]">
-          {/* Monto y meta */}
-          <div>
-            <div className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/55">
-              Monto comprometido del día
-            </div>
-            <div className="latido-oro mt-2 text-[52px] font-bold leading-none text-gold">
-              <Contador valor={r.monto_comprometido} formato="moneda" duracion={2000} />
-            </div>
-            <div className="mt-4 max-w-md">
-              <div className="flex items-baseline justify-between text-xs text-white/60">
-                <span>Meta diaria: {fmtMoneda(meta.monto_diario)}</span>
-                <span className="tnum">
-                  {restante > 0 ? `Faltan ${fmtMoneda(restante)}` : "Meta superada"}
-                </span>
-              </div>
-              <div className="mt-1.5 flex">
-                <BarraProgreso
-                  pct={meta.avance * 100}
-                  clase="bg-gradient-to-r from-gold/70 to-gold"
-                  pista="bg-white/10"
-                  alto="h-2.5"
-                  retraso={300}
-                />
-              </div>
-            </div>
-            <div className="mt-4 flex flex-wrap gap-x-6 gap-y-1 text-xs text-white/55">
-              <span>
-                Ticket promedio:{" "}
-                <strong className="tnum text-white/85">{fmtMoneda(r.ticket_promedio)}</strong>
+    <div className="space-y-2">
+      {asesores.map((g, i) => (
+        <div key={g.gestor} className="flex items-center gap-3 rounded-lg px-1 py-1 hover:bg-canvas/50">
+          <span className="tnum w-5 shrink-0 text-center text-xs font-bold text-ink-ter">{g.ranking}</span>
+          <div className="min-w-0 flex-1">
+            <div className="flex items-center justify-between gap-2">
+              <span className="truncate text-[13px] font-medium text-ink">
+                {g.gestor.split(" ").map((p) => p.charAt(0) + p.slice(1).toLowerCase()).join(" ")}
               </span>
-              <span>
-                {fmtNum(r.promesas)} promesas ·{" "}
-                <strong className="tnum text-white/85">{fmtNum(r.pagos_confirmados)}</strong>{" "}
-                pagos confirmados
-              </span>
+              <ChipNivel nivel={g.nivel} />
             </div>
-          </div>
-
-          {/* Gauge de meta */}
-          <div className="hidden justify-center lg:flex">
-            <GaugeMeta avance={meta.avance} />
-          </div>
-
-          {/* Indicadores operativos */}
-          <div className="grid grid-cols-3 gap-3 lg:grid-cols-1">
-            {[
-              {
-                icono: PhoneCall,
-                etiqueta: "Gestiones",
-                valor: r.total_gestiones,
-                formato: "num" as const,
-                pie: `${fmtNum(r.gestores_activos)} gestores en ${fmtNum(r.carteras_activas)} carteras`,
-              },
-              {
-                icono: Users,
-                etiqueta: "Contacto efectivo",
-                valor: r.tasa_contacto_efectivo,
-                formato: "pct" as const,
-                pie: `${fmtNum(r.contactos_efectivos)} titulares alcanzados`,
-              },
-              {
-                icono: Target,
-                etiqueta: "Conversión",
-                valor: r.tasa_conversion,
-                formato: "pct" as const,
-                pie: "promesa o pago al contactar",
-              },
-            ].map(({ icono: Icono, etiqueta, valor, formato, pie }) => (
-              <div
-                key={etiqueta}
-                className="con-barrido rounded-xl border border-white/10 bg-white/[0.06] px-4 py-3 backdrop-blur-sm"
-              >
-                <div className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.14em] text-white/50">
-                  <Icono className="h-3.5 w-3.5" />
-                  {etiqueta}
-                </div>
-                <div className="mt-1 text-2xl font-bold text-white">
-                  <Contador valor={valor} formato={formato} duracion={1800} />
-                </div>
-                <div className="mt-0.5 truncate text-[11px] text-white/45">{pie}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CINTA — las cifras del corte, a paso de lectura */}
-      <div className="anim-subir-2 mt-4">
-        <CintaResumen
-          titulo={`Resumen del día · ${r.hora_corte}`}
-          duracion={85}
-          items={[
-            { etiqueta: "Recuperado comprometido", valor: fmtMoneda(r.monto_comprometido), tono: "oro" },
-            { etiqueta: "Avance de meta", valor: fmtPct(meta.avance, 1), tono: "oro" },
-            { etiqueta: "Gestiones", valor: fmtNum(r.total_gestiones), tono: "azul" },
-            { etiqueta: "Contactos efectivos", valor: fmtNum(r.contactos_efectivos), tono: "verde" },
-            { etiqueta: "Promesas de pago", valor: fmtNum(r.promesas), tono: "azul" },
-            { etiqueta: "Pagos confirmados", valor: fmtNum(r.pagos_confirmados), tono: "verde" },
-            { etiqueta: "Ticket promedio", valor: fmtMoneda(r.ticket_promedio), tono: "oro" },
-            { etiqueta: "Guerreros activos", valor: fmtNum(r.gestores_activos) },
-            { etiqueta: "Carteras activas", valor: fmtNum(r.carteras_activas) },
-            ...(mejorHora !== undefined
-              ? [{ etiqueta: "Mejor franja de contacto", valor: `${mejorHora}:00`, tono: "verde" as const }]
-              : []),
-          ]}
-        />
-      </div>
-
-      {/* Marquesina de identidad */}
-      <MarquesinaGigante
-        frases={[
-          "Las metas de nuestros clientes son nuestras metas",
-          "Somos guerreros",
-        ]}
-        trazo
-        duracion={70}
-        className="-mx-8 mt-12 py-2"
-      />
-
-      {/* INSIGHTS — lo que requiere atención */}
-      <section>
-        <TituloSeccion
-          numero="01"
-          titulo="Lo que exige su atención."
-          doradas={["atención"]}
-          nota="Hallazgos generados automáticamente a partir de la gestión del día. Las luces rojas parpadean: hay que actuar."
-        />
-        <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">
-          {kpis.insights.map((ins, i) => {
-            const e = INSIGHT_ESTILO[ins.tipo] ?? INSIGHT_ESTILO.info;
-            const Icono = e.icono;
-            return (
-              <Revelar key={i} retraso={i * 90}>
-                <div
-                  className={`h-full rounded-xl border bg-surface p-4 shadow-card transition-transform hover:-translate-y-0.5 ${e.borde}`}
-                >
-                  <div className="flex items-start gap-3">
-                    <div
-                      className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ${e.fondo}`}
-                    >
-                      <Icono className={`h-4 w-4 ${e.texto}`} />
-                    </div>
-                    <div className="min-w-0">
-                      <div className="flex items-start gap-2">
-                        <span className="mt-1">
-                          {e.luz && <LuzAlerta tono={e.luz} />}
-                        </span>
-                        <span className="text-[13px] font-semibold leading-snug text-ink">
-                          {ins.titulo}
-                        </span>
-                      </div>
-                      <p className="mt-1 text-xs leading-relaxed text-ink-sec">
-                        {ins.detalle}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </Revelar>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* EMBUDO + RESULTADOS */}
-      <TituloSeccion
-        numero="02"
-        titulo="Dónde se gana la batalla."
-        doradas={["batalla"]}
-        nota="El recorrido completo: del intento de contacto al compromiso de pago, y cómo se reparten los resultados."
-      />
-      <div className="grid grid-cols-1 gap-4 xl:grid-cols-5">
-        <Revelar className="xl:col-span-3">
-          <Panel
-            titulo="Embudo de cobranza"
-            subtitulo="Dónde se gana y dónde se pierde la recuperación"
-            className="h-full"
-          >
-            <FunnelAnimado funnel={kpis.funnel} />
-            <p className="mt-4 rounded-lg bg-canvas px-3 py-2 text-xs leading-relaxed text-ink-sec">
-              <strong className="text-ink">Lectura ejecutiva:</strong> de cada 100
-              intentos, {Math.round(r.tasa_contacto_efectivo * 100)} llegan al
-              titular y{" "}
-              {Math.round(r.tasa_contacto_efectivo * r.tasa_conversion * 100)}{" "}
-              terminan en compromiso. La palanca de mayor impacto es elevar la
-              contactabilidad.
-            </p>
-          </Panel>
-        </Revelar>
-
-        <Revelar retraso={120} className="xl:col-span-2">
-          <Panel
-            titulo="Resultados de gestión"
-            subtitulo={`Distribución de las ${fmtNum(r.total_gestiones)} gestiones del día`}
-            className="h-full"
-          >
-            <GraficoCategorias data={kpis.por_categoria.slice(0, 8)} />
-          </Panel>
-        </Revelar>
-      </div>
-
-      {/* LA PROMESA DE LA CASA — el eslogan en grande */}
-      <Revelar>
-        <section className="hero-navy relative mt-12 overflow-hidden rounded-2xl border border-white/5 p-10 text-white shadow-float lg:p-14">
-          <div
-            className="aurora aurora-a h-[380px] w-[380px] opacity-35"
-            style={{ top: "-180px", left: "20%", background: "#1b4fd8" }}
-          />
-          <LanzasVoladoras
-            lanzas={[
-              { top: "22%", duracion: 14, retraso: 2, ancho: "h-auto w-40" },
-              { top: "74%", duracion: 19, retraso: 9, ancho: "h-auto w-28", color: "rgba(232,185,49,0.35)" },
-            ]}
-          />
-          <CascoGuerrero
-            className="flotante-lento pointer-events-none absolute -left-8 -bottom-10 h-48 w-48 opacity-[0.14]"
-            animado
-          />
-          <CascoGuerrero
-            className="flotante pointer-events-none absolute -right-6 -top-12 h-44 w-44 opacity-[0.12]"
-            animado
-          />
-          <div className="relative z-10 mx-auto max-w-4xl text-center">
-            <div className="mb-4 flex items-center justify-center gap-3 text-[11px] font-bold uppercase tracking-[0.26em] text-gold/90">
-              <LanzaSpear className="h-2.5 w-14" color="rgba(232,185,49,0.6)" />
-              Nuestra promesa
+            <div className="mt-1 flex items-center gap-2">
+              <div className="flex-1"><Barra pct={(g.promesas / maxProm) * 100} tono={mostrarAlertas ? "neg" : "pos"} /></div>
+              <span className="tnum w-10 shrink-0 text-right text-[11px] text-ink-sec">{fmtNum(g.promesas)} ptp</span>
+              <span className="tnum w-12 shrink-0 text-right text-[11px] text-ink-ter">{fmtPct(g.ptp_rate, 0)}</span>
             </div>
-            <h2 className="text-4xl font-extrabold leading-[1.04] tracking-tight lg:text-6xl">
-              <PalabrasReveladas
-                texto="Las metas de nuestros clientes son nuestras metas."
-                doradas={["metas"]}
-                paso={90}
-              />
-            </h2>
-          </div>
-        </section>
-      </Revelar>
-
-      {/* ACTIVIDAD + RANKING */}
-      <TituloSeccion
-        numero="03"
-        titulo="El ritmo y las lanzas."
-        doradas={["lanzas"]}
-        nota="Cuándo rinde más la operación y quiénes están ganando el día."
-      />
-      <div className="grid grid-cols-1 gap-4 xl:grid-cols-5">
-        <Revelar className="xl:col-span-3">
-          <Panel
-            titulo="Ritmo de la operación"
-            subtitulo={
-              datosHora.length > 0
-                ? `${(kpis as { tiene_hora?: boolean }).tiene_hora === false ? "Patrón MTD — archivo del día sin timestamp" : "Gestiones y contactos efectivos por hora"} · franja dorada = mejor contactabilidad`
-                : "Sin datos de hora en el archivo del día"
-            }
-            className="h-full"
-          >
-            {datosHora.length > 0 ? (
-              <GraficoHoras data={datosHora} mejorHora={mejorHora} />
-            ) : (
-              <div className="flex h-[280px] items-center justify-center rounded-lg bg-canvas text-center">
-                <div>
-                  <p className="text-sm font-medium text-ink-sec">Sin datos de hora</p>
-                  <p className="mt-1 text-xs text-ink-ter">El archivo de gestiones de este día no incluye timestamp de hora. Usa un archivo con formato ISO para ver este gráfico.</p>
-                </div>
-              </div>
+            {mostrarAlertas && (
+              <div className="mt-1.5"><ChipsAlerta alertas={g.alertas as Alerta[]} /></div>
             )}
-          </Panel>
-        </Revelar>
-
-        <Revelar retraso={120} className="xl:col-span-2">
-          <Panel
-            titulo="Las lanzas del día"
-            subtitulo={`Top 10 por promesas · ${r.fecha}`}
-            className="h-full"
-          >
-            <div className="space-y-2.5">
-              {kpis.top_gestores.map((g, i) => {
-                const medalla =
-                  i === 0
-                    ? "bg-gold text-navy"
-                    : i === 1
-                      ? "bg-[#c6d2e2] text-navy"
-                      : i === 2
-                        ? "bg-warn-soft text-warn"
-                        : "bg-canvas text-ink-ter";
-                const ptpRate = typeof g.ptp_rate === "number" ? g.ptp_rate : 0;
-                return (
-                  <div key={g.gestor} className="flex items-center gap-3">
-                    <div
-                      className={`tnum flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-bold ${medalla}`}
-                    >
-                      {i + 1}
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <div className="flex items-baseline justify-between gap-2">
-                        <span className="truncate text-[13px] font-medium text-ink">
-                          {g.gestor}
-                        </span>
-                        <span className="tnum shrink-0 text-[10px] text-ink-ter">
-                          PTP {ptpRate.toFixed(0)}%
-                        </span>
-                      </div>
-                      <div className="mt-1 flex items-center gap-2">
-                        <BarraProgreso
-                          pct={(g.promesas / maxPromesasGestor) * 100}
-                          retraso={i * 80}
-                        />
-                        <span className="tnum w-8 shrink-0 text-right text-xs font-bold text-accent-claro">
-                          {g.promesas}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-            <p className="mt-3 text-[11px] text-ink-ter">
-              Promesas conseguidas en el día · PTP = % de contactos efectivos convertidos a promesa.
-            </p>
-          </Panel>
-        </Revelar>
-      </div>
-
-      {/* CARTERAS — la vista del negocio */}
-      <TituloSeccion
-        numero="04"
-        titulo="Cada cartera, una línea de ingreso."
-        doradas={["ingreso"]}
-        nota="Contacto y conversión de cada cliente contra el promedio de la operación. Lo que parpadea en rojo pide una conversación."
-      />
-      <Revelar>
-        <Panel
-          titulo="Desempeño por cartera"
-          subtitulo="Cada cliente es una línea de ingreso: contacto y conversión contra el promedio de la operación"
-        >
-          <div className="overflow-x-auto">
-            <table className="w-full min-w-[760px] text-sm">
-              <thead>
-                <tr className="border-b border-line text-left text-[11px] uppercase tracking-wider text-ink-ter">
-                  <th className="pb-2.5 font-semibold">Cartera</th>
-                  <th className="pb-2.5 font-semibold">Volumen de gestión</th>
-                  <th className="pb-2.5 text-center font-semibold">Contacto</th>
-                  <th className="pb-2.5 text-center font-semibold">Conversión</th>
-                  <th className="pb-2.5 text-right font-semibold">Promesas</th>
-                  <th className="pb-2.5 text-right font-semibold">Pagos</th>
-                  <th className="pb-2.5 text-right font-semibold">Monto</th>
-                </tr>
-              </thead>
-              <tbody>
-                {kpis.por_proyecto.map((p, i) => (
-                  <tr
-                    key={p.proyecto}
-                    className="border-b border-line/60 last:border-0 hover:bg-canvas/60"
-                  >
-                    <td className="py-2.5 pr-4 font-medium text-ink">{p.proyecto}</td>
-                    <td className="py-2.5 pr-4">
-                      <div className="flex items-center gap-2">
-                        <div className="flex w-28">
-                          <BarraProgreso
-                            pct={(p.gestiones / maxGestionesCartera) * 100}
-                            clase="bg-accent-claro/70"
-                            retraso={i * 40}
-                          />
-                        </div>
-                        <span className="tnum text-xs text-ink-sec">
-                          {fmtNum(p.gestiones)}
-                        </span>
-                      </div>
-                    </td>
-                    <td className="py-2.5 text-center">
-                      <ChipTasa valor={p.tasa_contacto} referencia={promedioContacto} />
-                    </td>
-                    <td className="py-2.5 text-center">
-                      <ChipTasa
-                        valor={p.tasa_conversion}
-                        referencia={promedioConversion}
-                      />
-                    </td>
-                    <td className="tnum py-2.5 text-right font-semibold text-accent-claro">
-                      {fmtNum(p.promesas)}
-                    </td>
-                    <td className="tnum py-2.5 text-right text-ink-sec">
-                      {fmtNum(p.pagos)}
-                    </td>
-                    <td className="tnum py-2.5 text-right font-semibold text-ink">
-                      {p.monto > 0 ? fmtMoneda(p.monto) : "—"}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <div className="mt-3 flex flex-wrap items-center gap-4 text-[11px] text-ink-ter">
-            <span className="flex items-center gap-1.5">
-              <span className="inline-block h-2 w-2 rounded-full bg-pos"></span>
-              En o sobre el promedio
-            </span>
-            <span className="flex items-center gap-1.5">
-              <span className="inline-block h-2 w-2 rounded-full bg-warn"></span>
-              Hasta 25% bajo el promedio
-            </span>
-            <span className="flex items-center gap-1.5">
-              <span className="luz-roja inline-block h-2 w-2 rounded-full bg-neg"></span>
-              Más de 25% bajo el promedio — parpadea para revisar
-            </span>
-          </div>
-        </Panel>
-      </Revelar>
-
-      {/* TENDENCIA MTD — evolución del mes */}
-      {mtd.tendencia_diaria.length > 1 && (
-        <>
-          <TituloSeccion
-            numero="05"
-            titulo="La evolución del mes."
-            doradas={["evolución"]}
-            nota={`${mtd.mes_nombre} ${mtd.periodo.slice(0,4)} · gestiones y promesas acumuladas por día`}
-          />
-          <Revelar>
-            <Panel
-              titulo="Tendencia MTD"
-              subtitulo={`Del ${mtd.dias_procesados[0]} al ${mtd.dias_procesados[mtd.dias_procesados.length - 1]} · ${mtd.resumen.dias_procesados} días hábiles procesados`}
-            >
-              <GraficoTendencia data={mtd.tendencia_diaria} />
-            </Panel>
-          </Revelar>
-        </>
-      )}
-
-      {/* CIERRE — la firma de la casa */}
-      <footer className="hero-navy relative mt-12 overflow-hidden rounded-2xl border border-white/5 p-10 text-white shadow-float lg:p-14">
-        <div
-          className="aurora aurora-b h-[360px] w-[360px] opacity-35"
-          style={{ top: "-160px", right: "-100px", background: "#1b4fd8" }}
-        />
-        <LanzasVoladoras
-          lanzas={[
-            { top: "16%", duracion: 16, retraso: 3, ancho: "h-auto w-40" },
-            { top: "50%", duracion: 12, retraso: 0, ancho: "h-auto w-32", color: "rgba(232,185,49,0.35)" },
-            { top: "84%", duracion: 20, retraso: 8, ancho: "h-auto w-24", color: "rgba(91,140,255,0.3)" },
-          ]}
-        />
-        <Parallax
-          velocidad={0.06}
-          className="pointer-events-none absolute -left-8 bottom-[-30px]"
-        >
-          <CascoGuerrero className="h-56 w-56 opacity-[0.16]" animado />
-        </Parallax>
-        <Parallax
-          velocidad={0.09}
-          className="pointer-events-none absolute -right-6 top-[-20px]"
-        >
-          <CascoGuerrero className="flotante-lento h-40 w-40 opacity-[0.12]" animado />
-        </Parallax>
-        <div className="relative z-10 flex flex-col items-center text-center">
-          <h2 className="text-[13vw] font-extrabold uppercase leading-[0.92] tracking-tight lg:text-[104px]">
-            <PalabrasReveladas
-              texto="Somos guerreros."
-              doradas={["guerreros"]}
-              paso={140}
-            />
-          </h2>
-          <p className="mt-4 max-w-md text-sm text-white/55">
-            Cada gestión es una lanza. Las metas de nuestros clientes son
-            nuestras metas.
-          </p>
-          <LogoSpearAnimado className="mt-8 h-10 w-auto opacity-90" />
-          <div className="mt-6 flex items-center gap-2 text-[11px] text-white/40">
-            <Banknote className="h-3.5 w-3.5" />
-            Datos agregados sin información personal · Spear Contact ©{" "}
-            {new Date().getFullYear()} · Centro de Control
           </div>
         </div>
-      </footer>
+      ))}
     </div>
   );
 }

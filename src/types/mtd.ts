@@ -72,6 +72,7 @@ export type Cartera = {
   conversion: number;
   ticket: number;
   score: number;
+  nivel: Nivel;
   mejor_asesor: string;
   asesores_alerta: number;
   tendencia: PuntoTendencia[];

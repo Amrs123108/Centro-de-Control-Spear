@@ -3,6 +3,7 @@ import {
   Award,
   Banknote,
   Briefcase,
+  CalendarRange,
   Info,
   Lightbulb,
   PhoneCall,
@@ -14,8 +15,10 @@ import Link from "next/link";
 import mtdData from "@/data/mtd_gestores.json";
 import { obtenerSesion } from "@/lib/auth";
 import { fmtMoneda, fmtNum, fmtPct } from "@/lib/formato";
-import { GraficoHoras, GraficoTendencia, Sparkline } from "@/components/graficos";
-import { Barra, CeldaCalor, ChipNivel, ChipsAlerta, KPI, ScoreBar } from "@/components/ui";
+import { GraficoHoras, GraficoTendencia } from "@/components/graficos";
+import { Barra, ChipNivel, ChipsAlerta, KPI, Tip } from "@/components/ui";
+import { MatrizCarteras } from "@/components/matriz-carteras";
+import { Revelar } from "@/components/animados";
 import type { Alerta, MTDData } from "@/types/mtd";
 
 const mtd = mtdData as unknown as MTDData;
@@ -33,6 +36,13 @@ function saludo(): string {
   return "Buenas noches";
 }
 
+function fechaLarga(iso: string): string {
+  return new Date(`${iso}T12:00:00`).toLocaleDateString("es-PA", {
+    day: "numeric",
+    month: "long",
+  });
+}
+
 const INSIGHT_ESTILO: Record<string, { icono: React.ElementType; clase: string }> = {
   alerta: { icono: AlertTriangle, clase: "border-neg/25 text-neg" },
   oportunidad: { icono: Lightbulb, clase: "border-warn/25 text-warn" },
@@ -48,7 +58,7 @@ function Panel({
   className = "",
 }: {
   titulo: string;
-  sub?: string;
+  sub?: React.ReactNode;
   children: React.ReactNode;
   accion?: React.ReactNode;
   className?: string;
@@ -71,8 +81,9 @@ export default async function DashboardPage() {
   const sesion = await obtenerSesion();
   const r = mtd.resumen;
   const bm = mtd.benchmarks;
+  const dias = mtd.dias_procesados;
   const carteras = [...mtd.carteras].sort((a, b) => b.score - a.score);
-  const topAsesores = mtd.gestores.slice(0, 8);
+  const ranking = mtd.gestores.slice(0, 8);
   const atencion = mtd.gestores
     .filter((g) => g.alertas.length > 0)
     .sort((a, b) => a.score - b.score)
@@ -85,7 +96,6 @@ export default async function DashboardPage() {
           .reduce((a, b) => (b.efectivas / b.gestiones > a.efectivas / a.gestiones ? b : a)).hora
       : undefined;
 
-  const maxGest = Math.max(...carteras.map((c) => c.gestiones));
   const totalNiveles = r.gestores_elite + r.gestores_solido + r.gestores_promedio + r.gestores_bajo;
   const niveles = [
     { k: "Élite", n: r.gestores_elite, clase: "bg-pos" },
@@ -96,185 +106,170 @@ export default async function DashboardPage() {
 
   return (
     <div className="space-y-6">
-      {/* Encabezado */}
-      <header className="flex flex-wrap items-end justify-between gap-3">
+      {/* Encabezado + rango de fechas explícito */}
+      <header className="anim-subir flex flex-wrap items-end justify-between gap-3">
         <div>
           <h1 className="text-lg font-bold text-ink">
             {saludo()}, {sesion?.nombre.split(" ")[0]}
           </h1>
-          <p className="mt-0.5 text-sm text-ink-sec">
-            Resumen operativo · {mtd.mes_nombre} {mtd.periodo.slice(0, 4)} ·{" "}
-            <span className="text-ink-ter">
-              {r.dias_procesados} días · {fmtNum(r.total_gestores)} asesores
-            </span>
-          </p>
+          <p className="mt-0.5 text-sm text-ink-sec">Resumen operativo del equipo</p>
+        </div>
+        <div className="flex items-center gap-2 rounded-lg border border-accent/30 bg-accent-soft px-3 py-2 text-xs">
+          <CalendarRange className="h-4 w-4 text-accent-claro" />
+          <span className="text-ink-sec">
+            Información del <span className="font-semibold text-ink">{fechaLarga(dias[0])}</span> al{" "}
+            <span className="font-semibold text-ink">{fechaLarga(dias[dias.length - 1])}</span>
+          </span>
+          <span className="rounded bg-accent/20 px-1.5 py-0.5 text-[10px] font-bold text-accent-claro">
+            {dias.length} días
+          </span>
         </div>
       </header>
 
-      {/* PULSO — la cinta de KPIs */}
+      {/* PULSO — KPIs con identidad de color y contador animado */}
       <div className="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-6">
-        <KPI label="Gestiones" valor={fmtNum(r.total_gestiones)} sub={`${fmtNum(r.gestiones_por_dia)}/día`} icono={PhoneCall} />
-        <KPI label="Contacto efectivo" valor={fmtPct(r.tasa_contacto, 1)} sub={`${fmtNum(r.total_efectivas)} titulares`} tono="accent" icono={Users} />
-        <KPI label="PTP Rate" valor={fmtPct(r.ptp_rate, 1)} sub="promesa al contactar" tono="pos" icono={Target} />
-        <KPI label="Promesas" valor={fmtNum(r.total_promesas)} sub={`${fmtNum(r.total_pagos)} pagos`} icono={TrendingUp} />
-        <KPI label="Monto comprometido" valor={fmtMoneda(r.total_recaudo)} sub={`ticket ${fmtMoneda(r.ticket_promedio)}`} tono="gold" icono={Banknote} />
-        <KPI label="Carteras activas" valor={fmtNum(mtd.carteras.length)} sub={`${fmtNum(r.total_gestores)} asesores`} icono={Briefcase} />
+        <KPI label="Gestiones" valorNum={r.total_gestiones} sub={`${fmtNum(r.gestiones_por_dia)} por día`} tono="accent" icono={PhoneCall} retraso={0} />
+        <KPI label="Contacto efectivo" valorNum={r.tasa_contacto} formato="pct" sub={`${fmtNum(r.total_efectivas)} titulares`} tono="cian" icono={Users} retraso={60} />
+        <KPI label="PTP — promesa al hablar" valorNum={r.ptp_rate} formato="pct" sub="de cada contacto efectivo" tono="pos" icono={Target} retraso={120} />
+        <KPI label="Promesas" valorNum={r.total_promesas} sub={`${fmtNum(r.total_pagos)} pagos`} tono="morado" icono={TrendingUp} retraso={180} />
+        <KPI label="Monto promesado" valorNum={r.total_recaudo} formato="moneda" sub={`ticket ${fmtMoneda(r.ticket_promedio)}`} tono="gold" icono={Banknote} retraso={240} />
+        <KPI label="Carteras activas" valorNum={mtd.carteras.length} sub={`${fmtNum(r.total_gestores)} asesores`} tono="warn" icono={Briefcase} retraso={300} />
       </div>
 
-      {/* COMPOSICIÓN DEL EQUIPO + INSIGHTS */}
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+      {/* COMPOSICIÓN DEL EQUIPO */}
+      <Revelar>
         <Panel
           titulo="Composición del equipo"
-          sub={`Evaluación entre pares · ${r.gestores_con_alerta} asesores con alerta`}
+          sub={`${r.total_gestores} asesores evaluados contra la mediana del equipo`}
         >
-          <div className="mb-3 flex h-3 overflow-hidden rounded-full">
-            {niveles.map((nv) =>
-              nv.n > 0 ? (
-                <div
-                  key={nv.k}
-                  className={nv.clase}
-                  style={{ width: `${(nv.n / totalNiveles) * 100}%` }}
-                  title={`${nv.k}: ${nv.n}`}
-                />
-              ) : null
-            )}
-          </div>
-          <div className="grid grid-cols-2 gap-2">
-            {niveles.map((nv) => (
-              <div key={nv.k} className="flex items-center gap-2 text-xs">
-                <span className={`h-2.5 w-2.5 rounded-sm ${nv.clase}`} />
-                <span className="tnum font-bold text-ink">{nv.n}</span>
-                <span className="text-ink-ter">{nv.k}</span>
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-[1fr_auto]">
+            <div>
+              <div className="mb-3 flex h-3 overflow-hidden rounded-full">
+                {niveles.map((nv) =>
+                  nv.n > 0 ? (
+                    <div key={nv.k} className={nv.clase} style={{ width: `${(nv.n / totalNiveles) * 100}%` }} title={`${nv.k}: ${nv.n}`} />
+                  ) : null
+                )}
               </div>
-            ))}
-          </div>
-          <Link
-            href="/asesores"
-            className="mt-4 block rounded-lg border border-line bg-canvas px-3 py-2 text-center text-xs font-medium text-accent-claro transition hover:border-accent/40"
-          >
-            Ver scoreboard completo →
-          </Link>
-        </Panel>
-
-        <Panel titulo="Lo que exige atención" sub="Hallazgos automáticos del mes" className="lg:col-span-2">
-          <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
-            {mtd.insights.map((ins, i) => {
-              const e = INSIGHT_ESTILO[ins.tipo] ?? INSIGHT_ESTILO.info;
-              const Icono = e.icono;
-              return (
-                <div key={i} className={`rounded-lg border bg-canvas p-3 ${e.clase}`}>
-                  <div className="flex items-start gap-2">
-                    <Icono className="mt-0.5 h-4 w-4 shrink-0" />
-                    <div className="min-w-0">
-                      <p className="text-[13px] font-semibold leading-snug text-ink">{ins.titulo}</p>
-                      <p className="mt-1 text-[11px] leading-relaxed text-ink-sec">{ins.detalle}</p>
+              <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+                {niveles.map((nv) => (
+                  <div key={nv.k} className="rounded-lg border border-line bg-canvas px-3 py-2">
+                    <div className="flex items-center gap-1.5">
+                      <span className={`h-2.5 w-2.5 rounded-sm ${nv.clase}`} />
+                      <span className="tnum text-lg font-extrabold text-ink">{nv.n}</span>
                     </div>
+                    <div className="text-[11px] text-ink-ter">{nv.k}</div>
                   </div>
-                </div>
-              );
-            })}
+                ))}
+              </div>
+            </div>
+            <Link
+              href="/asesores"
+              className="flex items-center justify-center rounded-lg border border-line bg-canvas px-4 text-center text-xs font-medium text-accent-claro transition hover:border-accent/40"
+            >
+              Ver scoreboard completo →
+            </Link>
           </div>
         </Panel>
-      </div>
+      </Revelar>
 
-      {/* MATRIZ DE CARTERAS — heatmap */}
-      <Panel
-        titulo="Matriz de carteras"
-        sub="Cada cliente contra el promedio del equipo · verde = sobre la media, rojo = bajo la media"
-        accion={
-          <Link href="/carteras" className="rounded-lg border border-line px-3 py-1.5 text-xs font-medium text-accent-claro transition hover:border-accent/40">
-            Detalle →
-          </Link>
-        }
-      >
-        <div className="overflow-x-auto">
-          <table className="w-full min-w-[860px] text-sm">
-            <thead>
-              <tr className="border-b border-line text-left text-[10px] uppercase tracking-wider text-ink-ter">
-                <th className="pb-2 font-semibold">Cartera</th>
-                <th className="pb-2 text-center font-semibold">Asesores</th>
-                <th className="pb-2 font-semibold">Volumen</th>
-                <th className="pb-2 text-center font-semibold">Contacto</th>
-                <th className="pb-2 text-center font-semibold">PTP</th>
-                <th className="pb-2 text-center font-semibold">Conversión</th>
-                <th className="pb-2 text-right font-semibold">Promesas</th>
-                <th className="pb-2 text-right font-semibold">Monto</th>
-                <th className="pb-2 text-center font-semibold">14 días</th>
-                <th className="pb-2 font-semibold">Score</th>
-              </tr>
-            </thead>
-            <tbody>
-              {carteras.map((c) => (
-                <tr key={c.cartera} className="border-b border-line/50 last:border-0 hover:bg-canvas/50">
-                  <td className="py-2.5 pr-3 font-medium text-ink">{c.cartera}</td>
-                  <td className="tnum py-2.5 text-center text-ink-sec">{c.num_asesores}</td>
-                  <td className="py-2.5 pr-3">
-                    <div className="flex items-center gap-2">
-                      <div className="w-24"><Barra pct={(c.gestiones / maxGest) * 100} /></div>
-                      <span className="tnum text-xs text-ink-sec">{fmtNum(c.gestiones)}</span>
-                    </div>
-                  </td>
-                  <td className="py-2.5 text-center"><CeldaCalor valor={c.tasa_contacto} referencia={bm.tasa_contacto} /></td>
-                  <td className="py-2.5 text-center"><CeldaCalor valor={c.ptp_rate} referencia={bm.ptp_rate} /></td>
-                  <td className="py-2.5 text-center"><CeldaCalor valor={c.conversion} referencia={bm.conversion} /></td>
-                  <td className="tnum py-2.5 text-right font-semibold text-accent-claro">{fmtNum(c.promesas)}</td>
-                  <td className="tnum py-2.5 text-right text-ink">{c.monto > 0 ? fmtMoneda(c.monto) : "—"}</td>
-                  <td className="py-2.5">
-                    <div className="mx-auto w-24"><Sparkline data={c.tendencia.slice(-14)} /></div>
-                  </td>
-                  <td className="py-2.5"><div className="w-28"><ScoreBar score={c.score} /></div></td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </Panel>
-
-      {/* TOP + ATENCIÓN */}
-      <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
+      {/* MATRIZ DE CARTERAS — ordenable */}
+      <Revelar>
         <Panel
-          titulo="Las lanzas del mes"
-          sub="Top 8 por score compuesto (resultado + conversión + contacto + volumen)"
+          titulo="Matriz de carteras"
+          sub="Cada cliente contra el promedio del equipo · clic en una columna para reordenar"
+          accion={
+            <Link href="/carteras" className="rounded-lg border border-line px-3 py-1.5 text-xs font-medium text-accent-claro transition hover:border-accent/40">
+              Detalle →
+            </Link>
+          }
+        >
+          <MatrizCarteras carteras={carteras} bm={bm} />
+        </Panel>
+      </Revelar>
+
+      {/* TABLA DE POSICIONES (antes "Las lanzas") */}
+      <Revelar>
+        <Panel
+          titulo="Tabla de posiciones del mes"
+          sub={
+            <>
+              Top 8 por <Tip texto="Puntaje 0–100 que combina resultado (promesas/día), conversión (PTP), contactabilidad y volumen, comparado contra el equipo.">score</Tip>{" "}
+              compuesto del equipo
+            </>
+          }
           accion={<Link href="/asesores" className="text-xs font-medium text-accent-claro hover:underline">Todos →</Link>}
         >
-          <ListaAsesores asesores={topAsesores} />
+          <ListaAsesores asesores={ranking} />
         </Panel>
-
-        <Panel
-          titulo="Requieren atención"
-          sub={`${r.gestores_con_alerta} asesores con al menos una alerta de desempeño`}
-          accion={<Link href="/asesores" className="text-xs font-medium text-accent-claro hover:underline">Gestionar →</Link>}
-        >
-          {atencion.length > 0 ? (
-            <ListaAsesores asesores={atencion} mostrarAlertas />
-          ) : (
-            <p className="py-8 text-center text-sm text-ink-ter">Sin alertas de desempeño este mes.</p>
-          )}
-        </Panel>
-      </div>
+      </Revelar>
 
       {/* RITMO + TENDENCIA */}
       <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
-        <Panel
-          titulo="Ritmo por hora"
-          sub={mtd.por_hora.length > 1 ? "Gestiones y contactos efectivos · franja dorada = mejor contactabilidad" : "Sin datos de hora en los archivos"}
-        >
-          {mtd.por_hora.length > 1 ? (
-            <GraficoHoras data={mtd.por_hora} mejorHora={mejorHora} />
-          ) : (
-            <p className="py-16 text-center text-sm text-ink-ter">Los archivos del mes no incluyen timestamp de hora.</p>
-          )}
-        </Panel>
+        <Revelar>
+          <Panel
+            titulo="Ritmo por hora"
+            sub={mtd.por_hora.length > 1 ? "Gestiones y contactos efectivos · franja dorada = mejor contactabilidad" : "Sin datos de hora en los archivos"}
+          >
+            {mtd.por_hora.length > 1 ? (
+              <GraficoHoras data={mtd.por_hora} mejorHora={mejorHora} />
+            ) : (
+              <p className="py-16 text-center text-sm text-ink-ter">Los archivos del mes no incluyen timestamp de hora.</p>
+            )}
+          </Panel>
+        </Revelar>
 
-        <Panel titulo="Evolución del mes" sub={`Gestiones, efectivas y promesas por día · ${r.dias_procesados} días`}>
-          <GraficoTendencia data={mtd.tendencia_diaria} />
-        </Panel>
+        <Revelar retraso={100}>
+          <Panel titulo="Evolución del mes" sub={`Gestiones, efectivas y promesas por día · ${r.dias_procesados} días`}>
+            <GraficoTendencia data={mtd.tendencia_diaria} />
+          </Panel>
+        </Revelar>
+      </div>
+
+      {/* ───── ZONA DE ATENCIÓN (al final, aún por trabajar) ───── */}
+      <div className="border-t border-line/60 pt-2">
+        <div className="mb-4 flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.18em] text-ink-ter">
+          <AlertTriangle className="h-3.5 w-3.5" />
+          Zona de atención · en construcción
+        </div>
+        <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
+          <Panel titulo="Lo que exige atención" sub="Hallazgos automáticos del mes">
+            <div className="space-y-2.5">
+              {mtd.insights.map((ins, i) => {
+                const e = INSIGHT_ESTILO[ins.tipo] ?? INSIGHT_ESTILO.info;
+                const Icono = e.icono;
+                return (
+                  <div key={i} className={`rounded-lg border bg-canvas p-3 ${e.clase}`}>
+                    <div className="flex items-start gap-2">
+                      <Icono className="mt-0.5 h-4 w-4 shrink-0" />
+                      <div className="min-w-0">
+                        <p className="text-[13px] font-semibold leading-snug text-ink">{ins.titulo}</p>
+                        <p className="mt-1 text-[11px] leading-relaxed text-ink-sec">{ins.detalle}</p>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </Panel>
+
+          <Panel
+            titulo="Asesores con alerta"
+            sub={`${r.gestores_con_alerta} asesores con al menos una señal de desempeño`}
+            accion={<Link href="/asesores" className="text-xs font-medium text-accent-claro hover:underline">Gestionar →</Link>}
+          >
+            {atencion.length > 0 ? (
+              <ListaAsesores asesores={atencion} mostrarAlertas />
+            ) : (
+              <p className="py-8 text-center text-sm text-ink-ter">Sin alertas de desempeño este mes.</p>
+            )}
+          </Panel>
+        </div>
       </div>
     </div>
   );
 }
 
-/* Lista compacta de asesores reutilizable */
 function ListaAsesores({
   asesores,
   mostrarAlertas = false,
@@ -285,7 +280,7 @@ function ListaAsesores({
   const maxProm = Math.max(...asesores.map((a) => a.promesas), 1);
   return (
     <div className="space-y-2">
-      {asesores.map((g, i) => (
+      {asesores.map((g) => (
         <div key={g.gestor} className="flex items-center gap-3 rounded-lg px-1 py-1 hover:bg-canvas/50">
           <span className="tnum w-5 shrink-0 text-center text-xs font-bold text-ink-ter">{g.ranking}</span>
           <div className="min-w-0 flex-1">
@@ -297,12 +292,10 @@ function ListaAsesores({
             </div>
             <div className="mt-1 flex items-center gap-2">
               <div className="flex-1"><Barra pct={(g.promesas / maxProm) * 100} tono={mostrarAlertas ? "neg" : "pos"} /></div>
-              <span className="tnum w-10 shrink-0 text-right text-[11px] text-ink-sec">{fmtNum(g.promesas)} ptp</span>
-              <span className="tnum w-12 shrink-0 text-right text-[11px] text-ink-ter">{fmtPct(g.ptp_rate, 0)}</span>
+              <span className="tnum w-12 shrink-0 text-right text-[11px] text-ink-sec">{fmtNum(g.promesas)} prom.</span>
+              <span className="tnum w-10 shrink-0 text-right text-[11px] text-ink-ter">{fmtPct(g.ptp_rate, 0)}</span>
             </div>
-            {mostrarAlertas && (
-              <div className="mt-1.5"><ChipsAlerta alertas={g.alertas as Alerta[]} /></div>
-            )}
+            {mostrarAlertas && <div className="mt-1.5"><ChipsAlerta alertas={g.alertas as Alerta[]} /></div>}
           </div>
         </div>
       ))}

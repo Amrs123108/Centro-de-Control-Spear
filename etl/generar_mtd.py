@@ -87,9 +87,13 @@ PROYECTO_MAP: dict[str, str] = {
 
 NORM = Normalizador()
 GESTOR_PREDICTIVO = "MARLIN ZELEDON"
-# Cuentas que no son asesores reales: marcador predictivo y cuentas de práctica.
-# Se excluyen del scoreboard para no contaminar los benchmarks del equipo.
-GESTORES_EXCLUIDOS = ("MARLIN ZELEDON", "CAPACITACION", "PRUEBA", "TEST", "DEMO")
+# Cuentas que no son asesores reales: marcador predictivo, cuentas de práctica
+# y personal que no gestiona (supervisión/coordinación). Se excluyen del
+# scoreboard para no contaminar los benchmarks del equipo.
+GESTORES_EXCLUIDOS = (
+    "MARLIN ZELEDON", "CAPACITACION", "PRUEBA", "TEST", "DEMO",
+    "EVER RODR", "ORIS JARAMILLO", "ANIBAL ABREGO", "ANÍBAL ABREGO",
+)
 
 
 def normalizar_gestor(nombre: str) -> str | None:
@@ -102,9 +106,24 @@ def normalizar_gestor(nombre: str) -> str | None:
 
 
 def consolidar_proyecto(proyecto: str) -> str:
-    if not isinstance(proyecto, str):
+    """Unifica las variantes de cada cliente en una sola cartera."""
+    if not isinstance(proyecto, str) or not proyecto.strip():
         return "OTRO"
     p = proyecto.strip().upper()
+    # Reglas por palabra clave (cubren sufijos como CICLO, ACH, SUCURSALES, 31-60)
+    if p.startswith("SURA"):
+        return "SURA"
+    if "AFINITI" in p:
+        return "AFINITI"
+    if "BANISTMO" in p:
+        return "BANISTMO ACTIVA" if "ACTIVA" in p else "BANISTMO RECOVERY"
+    if "TIGO" in p:
+        return "TIGO"
+    if "MULTIBANK" in p:
+        return "MULTIBANK"
+    if p.startswith("BAC"):
+        return "BAC"
+    # Mapa explícito para el resto
     for original, consolidado in PROYECTO_MAP.items():
         if original.upper() == p:
             return consolidado
@@ -197,6 +216,17 @@ def leer_metas() -> pd.DataFrame:
     except Exception as e:
         print(f"ADVERTENCIA: No se pudo leer metas: {e}")
         return pd.DataFrame(columns=["ASESOR", "CARTERA", "META GESTIONES", "META PROMESAS", "META EFECTIVAS", "META RECAUDO"])
+
+
+def nivel_por_score(score: float) -> str:
+    """Segmentación común para asesores y carteras."""
+    if score >= 70:
+        return "elite"
+    if score >= 45:
+        return "solido"
+    if score >= 25:
+        return "promedio"
+    return "bajo"
 
 
 def semaforo(pct: float, pct_esperado: float) -> str:
@@ -448,16 +478,7 @@ def main(anio: str | None = None, mes: str | None = None) -> None:
         100 * (0.35 * pr_res + 0.30 * pr_ptp + 0.20 * pr_con + 0.15 * pr_vol)
     ).round(1)
 
-    def nivel(score: float) -> str:
-        if score >= 70:
-            return "elite"
-        if score >= 45:
-            return "solido"
-        if score >= 25:
-            return "promedio"
-        return "bajo"
-
-    agg["nivel"] = agg["score"].apply(nivel)
+    agg["nivel"] = agg["score"].apply(nivel_por_score)
 
     # Deltas vs la mediana del equipo (para la ficha del asesor)
     agg["delta_contacto"] = (agg["tasa_contacto"] - bm["tasa_contacto"]).round(4)
@@ -672,6 +693,7 @@ def main(anio: str | None = None, mes: str | None = None) -> None:
             "conversion": float(r["conversion"]),
             "ticket": float(r["ticket"]),
             "score": float(r["score"]),
+            "nivel": nivel_por_score(float(r["score"])),
             "mejor_asesor": mejor_por_cartera.get(c, "—"),
             "asesores_alerta": int(alerta_por_cartera.get(c, 0)),
             "tendencia": tend_por_cartera.get(c, []),

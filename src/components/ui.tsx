@@ -1,5 +1,6 @@
 import { ArrowDown, ArrowUp, Minus } from "lucide-react";
 import { fmtNum, fmtPct } from "@/lib/formato";
+import { Contador } from "@/components/animados";
 import {
   ALERTA_META,
   NIVEL_META,
@@ -7,38 +8,79 @@ import {
   type Nivel,
 } from "@/types/mtd";
 
-/* Tarjeta KPI compacta — primero el número */
+export type Tono = "ink" | "gold" | "pos" | "accent" | "neg" | "warn" | "morado" | "cian";
+
+const TONO_KPI: Record<
+  Tono,
+  { valor: string; icono: string; borde: string; barra: string }
+> = {
+  ink: { valor: "text-ink", icono: "bg-white/5 text-ink-sec", borde: "border-line", barra: "bg-ink-ter" },
+  gold: { valor: "text-gold", icono: "bg-gold-soft text-gold", borde: "border-gold/25", barra: "bg-gold" },
+  pos: { valor: "text-pos", icono: "bg-pos-soft text-pos", borde: "border-pos/25", barra: "bg-pos" },
+  accent: { valor: "text-accent-claro", icono: "bg-accent-soft text-accent-claro", borde: "border-accent/25", barra: "bg-accent-claro" },
+  neg: { valor: "text-neg", icono: "bg-neg-soft text-neg", borde: "border-neg/25", barra: "bg-neg" },
+  warn: { valor: "text-warn", icono: "bg-warn-soft text-warn", borde: "border-warn/25", barra: "bg-warn" },
+  morado: { valor: "text-[#b79cff]", icono: "bg-[#1d1640] text-[#b79cff]", borde: "border-[#7c5cff]/25", barra: "bg-[#a78bfa]" },
+  cian: { valor: "text-[#5fd0e6]", icono: "bg-[#0c2a33] text-[#5fd0e6]", borde: "border-[#22b8d4]/25", barra: "bg-[#22b8d4]" },
+};
+
+/* Tarjeta KPI compacta — primero el número, con identidad de color y animación */
 export function KPI({
   label,
   valor,
+  valorNum,
+  formato = "num",
   sub,
   tono = "ink",
   icono: Icono,
+  retraso = 0,
 }: {
   label: string;
-  valor: string;
+  /** Texto ya formateado; o usa valorNum para contador animado */
+  valor?: string;
+  valorNum?: number;
+  formato?: "num" | "moneda" | "pct";
   sub?: string;
-  tono?: "ink" | "gold" | "pos" | "accent" | "neg";
+  tono?: Tono;
   icono?: React.ElementType;
+  retraso?: number;
 }) {
-  const colorValor = {
-    ink: "text-ink",
-    gold: "text-gold",
-    pos: "text-pos",
-    accent: "text-accent-claro",
-    neg: "text-neg",
-  }[tono];
+  const t = TONO_KPI[tono];
   return (
-    <div className="rounded-xl border border-line bg-surface px-4 py-3 shadow-card">
-      <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-ink-ter">
-        {Icono && <Icono className="h-3.5 w-3.5" />}
-        {label}
+    <div
+      className={`anim-subir relative overflow-hidden rounded-xl border bg-surface px-4 py-3 shadow-card ${t.borde}`}
+      style={{ animationDelay: `${retraso}ms` }}
+    >
+      <span className={`absolute inset-x-0 top-0 h-0.5 ${t.barra} opacity-70`} />
+      <div className="flex items-center justify-between">
+        <span className="text-[10px] font-semibold uppercase tracking-[0.12em] text-ink-ter">{label}</span>
+        {Icono && (
+          <span className={`flex h-6 w-6 items-center justify-center rounded-md ${t.icono}`}>
+            <Icono className="h-3.5 w-3.5" />
+          </span>
+        )}
       </div>
-      <div className={`tnum mt-1 text-[26px] font-extrabold leading-none ${colorValor}`}>
-        {valor}
+      <div className={`tnum mt-1.5 text-[26px] font-extrabold leading-none ${t.valor}`}>
+        {valorNum !== undefined ? (
+          <Contador valor={valorNum} formato={formato} decimales={formato === "pct" ? 1 : 0} />
+        ) : (
+          valor
+        )}
       </div>
       {sub && <div className="mt-1 truncate text-[11px] text-ink-ter">{sub}</div>}
     </div>
+  );
+}
+
+/* Etiqueta con definición (tooltip nativo + subrayado punteado) */
+export function Tip({ texto, children }: { texto: string; children: React.ReactNode }) {
+  return (
+    <span
+      title={texto}
+      className="cursor-help underline decoration-dotted decoration-ink-ter/60 underline-offset-2"
+    >
+      {children}
+    </span>
   );
 }
 

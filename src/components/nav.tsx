@@ -11,6 +11,7 @@ import {
   Users,
 } from "lucide-react";
 import type { Sesion } from "@/lib/auth";
+import { LogoSpearAnimado } from "@/components/marca";
 
 const RUTAS = [
   { href: "/dashboard", etiqueta: "Resumen", icono: LayoutDashboard },
@@ -44,17 +45,13 @@ export function BarraComando({
 
   return (
     <header className="sticky top-0 z-40 flex h-14 items-center gap-4 border-b border-line bg-navy/95 px-4 backdrop-blur supports-[backdrop-filter]:bg-navy/80">
-      {/* Identidad */}
+      {/* Identidad — logo animado de la casa */}
       <div className="flex items-center gap-2.5">
-        <span className="flex h-7 w-7 items-center justify-center rounded-md bg-accent text-white shadow-[0_0_16px_rgba(27,79,216,0.5)]">
-          <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round">
-            <path d="M4 20 L20 4 M20 4 L13 4 M20 4 L20 11" />
-          </svg>
+        <LogoSpearAnimado className="h-8 w-auto drop-shadow-[0_0_12px_rgba(27,79,216,0.4)]" />
+        <span className="hidden h-6 w-px bg-line-dark sm:block" />
+        <span className="hidden text-[9px] font-semibold uppercase tracking-[0.22em] text-white/45 sm:block">
+          Centro de Control
         </span>
-        <div className="leading-none">
-          <div className="text-sm font-extrabold tracking-tight text-white">SPEAR</div>
-          <div className="text-[9px] uppercase tracking-[0.22em] text-white/45">Centro de Control</div>
-        </div>
       </div>
 
       {/* Contexto: período + corte */}

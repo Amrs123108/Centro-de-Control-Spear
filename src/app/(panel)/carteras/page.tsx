@@ -1,71 +1,94 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import {
-  Banknote,
-  Briefcase,
-  PhoneCall,
-  Target,
-  TrendingUp,
-  Users,
-} from "lucide-react";
+import { Banknote, Briefcase, PhoneCall, Target, TrendingUp, Users } from "lucide-react";
 import mtdData from "@/data/mtd_gestores.json";
 import { fmtMoneda, fmtNum, fmtPct } from "@/lib/formato";
 import { GraficoTendencia } from "@/components/graficos";
-import { Barra, ChipNivel, Delta, ScoreBar } from "@/components/ui";
-import type { MTDData } from "@/types/mtd";
+import { Barra, ChipNivel, Delta, ScoreBar, Tip } from "@/components/ui";
+import { NIVEL_META, type MTDData, type Nivel } from "@/types/mtd";
 
 const mtd = mtdData as unknown as MTDData;
 
+const DEF_PTP = "PTP (Promise To Pay / Promesa de pago): de cada cliente con quien SÍ se habló, cuántos se comprometieron a pagar.";
+const DEF_CONTACTO = "Tasa de contacto: de cada 100 gestiones, en cuántas se logró hablar con el titular.";
+const DEF_CONV = "Conversión: de cada 100 gestiones realizadas, cuántas terminaron en una promesa de pago.";
+
+const NIVELES: { k: Nivel; label: string }[] = [
+  { k: "elite", label: "Élite" },
+  { k: "solido", label: "Sólido" },
+  { k: "promedio", label: "Promedio" },
+  { k: "bajo", label: "Bajo" },
+];
+
+const titulo = (n: string) =>
+  n.split(" ").map((p) => p.charAt(0) + p.slice(1).toLowerCase()).join(" ");
+
 export default function CarterasPage() {
-  const carteras = useMemo(
-    () => [...mtd.carteras].sort((a, b) => b.score - a.score),
-    []
-  );
-  const [sel, setSel] = useState(carteras[0].cartera);
-  const c = carteras.find((x) => x.cartera === sel) ?? carteras[0];
+  const todas = useMemo(() => [...mtd.carteras].sort((a, b) => b.score - a.score), []);
   const bm = mtd.benchmarks;
 
+  const [nivel, setNivel] = useState<Nivel | "TODOS">("TODOS");
+  const [sel, setSel] = useState(todas[0].cartera);
+
+  const seg = useMemo(
+    () => ({
+      total: todas.length,
+      elite: todas.filter((c) => c.nivel === "elite").length,
+      solido: todas.filter((c) => c.nivel === "solido").length,
+      promedio: todas.filter((c) => c.nivel === "promedio").length,
+      bajo: todas.filter((c) => c.nivel === "bajo").length,
+    }),
+    [todas]
+  );
+
+  const lista = nivel === "TODOS" ? todas : todas.filter((c) => c.nivel === nivel);
+  const c = lista.find((x) => x.cartera === sel) ?? lista[0] ?? todas[0];
+
   const asesores = useMemo(
-    () =>
-      mtd.gestores
-        .filter((g) => g.cartera_principal === c.cartera)
-        .sort((a, b) => b.score - a.score),
+    () => mtd.gestores.filter((g) => g.cartera_principal === c.cartera).sort((a, b) => b.score - a.score),
     [c.cartera]
   );
 
-  // Tendencia diaria de la cartera con gestiones+efectivas reconstruidas no está;
-  // usamos la tendencia de promesas (sparkline detallado).
-  const tendencia = c.tendencia.map((p) => ({
-    fecha: p.fecha,
-    gestiones: 0,
-    efectivas: 0,
-    promesas: p.promesas,
-  }));
+  const tendencia = c.tendencia.map((p) => ({ fecha: p.fecha, gestiones: 0, efectivas: 0, promesas: p.promesas }));
 
   return (
-    <div className="space-y-6">
-      <header>
+    <div className="space-y-5">
+      <header className="anim-subir">
         <h1 className="text-lg font-bold text-ink">Carteras</h1>
         <p className="mt-0.5 text-sm text-ink-sec">
-          Cada cliente es una línea de ingreso · {mtd.carteras.length} carteras ·{" "}
-          {mtd.mes_nombre} {mtd.periodo.slice(0, 4)} MTD
+          Cada cliente es una línea de ingreso · {mtd.carteras.length} carteras · {mtd.mes_nombre}{" "}
+          {mtd.periodo.slice(0, 4)} MTD
         </p>
       </header>
 
+      {/* Segmentación de carteras por nivel */}
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+        <CardSeg label="Todas" n={seg.total} sub="carteras activas" activo={nivel === "TODOS"} onClick={() => setNivel("TODOS")} tono="ink" />
+        {NIVELES.map((nv) => (
+          <CardSeg
+            key={nv.k}
+            label={nv.label}
+            n={seg[nv.k]}
+            sub={seg.total > 0 ? fmtPct(seg[nv.k] / seg.total, 0) : "—"}
+            activo={nivel === nv.k}
+            onClick={() => setNivel(nivel === nv.k ? "TODOS" : nv.k)}
+            tono={nv.k}
+          />
+        ))}
+      </div>
+
       <div className="grid grid-cols-1 gap-5 lg:grid-cols-[minmax(280px,360px)_1fr]">
-        {/* Ranking de carteras */}
+        {/* Ranking */}
         <div className="space-y-2">
-          {carteras.map((x, i) => {
-            const activa = x.cartera === sel;
+          {lista.map((x, i) => {
+            const activa = x.cartera === c.cartera;
             return (
               <button
                 key={x.cartera}
                 onClick={() => setSel(x.cartera)}
-                className={`w-full rounded-xl border p-3 text-left transition ${
-                  activa
-                    ? "border-accent bg-accent-soft"
-                    : "border-line bg-surface hover:border-line-dark"
+                className={`anim-subir w-full rounded-xl border p-3 text-left transition ${
+                  activa ? "border-accent bg-accent-soft" : "border-line bg-surface hover:border-line-dark"
                 }`}
               >
                 <div className="flex items-center justify-between gap-2">
@@ -73,23 +96,22 @@ export default function CarterasPage() {
                     <span className="tnum text-[11px] font-bold text-ink-ter">{i + 1}</span>
                     <span className="text-sm font-semibold text-ink">{x.cartera}</span>
                   </div>
-                  <span className="tnum text-xs font-bold text-accent-claro">{Math.round(x.score)}</span>
+                  <ChipNivel nivel={x.nivel} />
                 </div>
                 <div className="mt-2"><ScoreBar score={x.score} /></div>
                 <div className="mt-2 flex items-center justify-between text-[11px] text-ink-ter">
                   <span>{x.num_asesores} asesores · {fmtNum(x.gestiones)} gest.</span>
                   {x.asesores_alerta > 0 && (
-                    <span className="rounded bg-neg-soft px-1.5 py-0.5 font-semibold text-neg">
-                      {x.asesores_alerta} alerta{x.asesores_alerta > 1 ? "s" : ""}
-                    </span>
+                    <span className="rounded bg-neg-soft px-1.5 py-0.5 font-semibold text-neg">{x.asesores_alerta} alerta{x.asesores_alerta > 1 ? "s" : ""}</span>
                   )}
                 </div>
               </button>
             );
           })}
+          {lista.length === 0 && <p className="rounded-xl border border-line bg-surface px-4 py-8 text-center text-sm text-ink-ter">Sin carteras en este nivel.</p>}
         </div>
 
-        {/* Detalle de la cartera seleccionada */}
+        {/* Detalle */}
         <div className="space-y-4">
           <div className="rounded-xl border border-line bg-surface p-5 shadow-card">
             <div className="flex flex-wrap items-center justify-between gap-3">
@@ -98,12 +120,12 @@ export default function CarterasPage() {
                   <Briefcase className="h-5 w-5" />
                 </span>
                 <div>
-                  <h2 className="text-xl font-extrabold text-ink">{c.cartera}</h2>
+                  <div className="flex items-center gap-2">
+                    <h2 className="text-xl font-extrabold text-ink">{c.cartera}</h2>
+                    <ChipNivel nivel={c.nivel} />
+                  </div>
                   <p className="text-xs text-ink-ter">
-                    {c.num_asesores} asesores · mejor:{" "}
-                    <span className="font-medium text-ink-sec">
-                      {c.mejor_asesor.split(" ").map((p) => p.charAt(0) + p.slice(1).toLowerCase()).join(" ")}
-                    </span>
+                    {c.num_asesores} asesores · mejor: <span className="font-medium text-ink-sec">{titulo(c.mejor_asesor)}</span>
                   </p>
                 </div>
               </div>
@@ -113,12 +135,11 @@ export default function CarterasPage() {
               </div>
             </div>
 
-            {/* KPIs vs promedio del equipo */}
             <div className="mt-5 grid grid-cols-2 gap-3 md:grid-cols-4">
-              <KpiCartera icono={PhoneCall} label="Contacto efectivo" valor={fmtPct(c.tasa_contacto, 1)} delta={c.tasa_contacto - bm.tasa_contacto} />
-              <KpiCartera icono={Target} label="PTP Rate" valor={fmtPct(c.ptp_rate, 1)} delta={c.ptp_rate - bm.ptp_rate} />
-              <KpiCartera icono={TrendingUp} label="Conversión" valor={fmtPct(c.conversion, 1)} delta={c.conversion - bm.conversion} />
-              <KpiCartera icono={Banknote} label="Monto" valor={c.monto > 0 ? fmtMoneda(c.monto) : "—"} sub={`ticket ${fmtMoneda(c.ticket)}`} />
+              <KpiCartera icono={PhoneCall} label="Contacto" def={DEF_CONTACTO} valor={fmtPct(c.tasa_contacto, 1)} delta={c.tasa_contacto - bm.tasa_contacto} tono="cian" />
+              <KpiCartera icono={Target} label="PTP" def={DEF_PTP} valor={fmtPct(c.ptp_rate, 1)} delta={c.ptp_rate - bm.ptp_rate} tono="pos" />
+              <KpiCartera icono={TrendingUp} label="Conversión" def={DEF_CONV} valor={fmtPct(c.conversion, 1)} delta={c.conversion - bm.conversion} tono="morado" />
+              <KpiCartera icono={Banknote} label="Monto promesado" valor={c.monto > 0 ? fmtMoneda(c.monto) : "—"} sub={`ticket ${fmtMoneda(c.ticket)}`} tono="gold" />
             </div>
 
             <div className="mt-3 grid grid-cols-3 gap-3 text-center">
@@ -128,13 +149,11 @@ export default function CarterasPage() {
             </div>
           </div>
 
-          {/* Tendencia de promesas */}
           <div className="rounded-xl border border-line bg-surface p-5 shadow-card">
             <h3 className="mb-3 text-sm font-bold text-ink">Promesas por día</h3>
             <GraficoTendencia data={tendencia} />
           </div>
 
-          {/* Asesores de la cartera */}
           <div className="rounded-xl border border-line bg-surface p-5 shadow-card">
             <div className="mb-3 flex items-center gap-2">
               <Users className="h-4 w-4 text-ink-ter" />
@@ -148,8 +167,8 @@ export default function CarterasPage() {
                     <th className="pb-2 font-semibold">Asesor</th>
                     <th className="pb-2 text-center font-semibold">Nivel</th>
                     <th className="pb-2 text-right font-semibold">Gestiones</th>
-                    <th className="pb-2 text-center font-semibold">Contacto</th>
-                    <th className="pb-2 text-center font-semibold">PTP</th>
+                    <th className="pb-2 text-center font-semibold"><Tip texto={DEF_CONTACTO}>Contacto</Tip></th>
+                    <th className="pb-2 text-center font-semibold"><Tip texto={DEF_PTP}>PTP</Tip></th>
                     <th className="pb-2 text-right font-semibold">Promesas</th>
                     <th className="pb-2 font-semibold">Score</th>
                   </tr>
@@ -157,9 +176,7 @@ export default function CarterasPage() {
                 <tbody>
                   {asesores.map((g) => (
                     <tr key={g.gestor} className="border-b border-line/50 last:border-0 hover:bg-canvas/50">
-                      <td className="py-2 pr-3 font-medium text-ink">
-                        {g.gestor.split(" ").map((p) => p.charAt(0) + p.slice(1).toLowerCase()).join(" ")}
-                      </td>
+                      <td className="py-2 pr-3 font-medium text-ink">{titulo(g.gestor)}</td>
                       <td className="py-2 text-center"><ChipNivel nivel={g.nivel} /></td>
                       <td className="tnum py-2 text-right text-ink-sec">{fmtNum(g.gestiones)}</td>
                       <td className="tnum py-2 text-center text-ink-sec">{fmtPct(g.tasa_contacto, 0)}</td>
@@ -178,24 +195,76 @@ export default function CarterasPage() {
   );
 }
 
+function CardSeg({
+  label,
+  n,
+  sub,
+  activo,
+  onClick,
+  tono,
+}: {
+  label: string;
+  n: number;
+  sub: string;
+  activo: boolean;
+  onClick: () => void;
+  tono: Nivel | "ink";
+}) {
+  const acento = {
+    ink: { barra: "bg-ink-ter", txt: "text-ink", borde: "border-ink-ter" },
+    elite: { barra: "bg-pos", txt: "text-pos", borde: "border-pos" },
+    solido: { barra: "bg-accent-claro", txt: "text-accent-claro", borde: "border-accent" },
+    promedio: { barra: "bg-warn", txt: "text-warn", borde: "border-warn" },
+    bajo: { barra: "bg-neg", txt: "text-neg", borde: "border-neg" },
+  }[tono];
+  return (
+    <button
+      onClick={onClick}
+      className={`anim-subir relative overflow-hidden rounded-xl border bg-surface px-4 py-3 text-left transition ${
+        activo ? acento.borde : "border-line hover:border-line-dark"
+      }`}
+    >
+      <span className={`absolute inset-x-0 top-0 h-0.5 ${acento.barra} ${activo ? "opacity-100" : "opacity-40"}`} />
+      <div className={`tnum text-2xl font-extrabold ${acento.txt}`}>{n}</div>
+      <div className="text-xs font-semibold text-ink">{label}</div>
+      <div className="truncate text-[10px] text-ink-ter">{sub}</div>
+    </button>
+  );
+}
+
 function KpiCartera({
   icono: Icono,
   label,
+  def,
   valor,
   delta,
   sub,
+  tono,
 }: {
   icono: React.ElementType;
   label: string;
+  def?: string;
   valor: string;
   delta?: number;
   sub?: string;
+  tono: "cian" | "pos" | "morado" | "gold";
 }) {
+  const c = {
+    cian: { icono: "bg-[#0c2a33] text-[#5fd0e6]", barra: "bg-[#22b8d4]" },
+    pos: { icono: "bg-pos-soft text-pos", barra: "bg-pos" },
+    morado: { icono: "bg-[#1d1640] text-[#b79cff]", barra: "bg-[#a78bfa]" },
+    gold: { icono: "bg-gold-soft text-gold", barra: "bg-gold" },
+  }[tono];
   return (
-    <div className="rounded-lg border border-line bg-canvas px-3 py-2.5">
-      <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider text-ink-ter">
-        <Icono className="h-3.5 w-3.5" />
-        {label}
+    <div className="relative overflow-hidden rounded-lg border border-line bg-canvas px-3 py-2.5">
+      <span className={`absolute inset-x-0 top-0 h-0.5 ${c.barra} opacity-70`} />
+      <div className="flex items-center justify-between">
+        <span className="text-[10px] font-semibold uppercase tracking-wider text-ink-ter">
+          {def ? <Tip texto={def}>{label}</Tip> : label}
+        </span>
+        <span className={`flex h-5 w-5 items-center justify-center rounded ${c.icono}`}>
+          <Icono className="h-3 w-3" />
+        </span>
       </div>
       <div className="tnum mt-1 text-lg font-extrabold text-ink">{valor}</div>
       {delta !== undefined ? (

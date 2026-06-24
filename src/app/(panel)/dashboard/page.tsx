@@ -6,16 +6,20 @@ import {
   Lightbulb,
   PhoneCall,
   Target,
+  TrendingUp,
   Users,
 } from "lucide-react";
 import kpis from "@/data/kpis.json";
+import mtdData from "@/data/mtd_gestores.json";
 import { obtenerSesion } from "@/lib/auth";
 import { fmtMoneda, fmtNum, fmtPct } from "@/lib/formato";
 import {
   GaugeMeta,
   GraficoCategorias,
   GraficoHoras,
+  GraficoTendencia,
 } from "@/components/graficos";
+import type { MTDData } from "@/types/mtd";
 import {
   BarraProgreso,
   CintaResumen,
@@ -52,8 +56,11 @@ function saludo(): string {
   return "Buenas noches";
 }
 
+type DatoHora = { hora: number; gestiones: number; efectivas: number };
+
 function mejorHoraContacto(): number | undefined {
-  const candidatas = kpis.por_hora.filter((h) => h.gestiones >= 100);
+  const datos = kpis.por_hora as DatoHora[];
+  const candidatas = datos.filter((h) => h.gestiones >= 100);
   if (!candidatas.length) return undefined;
   return candidatas.reduce((a, b) =>
     b.efectivas / b.gestiones > a.efectivas / a.gestiones ? b : a
@@ -178,12 +185,18 @@ export default async function DashboardPage() {
   const sesion = await obtenerSesion();
   const r = kpis.resumen;
   const meta = kpis.meta;
+  const mtd = mtdData as unknown as MTDData;
   const restante = Math.max(meta.monto_diario - r.monto_comprometido, 0);
   const mejorHora = mejorHoraContacto();
   const maxGestionesCartera = Math.max(...kpis.por_proyecto.map((p) => p.gestiones));
   const maxPromesasGestor = Math.max(...kpis.top_gestores.map((g) => g.promesas));
   const promedioConversion = r.tasa_conversion;
   const promedioContacto = r.tasa_contacto_efectivo;
+  // Si el archivo diario no tiene timestamps de hora, usar el patrón horario del MTD
+  const kpisExt = kpis as { tiene_hora?: boolean; por_hora: DatoHora[] };
+  const datosHora: DatoHora[] = kpisExt.tiene_hora === false
+    ? (mtd.por_hora as DatoHora[])
+    : kpisExt.por_hora;
 
   const fecha = new Date(`${r.fecha}T12:00:00`).toLocaleDateString("es-PA", {
     weekday: "long",
@@ -508,17 +521,30 @@ export default async function DashboardPage() {
         <Revelar className="xl:col-span-3">
           <Panel
             titulo="Ritmo de la operación"
-            subtitulo="Gestiones y contactos efectivos por hora — la franja dorada marca la mejor contactabilidad"
+            subtitulo={
+              datosHora.length > 0
+                ? `${(kpis as { tiene_hora?: boolean }).tiene_hora === false ? "Patrón MTD — archivo del día sin timestamp" : "Gestiones y contactos efectivos por hora"} · franja dorada = mejor contactabilidad`
+                : "Sin datos de hora en el archivo del día"
+            }
             className="h-full"
           >
-            <GraficoHoras data={kpis.por_hora} mejorHora={mejorHora} />
+            {datosHora.length > 0 ? (
+              <GraficoHoras data={datosHora} mejorHora={mejorHora} />
+            ) : (
+              <div className="flex h-[280px] items-center justify-center rounded-lg bg-canvas text-center">
+                <div>
+                  <p className="text-sm font-medium text-ink-sec">Sin datos de hora</p>
+                  <p className="mt-1 text-xs text-ink-ter">El archivo de gestiones de este día no incluye timestamp de hora. Usa un archivo con formato ISO para ver este gráfico.</p>
+                </div>
+              </div>
+            )}
           </Panel>
         </Revelar>
 
         <Revelar retraso={120} className="xl:col-span-2">
           <Panel
             titulo="Las lanzas del día"
-            subtitulo="Top 10 gestores por promesas conseguidas"
+            subtitulo={`Top 10 por promesas · ${r.fecha}`}
             className="h-full"
           >
             <div className="space-y-2.5">
@@ -531,6 +557,7 @@ export default async function DashboardPage() {
                       : i === 2
                         ? "bg-warn-soft text-warn"
                         : "bg-canvas text-ink-ter";
+                const ptpRate = typeof g.ptp_rate === "number" ? g.ptp_rate : 0;
                 return (
                   <div key={g.gestor} className="flex items-center gap-3">
                     <div
@@ -543,8 +570,8 @@ export default async function DashboardPage() {
                         <span className="truncate text-[13px] font-medium text-ink">
                           {g.gestor}
                         </span>
-                        <span className="tnum shrink-0 text-xs text-ink-ter">
-                          {fmtNum(g.gestiones)} gest.
+                        <span className="tnum shrink-0 text-[10px] text-ink-ter">
+                          PTP {ptpRate.toFixed(0)}%
                         </span>
                       </div>
                       <div className="mt-1 flex items-center gap-2">
@@ -562,8 +589,7 @@ export default async function DashboardPage() {
               })}
             </div>
             <p className="mt-3 text-[11px] text-ink-ter">
-              Identidad protegida por política de datos. La barra indica promesas
-              conseguidas.
+              Promesas conseguidas en el día · PTP = % de contactos efectivos convertidos a promesa.
             </p>
           </Panel>
         </Revelar>
@@ -654,6 +680,26 @@ export default async function DashboardPage() {
           </div>
         </Panel>
       </Revelar>
+
+      {/* TENDENCIA MTD — evolución del mes */}
+      {mtd.tendencia_diaria.length > 1 && (
+        <>
+          <TituloSeccion
+            numero="05"
+            titulo="La evolución del mes."
+            doradas={["evolución"]}
+            nota={`${mtd.mes_nombre} ${mtd.periodo.slice(0,4)} · gestiones y promesas acumuladas por día`}
+          />
+          <Revelar>
+            <Panel
+              titulo="Tendencia MTD"
+              subtitulo={`Del ${mtd.dias_procesados[0]} al ${mtd.dias_procesados[mtd.dias_procesados.length - 1]} · ${mtd.resumen.dias_procesados} días hábiles procesados`}
+            >
+              <GraficoTendencia data={mtd.tendencia_diaria} />
+            </Panel>
+          </Revelar>
+        </>
+      )}
 
       {/* CIERRE — la firma de la casa */}
       <footer className="hero-navy relative mt-12 overflow-hidden rounded-2xl border border-white/5 p-10 text-white shadow-float lg:p-14">

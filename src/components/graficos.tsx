@@ -197,6 +197,55 @@ export function GraficoCategorias({
   );
 }
 
+export function GraficoTendencia({
+  data,
+}: {
+  data: { fecha: string; gestiones: number; efectivas: number; promesas: number }[];
+}) {
+  const fmt = (f: string) =>
+    new Date(`${f}T12:00:00`).toLocaleDateString("es-PA", { day: "numeric", month: "short" });
+
+  return (
+    <ResponsiveContainer width="100%" height={260}>
+      <AreaChart data={data} margin={{ top: 8, right: 8, left: -12, bottom: 0 }}>
+        <defs>
+          <linearGradient id="gradGestT" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor={ACCENT} stopOpacity={0.2} />
+            <stop offset="100%" stopColor={ACCENT} stopOpacity={0.02} />
+          </linearGradient>
+          <linearGradient id="gradPromT" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor={GOLD} stopOpacity={0.3} />
+            <stop offset="100%" stopColor={GOLD} stopOpacity={0.02} />
+          </linearGradient>
+          <linearGradient id="gradEfecT" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor={POS} stopOpacity={0.2} />
+            <stop offset="100%" stopColor={POS} stopOpacity={0.02} />
+          </linearGradient>
+        </defs>
+        <CartesianGrid strokeDasharray="3 3" stroke={LINE} vertical={false} />
+        <XAxis
+          dataKey="fecha"
+          tickFormatter={fmt}
+          tick={{ fontSize: 11, fill: INK_TER }}
+          axisLine={{ stroke: LINE }}
+          tickLine={false}
+          interval="preserveStartEnd"
+        />
+        <YAxis tick={{ fontSize: 11, fill: INK_TER }} axisLine={false} tickLine={false} />
+        <Tooltip
+          contentStyle={tooltipStyle}
+          labelStyle={tooltipLabelStyle}
+          labelFormatter={(f: unknown) => fmt(String(f))}
+        />
+        <Legend wrapperStyle={legendStyle} />
+        <Area type="monotone" dataKey="gestiones" name="Gestiones" stroke={ACCENT} strokeWidth={2} fill="url(#gradGestT)" />
+        <Area type="monotone" dataKey="efectivas" name="Efectivas" stroke={POS} strokeWidth={2} fill="url(#gradEfecT)" />
+        <Area type="monotone" dataKey="promesas" name="Promesas" stroke={GOLD} strokeWidth={2} fill="url(#gradPromT)" />
+      </AreaChart>
+    </ResponsiveContainer>
+  );
+}
+
 export function GraficoCarteras({
   data,
 }: {

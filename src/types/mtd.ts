@@ -18,6 +18,13 @@ export type Gestor = {
   pct_recaudo: number | null;
 };
 
+export type PorHora = { hora: number; gestiones: number; efectivas: number; promesas?: number };
+export type TendenciaDia = { fecha: string; gestiones: number; efectivas: number; promesas: number };
+export type PorCartera = {
+  cartera: string; gestiones: number; efectivas: number; promesas: number;
+  tasa_contacto: number; ptp_rate: number;
+};
+
 export type MTDData = {
   generado: string;
   periodo: string;
@@ -39,4 +46,7 @@ export type MTDData = {
     pct_mes_transcurrido: number;
   };
   gestores: Gestor[];
+  por_hora: PorHora[];
+  tendencia_diaria: TendenciaDia[];
+  por_cartera: PorCartera[];
 };

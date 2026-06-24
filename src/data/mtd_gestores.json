@@ -1,5 +1,5 @@
 {
-  "generado": "2026-06-23T18:33:52",
+  "generado": "2026-06-23T19:44:06",
   "periodo": "2026-06",
   "mes_nombre": "Junio",
   "dias_procesados": [
@@ -1653,6 +1653,312 @@
       "pct_efectivas": null,
       "pct_promesas": null,
       "pct_recaudo": null
+    }
+  ],
+  "por_hora": [
+    {
+      "hora": 7,
+      "gestiones": 479,
+      "efectivas": 235,
+      "promesas": 86
+    },
+    {
+      "hora": 8,
+      "gestiones": 3048,
+      "efectivas": 1532,
+      "promesas": 469
+    },
+    {
+      "hora": 9,
+      "gestiones": 3166,
+      "efectivas": 1178,
+      "promesas": 542
+    },
+    {
+      "hora": 10,
+      "gestiones": 3317,
+      "efectivas": 1135,
+      "promesas": 546
+    },
+    {
+      "hora": 11,
+      "gestiones": 2997,
+      "efectivas": 961,
+      "promesas": 497
+    },
+    {
+      "hora": 12,
+      "gestiones": 2309,
+      "efectivas": 642,
+      "promesas": 342
+    },
+    {
+      "hora": 13,
+      "gestiones": 2455,
+      "efectivas": 542,
+      "promesas": 301
+    },
+    {
+      "hora": 14,
+      "gestiones": 2872,
+      "efectivas": 647,
+      "promesas": 350
+    },
+    {
+      "hora": 15,
+      "gestiones": 2904,
+      "efectivas": 620,
+      "promesas": 347
+    },
+    {
+      "hora": 16,
+      "gestiones": 1306,
+      "efectivas": 261,
+      "promesas": 106
+    },
+    {
+      "hora": 17,
+      "gestiones": 4,
+      "efectivas": 1,
+      "promesas": 1
+    }
+  ],
+  "tendencia_diaria": [
+    {
+      "fecha": "2026-06-01",
+      "gestiones": 8254,
+      "efectivas": 2812,
+      "promesas": 1323
+    },
+    {
+      "fecha": "2026-06-02",
+      "gestiones": 7423,
+      "efectivas": 2279,
+      "promesas": 1093
+    },
+    {
+      "fecha": "2026-06-03",
+      "gestiones": 9180,
+      "efectivas": 2663,
+      "promesas": 1171
+    },
+    {
+      "fecha": "2026-06-04",
+      "gestiones": 7559,
+      "efectivas": 2074,
+      "promesas": 1014
+    },
+    {
+      "fecha": "2026-06-05",
+      "gestiones": 7388,
+      "efectivas": 2164,
+      "promesas": 1038
+    },
+    {
+      "fecha": "2026-06-06",
+      "gestiones": 3096,
+      "efectivas": 791,
+      "promesas": 382
+    },
+    {
+      "fecha": "2026-06-08",
+      "gestiones": 8278,
+      "efectivas": 2538,
+      "promesas": 1300
+    },
+    {
+      "fecha": "2026-06-09",
+      "gestiones": 7710,
+      "efectivas": 2664,
+      "promesas": 1392
+    },
+    {
+      "fecha": "2026-06-10",
+      "gestiones": 7583,
+      "efectivas": 2632,
+      "promesas": 1365
+    },
+    {
+      "fecha": "2026-06-11",
+      "gestiones": 8042,
+      "efectivas": 2572,
+      "promesas": 1270
+    },
+    {
+      "fecha": "2026-06-12",
+      "gestiones": 7680,
+      "efectivas": 1963,
+      "promesas": 861
+    },
+    {
+      "fecha": "2026-06-13",
+      "gestiones": 3226,
+      "efectivas": 1152,
+      "promesas": 432
+    },
+    {
+      "fecha": "2026-06-15",
+      "gestiones": 8305,
+      "efectivas": 2935,
+      "promesas": 1078
+    },
+    {
+      "fecha": "2026-06-16",
+      "gestiones": 7941,
+      "efectivas": 2552,
+      "promesas": 1030
+    },
+    {
+      "fecha": "2026-06-17",
+      "gestiones": 7819,
+      "efectivas": 3197,
+      "promesas": 1514
+    },
+    {
+      "fecha": "2026-06-18",
+      "gestiones": 7721,
+      "efectivas": 2349,
+      "promesas": 989
+    },
+    {
+      "fecha": "2026-06-19",
+      "gestiones": 7628,
+      "efectivas": 2328,
+      "promesas": 1088
+    },
+    {
+      "fecha": "2026-06-20",
+      "gestiones": 2949,
+      "efectivas": 1177,
+      "promesas": 474
+    },
+    {
+      "fecha": "2026-06-22",
+      "gestiones": 6858,
+      "efectivas": 2201,
+      "promesas": 997
+    }
+  ],
+  "por_cartera": [
+    {
+      "cartera": "BANISTMO ACTIVA",
+      "gestiones": 39000,
+      "efectivas": 10543,
+      "promesas": 4965,
+      "tasa_contacto": 0.2703,
+      "ptp_rate": 0.4709
+    },
+    {
+      "cartera": "SURA",
+      "gestiones": 36452,
+      "efectivas": 11901,
+      "promesas": 5527,
+      "tasa_contacto": 0.3265,
+      "ptp_rate": 0.4644
+    },
+    {
+      "cartera": "TIGO",
+      "gestiones": 15783,
+      "efectivas": 6858,
+      "promesas": 3056,
+      "tasa_contacto": 0.4345,
+      "ptp_rate": 0.4456
+    },
+    {
+      "cartera": "BANISTMO RECOVERY",
+      "gestiones": 13383,
+      "efectivas": 3538,
+      "promesas": 1016,
+      "tasa_contacto": 0.2644,
+      "ptp_rate": 0.2872
+    },
+    {
+      "cartera": "BAC",
+      "gestiones": 8567,
+      "efectivas": 2193,
+      "promesas": 914,
+      "tasa_contacto": 0.256,
+      "ptp_rate": 0.4168
+    },
+    {
+      "cartera": "SOLVE",
+      "gestiones": 8277,
+      "efectivas": 2191,
+      "promesas": 1112,
+      "tasa_contacto": 0.2647,
+      "ptp_rate": 0.5075
+    },
+    {
+      "cartera": "KREDIYA",
+      "gestiones": 4462,
+      "efectivas": 2685,
+      "promesas": 2051,
+      "tasa_contacto": 0.6017,
+      "ptp_rate": 0.7639
+    },
+    {
+      "cartera": "RODELAG",
+      "gestiones": 3998,
+      "efectivas": 1707,
+      "promesas": 592,
+      "tasa_contacto": 0.427,
+      "ptp_rate": 0.3468
+    },
+    {
+      "cartera": "BANCO LA HIPOTECARIA",
+      "gestiones": 2625,
+      "efectivas": 649,
+      "promesas": 424,
+      "tasa_contacto": 0.2472,
+      "ptp_rate": 0.6533
+    },
+    {
+      "cartera": "GLOBAL BANK",
+      "gestiones": 1706,
+      "efectivas": 631,
+      "promesas": 101,
+      "tasa_contacto": 0.3699,
+      "ptp_rate": 0.1601
+    },
+    {
+      "cartera": "SURA TC Y ACH",
+      "gestiones": 341,
+      "efectivas": 135,
+      "promesas": 46,
+      "tasa_contacto": 0.3959,
+      "ptp_rate": 0.3407
+    },
+    {
+      "cartera": "AFINITI",
+      "gestiones": 26,
+      "efectivas": 8,
+      "promesas": 4,
+      "tasa_contacto": 0.3077,
+      "ptp_rate": 0.5
+    },
+    {
+      "cartera": "SURA SUCURSALES",
+      "gestiones": 10,
+      "efectivas": 0,
+      "promesas": 0,
+      "tasa_contacto": 0.0,
+      "ptp_rate": 0.0
+    },
+    {
+      "cartera": "AFINITI FINANCIAL 31-60",
+      "gestiones": 9,
+      "efectivas": 4,
+      "promesas": 3,
+      "tasa_contacto": 0.4444,
+      "ptp_rate": 0.75
+    },
+    {
+      "cartera": "MULTIBANK",
+      "gestiones": 1,
+      "efectivas": 0,
+      "promesas": 0,
+      "tasa_contacto": 0.0,
+      "ptp_rate": 0.0
     }
   ]
 }

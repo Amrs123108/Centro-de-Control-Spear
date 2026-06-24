@@ -151,11 +151,18 @@ def leer_dia(filepath: Path, fecha_archivo: date_type | None = None) -> pd.DataF
     if fecha_archivo is not None:
         df["FECHA_ARCHIVO"] = pd.Timestamp(fecha_archivo)
     else:
-        # Fallback: intentar leer de FECHA_CLAS (puede tener errores de formato)
         if "FECHA_CLAS" in df.columns:
             df["FECHA_ARCHIVO"] = pd.to_datetime(df["FECHA_CLAS"], errors="coerce")
         else:
             df["FECHA_ARCHIVO"] = pd.NaT
+
+    # Hora: extraer de FECHA_CLAS cuando tiene formato ISO "YYYY-MM-DD HH:MM:SS"
+    # Los archivos en formato "DD/MM/YYYY" (sin hora) quedarán como NaT
+    if "FECHA_CLAS" in df.columns:
+        dt_iso = pd.to_datetime(df["FECHA_CLAS"], format="%Y-%m-%d %H:%M:%S", errors="coerce")
+        df["HORA"] = dt_iso.dt.hour.where(dt_iso.notna())
+    else:
+        df["HORA"] = pd.NA
 
     # Categorías y flags
     df["categoria"] = df["CLASIFICACION"].fillna("").map(NORM.normalizar)
@@ -387,6 +394,53 @@ def main(anio: str | None = None, mes: str | None = None) -> None:
             "pct_recaudo": r["pct_recaudo"],
         })
 
+    # ── Ritmo por hora (MTD) — solo de archivos con formato ISO + hora ────────
+    filas_con_hora = df_mes[df_mes["HORA"].notna()]
+    if len(filas_con_hora) > 0:
+        por_hora_mtd = (
+            filas_con_hora.groupby(filas_con_hora["HORA"].astype(int))
+            .agg(gestiones=("GESTOR", "size"), efectivas=("efectiva", "sum"), promesas=("es_promesa", "sum"))
+            .reset_index()
+            .rename(columns={"HORA": "hora"})
+        )
+        por_hora_mtd["efectivas"] = por_hora_mtd["efectivas"].astype(int)
+        por_hora_mtd["promesas"] = por_hora_mtd["promesas"].astype(int)
+        por_hora_list = por_hora_mtd.to_dict(orient="records")
+    else:
+        por_hora_list = []
+
+    # ── Tendencia diaria (gestiones/promesas por día del mes) ─────────────────
+    tendencia = (
+        df_mes.groupby(df_mes["FECHA_ARCHIVO"].dt.date)
+        .agg(gestiones=("GESTOR", "size"), efectivas=("efectiva", "sum"), promesas=("es_promesa", "sum"))
+        .reset_index()
+        .rename(columns={"FECHA_ARCHIVO": "fecha"})
+        .sort_values("fecha")
+    )
+    tendencia["efectivas"] = tendencia["efectivas"].astype(int)
+    tendencia["promesas"] = tendencia["promesas"].astype(int)
+    tendencia_list = [
+        {**r, "fecha": str(r["fecha"])} for r in tendencia.to_dict(orient="records")
+    ]
+
+    # ── PTP Rate y por cartera ────────────────────────────────────────────────
+    por_cartera = (
+        df_mes.groupby("PROYECTO")
+        .agg(
+            gestiones=("GESTOR", "size"),
+            efectivas=("efectiva", "sum"),
+            promesas=("es_promesa", "sum"),
+        )
+        .reset_index()
+        .sort_values("gestiones", ascending=False)
+        .rename(columns={"PROYECTO": "cartera"})
+    )
+    por_cartera["efectivas"] = por_cartera["efectivas"].astype(int)
+    por_cartera["promesas"] = por_cartera["promesas"].astype(int)
+    por_cartera["tasa_contacto"] = (por_cartera["efectivas"] / por_cartera["gestiones"].clip(lower=1)).round(4)
+    por_cartera["ptp_rate"] = (por_cartera["promesas"] / por_cartera["efectivas"].clip(lower=1)).round(4)
+    por_cartera_list = por_cartera.to_dict(orient="records")
+
     salida = {
         "generado": datetime.now().isoformat(timespec="seconds"),
         "periodo": f"{anio}-{mes_num}",
@@ -395,6 +449,9 @@ def main(anio: str | None = None, mes: str | None = None) -> None:
         "pct_mes_transcurrido": round(pct_esperado, 1),
         "resumen": resumen,
         "gestores": gestores,
+        "por_hora": por_hora_list,
+        "tendencia_diaria": tendencia_list,
+        "por_cartera": por_cartera_list,
     }
 
     SALIDA.parent.mkdir(parents=True, exist_ok=True)

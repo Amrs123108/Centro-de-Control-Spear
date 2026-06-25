@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { BarraComando, RailIconos } from "@/components/nav";
+import { FondoTecno } from "@/components/fondo-tecno";
 import { obtenerSesion } from "@/lib/auth";
 import mtd from "@/data/mtd_gestores.json";
 
@@ -28,6 +29,7 @@ export default async function PanelLayout({
         <main className="relative min-w-0 flex-1 overflow-x-hidden">
           {/* Atmósfera sutil de la sala de mando */}
           <div aria-hidden="true" className="pointer-events-none fixed inset-0 -z-10">
+            <FondoTecno />
             <div className="malla-fondo absolute inset-0 opacity-60" />
           </div>
           <div className="mx-auto max-w-[1480px] px-5 py-6 lg:px-8">{children}</div>

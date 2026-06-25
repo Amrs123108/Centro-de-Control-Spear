@@ -498,6 +498,219 @@ html.lenis body {
   animation: lanza-cruza linear infinite;
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   TEMA "VIDRIO" — institucional fintech, cristal limpio, paleta navy + azul de marca (logo Spear)
+   Se activa con <html data-tema="vidrio">. No altera estructura ni lógica:
+   solo redefine tokens de color y añade tratamiento glass a los paneles.
+   ═══════════════════════════════════════════════════════════════════════════ */
+[data-tema="vidrio"] {
+  /* Marca → azul cobalto del logo Spear */
+  --color-navy: #0b1830;
+  --color-navy-mid: #112444;
+  --color-navy-light: #1b3a66;
+  --color-accent: #2160d8;
+  --color-accent-claro: #5b8cff;
+  --color-accent-soft: rgba(91, 140, 255, 0.15);
+
+  /* Lienzo y superficies translúcidas (vidrio) */
+  --color-canvas: #060f1d;
+  --color-surface: rgba(18, 33, 58, 0.26);
+  --color-line: rgba(120, 152, 255, 0.17);
+  --color-line-dark: rgba(120, 152, 255, 0.28);
+
+  /* Texto */
+  --color-ink: #eaf4f8;
+  --color-ink-sec: #abc4d1;
+  --color-ink-ter: #6f8f9f;
+
+  /* Dinero — gold desaturado, sin neón */
+  --color-gold: #cda35c;
+  --color-gold-soft: rgba(205, 163, 92, 0.12);
+
+  /* Semánticos calmados */
+  --color-pos: #4fd1c5;
+  --color-pos-soft: rgba(79, 209, 197, 0.13);
+  --color-neg: #f08a86;
+  --color-neg-soft: rgba(240, 138, 134, 0.13);
+  --color-warn: #e0a86a;
+  --color-warn-soft: rgba(224, 168, 106, 0.13);
+
+  --shadow-card: 0 8px 30px rgb(0 0 0 / 0.45), inset 0 1px 0 rgb(255 255 255 / 0.06);
+}
+
+/* Base del lienzo: solo un fondo profundo con una insinuación de luz. La luz
+   protagonista la genera el circuito animado (FondoTecno), no el body. */
+[data-tema="vidrio"] body {
+  background-color: #060f1d;
+  background-image:
+    radial-gradient(ellipse 90% 70% at 50% 46%, rgba(33, 96, 216, 0.13), transparent 72%),
+    radial-gradient(ellipse 80% 50% at 50% 118%, rgba(91, 140, 255, 0.06), transparent 60%);
+  background-attachment: fixed;
+}
+
+/* El circuito reemplaza a la malla en tema Vidrio */
+[data-tema="vidrio"] .malla-fondo {
+  display: none;
+}
+
+/* ── Circuito tecnológico (FondoTecno) ─────────────────────────────────────── */
+.fondo-tecno {
+  pointer-events: none;
+}
+.pcb-traza {
+  opacity: 0.85;
+  filter: drop-shadow(0 0 1px rgba(91, 140, 255, 0.25));
+}
+
+/* Blobs de luz que derivan lento = fuente de luz central animada */
+.blob-tecno {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(80px);
+  mix-blend-mode: screen;
+}
+.blob-a {
+  width: 46vw;
+  height: 46vw;
+  background: radial-gradient(circle, rgba(33, 96, 216, 0.55), transparent 70%);
+  animation: deriva-blob-a 26s ease-in-out infinite alternate;
+}
+.blob-b {
+  width: 40vw;
+  height: 40vw;
+  background: radial-gradient(circle, rgba(91, 140, 255, 0.45), transparent 70%);
+  animation: deriva-blob-b 32s ease-in-out infinite alternate;
+}
+.blob-c {
+  width: 34vw;
+  height: 34vw;
+  background: radial-gradient(circle, rgba(70, 110, 235, 0.34), transparent 70%);
+  animation: deriva-blob-c 38s ease-in-out infinite alternate;
+}
+@keyframes deriva-blob-a {
+  from { transform: translate(8vw, 2vh); }
+  to { transform: translate(34vw, 26vh); }
+}
+@keyframes deriva-blob-b {
+  from { transform: translate(62vw, 44vh); }
+  to { transform: translate(40vw, 8vh); }
+}
+@keyframes deriva-blob-c {
+  from { transform: translate(70vw, 6vh); }
+  to { transform: translate(48vw, 40vh); }
+}
+
+/* Placa de circuito (SVG): trazas, pads y chips */
+.pcb-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.pcb-svg .trazas path {
+  fill: none;
+  stroke: rgba(120, 152, 255, 0.14);
+  stroke-width: 1.4;
+}
+.pcb-svg .pads circle {
+  fill: rgba(120, 152, 255, 0.34);
+}
+.pcb-svg .pads rect {
+  fill: rgba(91, 140, 255, 0.04);
+  stroke: rgba(120, 152, 255, 0.24);
+  stroke-width: 1.2;
+}
+
+/* Cargas de energía: un paquete brillante que viaja por cada traza e ilumina */
+.pcb-svg .flujo path {
+  fill: none;
+  stroke: #bcd2ff;
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  stroke-dasharray: 5 130;
+  animation-name: fluir-energia;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+@keyframes fluir-energia {
+  from { stroke-dashoffset: 135; }
+  to { stroke-dashoffset: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blob-a, .blob-b, .blob-c { animation: none; }
+  .pcb-svg .flujo path { animation: none; opacity: 0.5; }
+}
+
+/* PANELES DE VIDRIO — todo lo que use .shadow-card recibe el tratamiento glass.
+   Capas: (1) sheen diagonal que "atrapa" la luz en la esquina superior-izq,
+   (2) oscurecimiento inferior para profundidad y legibilidad. Blur profundo +
+   superficie translúcida: el bloom del fondo se filtra a través = vidrio real. */
+[data-tema="vidrio"] .shadow-card {
+  background-image:
+    linear-gradient(148deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.03) 24%, transparent 50%),
+    linear-gradient(to top, rgba(4, 14, 22, 0.30), transparent 48%);
+  border-color: rgba(130, 162, 255, 0.28);
+  /* Cristal limpio: sin blur (no frosted) — el fondo se ve nítido a través */
+  -webkit-backdrop-filter: saturate(1.25) brightness(1.04);
+  backdrop-filter: saturate(1.25) brightness(1.04);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.20),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.20),
+    0 1px 2px rgba(0, 0, 0, 0.45),
+    0 4px 10px rgba(0, 0, 0, 0.40),
+    0 16px 40px rgba(0, 0, 0, 0.45);
+}
+
+/* Tiles internos (bg-canvas) translúcidos: "vidrio dentro del vidrio" — clave en
+   el Resumen, donde los paneles llevan muchos sub-bloques de datos. */
+[data-tema="vidrio"] .bg-canvas {
+  background-color: rgba(255, 255, 255, 0.045);
+  border-color: rgba(130, 162, 255, 0.13);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07);
+}
+
+/* Líneas de gráfica con glow tenue — azul de marca */
+[data-tema="vidrio"] .recharts-area-curve,
+[data-tema="vidrio"] .recharts-line-curve {
+  filter: drop-shadow(0 0 5px rgba(91, 140, 255, 0.5));
+}
+[data-tema="vidrio"] .recharts-dot {
+  filter: drop-shadow(0 0 4px rgba(91, 140, 255, 0.75));
+}
+[data-tema="vidrio"] .recharts-cartesian-grid line {
+  stroke: rgba(120, 152, 255, 0.10);
+}
+
+/* Barra superior y rail también en vidrio */
+[data-tema="vidrio"] header.sticky,
+[data-tema="vidrio"] nav.sticky {
+  background-color: rgba(9, 18, 36, 0.72) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(1.1);
+  backdrop-filter: blur(16px) saturate(1.1);
+  border-color: rgba(91, 140, 255, 0.13);
+}
+
+/* Glow estratégico: solo el ícono de navegación activo */
+[data-tema="vidrio"] nav.sticky a[class*="bg-accent"] {
+  box-shadow: 0 0 22px rgba(91, 140, 255, 0.4) !important;
+}
+
+/* Calma institucional en la landing: sin cursor propio ni lanzas cruzando */
+[data-tema="vidrio"] .cursor-punto,
+[data-tema="vidrio"] .cursor-anillo,
+[data-tema="vidrio"] .lanza-vuela {
+  display: none !important;
+}
+[data-tema="vidrio"] .con-barrido::after,
+[data-tema="vidrio"] .marquesina-pista {
+  opacity: 0.5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-tema="vidrio"] body { animation: none; }
+}
+
 /* Respeto a usuarios con movimiento reducido */
 @media (prefers-reduced-motion: reduce) {
   .aurora-a,

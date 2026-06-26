@@ -3,8 +3,10 @@
 import { useMemo, useState } from "react";
 import { ChevronDown, ChevronUp, Search, X } from "lucide-react";
 import mtdData from "@/data/mtd_gestores.json";
+import supervisoresData from "@/data/supervisores.json";
 import { fmtMoneda, fmtNum, fmtPct } from "@/lib/formato";
 import { Barra, ChipNivel, Delta, ScoreBar, Tip } from "@/components/ui";
+import { LogoCartera } from "@/components/logo-cartera";
 import {
   ALERTA_META,
   NIVEL_META,
@@ -15,6 +17,8 @@ import {
 } from "@/types/mtd";
 
 const mtd = mtdData as unknown as MTDData;
+const SUPERVISORES = supervisoresData.supervisores as Record<string, string>;
+const liderDe = (cartera: string) => SUPERVISORES[cartera]?.trim() ?? "";
 
 type Orden = "score" | "gestiones" | "tasa_contacto" | "ptp_rate" | "promesas" | "gestiones_dia" | "dias_activos";
 
@@ -38,8 +42,17 @@ export default function AsesoresPage() {
     () => ["TODAS", ...Array.from(new Set(mtd.gestores.map((g) => g.cartera_principal))).sort()],
     []
   );
+  // Supervisores que realmente tienen asesores en la data
+  const supervisores = useMemo(
+    () => [
+      "TODOS",
+      ...Array.from(new Set(mtd.gestores.map((g) => liderDe(g.cartera_principal)).filter(Boolean))).sort(),
+    ],
+    []
+  );
 
   const [cartera, setCartera] = useState("TODAS");
+  const [supervisor, setSupervisor] = useState("TODOS");
   const [nivel, setNivel] = useState<Nivel | "TODOS">("TODOS");
   const [soloAlerta, setSoloAlerta] = useState(false);
   const [busca, setBusca] = useState("");
@@ -47,10 +60,15 @@ export default function AsesoresPage() {
   const [asc, setAsc] = useState(false);
   const [sel, setSel] = useState<string>(mtd.gestores[0].gestor);
 
-  // Base filtrada solo por cartera — alimenta las tarjetas de segmentación
+  // Base filtrada por cartera + supervisor — alimenta las tarjetas de segmentación
   const baseCartera = useMemo(
-    () => (cartera === "TODAS" ? mtd.gestores : mtd.gestores.filter((g) => g.cartera_principal === cartera)),
-    [cartera]
+    () =>
+      mtd.gestores.filter((g) => {
+        if (cartera !== "TODAS" && g.cartera_principal !== cartera) return false;
+        if (supervisor !== "TODOS" && liderDe(g.cartera_principal) !== supervisor) return false;
+        return true;
+      }),
+    [cartera, supervisor]
   );
 
   const seg = useMemo(
@@ -149,10 +167,24 @@ export default function AsesoresPage() {
         <select
           value={cartera}
           onChange={(e) => setCartera(e.target.value)}
-          className="rounded-lg border border-line bg-surface px-2.5 py-1.5 text-xs text-ink-sec outline-none"
+          className="rounded-lg border border-line px-2.5 py-1.5 text-xs text-ink outline-none"
+          style={{ backgroundColor: "#0e1c31", color: "#eaf4f8" }}
         >
           {carteras.map((c) => (
-            <option key={c} value={c} className="bg-surface">{c}</option>
+            <option key={c} value={c} style={{ backgroundColor: "#0e1c31", color: "#eaf4f8" }}>{c}</option>
+          ))}
+        </select>
+        <select
+          value={supervisor}
+          onChange={(e) => setSupervisor(e.target.value)}
+          className="rounded-lg border border-line px-2.5 py-1.5 text-xs text-ink outline-none"
+          style={{ backgroundColor: "#0e1c31", color: "#eaf4f8" }}
+          title="Filtrar por supervisor (líder)"
+        >
+          {supervisores.map((s) => (
+            <option key={s} value={s} style={{ backgroundColor: "#0e1c31", color: "#eaf4f8" }}>
+              {s === "TODOS" ? "Todos los supervisores" : s}
+            </option>
           ))}
         </select>
         <button
@@ -193,14 +225,22 @@ export default function AsesoresPage() {
                 >
                   <td className="tnum px-3 py-2.5 text-center text-xs text-ink-ter">{g.ranking}</td>
                   <td className="px-3 py-2.5">
-                    <div className="flex items-center gap-2">
-                      <span className={`h-2 w-2 rounded-full ${NIVEL_META[g.nivel].punto}`} />
-                      <span className="font-medium text-ink">{titulo(g.gestor)}</span>
-                      {g.alertas.length > 0 && (
-                        <span className="tnum rounded bg-neg-soft px-1 text-[9px] font-bold text-neg">{g.alertas.length}!</span>
-                      )}
+                    <div className="flex items-center gap-2.5">
+                      <LogoCartera cartera={g.cartera_principal} alto={30} />
+                      <div className="min-w-0">
+                        <div className="flex items-center gap-2">
+                          <span className={`h-2 w-2 shrink-0 rounded-full ${NIVEL_META[g.nivel].punto}`} />
+                          <span className="truncate font-medium text-ink">{titulo(g.gestor)}</span>
+                          {g.alertas.length > 0 && (
+                            <span className="tnum rounded bg-neg-soft px-1 text-[9px] font-bold text-neg">{g.alertas.length}!</span>
+                          )}
+                        </div>
+                        <div className="mt-0.5 truncate text-[10px] text-ink-ter">
+                          {g.cartera_principal}
+                          {liderDe(g.cartera_principal) && ` · ${liderDe(g.cartera_principal)}`} · {g.dias_activos}d
+                        </div>
+                      </div>
                     </div>
-                    <div className="mt-0.5 text-[10px] text-ink-ter">{g.cartera_principal} · {g.dias_activos}d</div>
                   </td>
                   <td className="tnum px-3 py-2.5 text-right text-ink-sec">{fmtNum(g.gestiones)}</td>
                   <td className="tnum px-3 py-2.5 text-right text-ink-ter">{fmtNum(g.gestiones_dia)}</td>
@@ -297,7 +337,10 @@ function FichaAsesor({ g, bm, dias }: { g: Gestor; bm: MTDData["benchmarks"]; di
       <div className="flex items-start justify-between gap-3">
         <div>
           <h2 className="text-lg font-extrabold leading-tight text-ink">{titulo(g.gestor)}</h2>
-          <p className="text-xs text-ink-ter">{g.cartera_principal} · ranking #{g.ranking}</p>
+          <div className="mt-1 flex items-center gap-2">
+            <LogoCartera cartera={g.cartera_principal} alto={24} />
+            <p className="text-xs text-ink-ter">{g.cartera_principal} · #{g.ranking}</p>
+          </div>
           <div className="mt-2"><ChipNivel nivel={g.nivel} /></div>
         </div>
         <div className="text-right">

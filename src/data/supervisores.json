@@ -1,0 +1,33 @@
+{
+  "_nota": "Mapeo cartera -> lider/supervisor. Fuente: '20260615 Headcount.xlsx' (Posicion = Lider de Cobros). La fuente MTD no trae lider, por eso es editable a mano. AFINITI y MULTIBANK no figuran en ese headcount; lider indicado por Angel.",
+  "supervisores": {
+    "BANISTMO ACTIVA": "Luis Dolande",
+    "BANISTMO RECOVERY": "Andrew Gonzalez",
+    "SURA": "Kevin Herrera",
+    "TIGO": "Nicolle Nuñez",
+    "BAC": "Yeznyha de León",
+    "SOLVE": "Victor Delgado",
+    "KREDIYA": "Nicolle Nuñez",
+    "RODELAG": "Oris Jaramillo",
+    "BANCO LA HIPOTECARIA": "Miriam Nuñez",
+    "GLOBAL BANK": "Victor Delgado",
+    "AFINITI": "Yilda Giron",
+    "MULTIBANK": "Yilda Giron"
+  },
+  "_nota_gerentes": "Mapeo lider -> a quien reporta (gerencia). Fuente: misma hoja HEADCOUNT, columna 'Reporta'. Los lideres que reportan al Gerente de Cobros (Cesar Zambrano) van directo; los que reportan a la Coordinadora de Cobros (Liliana Caballero) van en su grupo. Yilda Giron (Afiniti/Multibank) no figura en el headcount: queda 'Sin asignar' hasta confirmar.",
+  "gerentes": {
+    "Luis Dolande": "César Zambrano",
+    "Kevin Herrera": "César Zambrano",
+    "Nicolle Nuñez": "César Zambrano",
+    "Andrew Gonzalez": "Liliana Caballero",
+    "Yeznyha de León": "Liliana Caballero",
+    "Miriam Nuñez": "Liliana Caballero",
+    "Oris Jaramillo": "Liliana Caballero",
+    "Victor Delgado": "Liliana Caballero",
+    "Yilda Giron": "Sin asignar"
+  },
+  "_cargos": {
+    "César Zambrano": "Gerente de Cobros",
+    "Liliana Caballero": "Coordinadora de Cobros"
+  }
+}

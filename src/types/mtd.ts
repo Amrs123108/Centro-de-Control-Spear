@@ -56,7 +56,13 @@ export type Benchmarks = {
   promesas_dia: number;
 };
 
-export type PuntoTendencia = { fecha: string; promesas: number };
+export type PuntoTendencia = {
+  fecha: string;
+  /** gestiones/efectivas pueden faltar en datos antiguos (solo traían promesas). */
+  gestiones?: number;
+  efectivas?: number;
+  promesas: number;
+};
 
 export type Cartera = {
   cartera: string;

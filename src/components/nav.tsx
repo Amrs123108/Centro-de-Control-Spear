@@ -2,11 +2,13 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import type { CSSProperties } from "react";
 import {
   Briefcase,
   CalendarDays,
   LayoutDashboard,
   LogOut,
+  Network,
   Radio,
   Users,
 } from "lucide-react";
@@ -14,9 +16,22 @@ import type { Sesion } from "@/lib/auth";
 import { LogoSpearAnimado } from "@/components/marca";
 
 const RUTAS = [
-  { href: "/dashboard", etiqueta: "Resumen", icono: LayoutDashboard },
-  { href: "/carteras", etiqueta: "Carteras", icono: Briefcase },
-  { href: "/asesores", etiqueta: "Asesores", icono: Users },
+  {
+    href: "/dashboard", etiqueta: "Resumen", icono: LayoutDashboard,
+    color: "#22d3ee", soft: "rgba(34,211,238,0.16)", mid: "rgba(34,211,238,0.5)",
+  },
+  {
+    href: "/carteras", etiqueta: "Carteras", icono: Briefcase,
+    color: "#34d399", soft: "rgba(52,211,153,0.16)", mid: "rgba(52,211,153,0.5)",
+  },
+  {
+    href: "/asesores", etiqueta: "Asesores", icono: Users,
+    color: "#a78bfa", soft: "rgba(167,139,250,0.18)", mid: "rgba(167,139,250,0.5)",
+  },
+  {
+    href: "/supervisores", etiqueta: "Equipos", icono: Network,
+    color: "#f472b6", soft: "rgba(244,114,182,0.18)", mid: "rgba(244,114,182,0.5)",
+  },
 ];
 
 const ROL_ETIQUETA: Record<string, string> = {
@@ -44,14 +59,19 @@ export function BarraComando({
   }
 
   return (
-    <header className="sticky top-0 z-40 flex h-14 items-center gap-4 border-b border-line bg-navy/95 px-4 backdrop-blur supports-[backdrop-filter]:bg-navy/80">
-      {/* Identidad — logo animado de la casa */}
-      <div className="flex items-center gap-2.5">
+    <header className="sticky top-0 z-40 flex h-14 items-center gap-4 bg-navy/95 px-4 backdrop-blur supports-[backdrop-filter]:bg-navy/80">
+      {/* Identidad — logo animado de la casa + nombre de la herramienta */}
+      <div className="flex items-center gap-3">
         <LogoSpearAnimado className="h-8 w-auto drop-shadow-[0_0_12px_rgba(27,79,216,0.4)]" />
-        <span className="hidden h-6 w-px bg-line-dark sm:block" />
-        <span className="hidden text-[9px] font-semibold uppercase tracking-[0.22em] text-white/45 sm:block">
-          Centro de Control
-        </span>
+        <span className="hidden h-7 w-px bg-gradient-to-b from-transparent via-accent-claro/50 to-transparent sm:block" />
+        <div className="hidden flex-col leading-none sm:flex">
+          <span className="text-[15px] font-extrabold tracking-tight text-white drop-shadow-[0_0_10px_rgba(91,140,255,0.35)]">
+            Centro de <span className="text-accent-claro">Control</span>
+          </span>
+          <span className="mt-1 text-[8px] font-bold uppercase tracking-[0.34em] text-white/45">
+            Spear · Cobranzas
+          </span>
+        </div>
       </div>
 
       {/* Contexto: período + corte */}
@@ -93,25 +113,34 @@ export function RailIconos() {
   const pathname = usePathname();
 
   return (
-    <nav className="sticky top-14 z-30 flex h-[calc(100vh-3.5rem)] w-16 shrink-0 flex-col items-center gap-1 border-r border-line bg-navy py-4">
-      {RUTAS.map(({ href, etiqueta, icono: Icono }) => {
+    <nav className="sticky top-14 z-30 flex h-[calc(100vh-3.5rem)] w-16 shrink-0 flex-col items-center gap-3 py-5">
+      {RUTAS.map(({ href, etiqueta, icono: Icono, color, soft, mid }) => {
         const activo = pathname.startsWith(href);
         return (
           <Link
             key={href}
             href={href}
             title={etiqueta}
-            className={`group relative flex h-12 w-12 flex-col items-center justify-center gap-0.5 rounded-xl transition ${
-              activo
-                ? "bg-accent text-white shadow-[0_0_18px_rgba(27,79,216,0.45)]"
-                : "text-white/55 hover:bg-white/5 hover:text-white"
-            }`}
+            data-activo={activo}
+            style={{ "--hud": color, "--hud-soft": soft, "--hud-mid": mid } as CSSProperties}
+            className="hud-link relative flex flex-col items-center gap-1.5 rounded-xl py-1"
           >
-            <Icono className="h-[18px] w-[18px]" />
-            <span className="text-[8px] font-semibold uppercase tracking-wide">{etiqueta}</span>
-            {activo && (
-              <span className="absolute -left-[1px] top-1/2 h-6 w-[3px] -translate-y-1/2 rounded-full bg-accent-claro" />
-            )}
+            {/* Nodo HUD: anillos concéntricos (alternan estilo y dirección) +
+                brillo. Giran al pasar el mouse o si la sección está activa. */}
+            <span className="hud-nodo">
+              <span className="hud-glow" />
+              <span className="hud-anillo hud-anillo--a hud-anillo--r1" />
+              <span className="hud-anillo hud-anillo--b hud-anillo--r2" />
+              <span className="hud-anillo hud-anillo--a hud-anillo--r3" />
+              <span className="hud-anillo hud-anillo--b hud-anillo--r4" />
+              <span className="hud-diamante" />
+              <span className="hud-core">
+                <Icono className="h-4 w-4" />
+              </span>
+            </span>
+            <span className="hud-label text-[8px] font-semibold uppercase tracking-wide">
+              {etiqueta}
+            </span>
           </Link>
         );
       })}

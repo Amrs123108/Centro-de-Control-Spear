@@ -1,11 +1,12 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Banknote, Briefcase, PhoneCall, Target, TrendingUp, Users } from "lucide-react";
+import { Banknote, PhoneCall, Target, TrendingUp, Users } from "lucide-react";
 import mtdData from "@/data/mtd_gestores.json";
 import { fmtMoneda, fmtNum, fmtPct } from "@/lib/formato";
 import { GraficoTendencia } from "@/components/graficos";
 import { Barra, ChipNivel, Delta, ScoreBar, Tip } from "@/components/ui";
+import { LogoCartera } from "@/components/logo-cartera";
 import { NIVEL_META, type MTDData, type Nivel } from "@/types/mtd";
 
 const mtd = mtdData as unknown as MTDData;
@@ -50,7 +51,12 @@ export default function CarterasPage() {
     [c.cartera]
   );
 
-  const tendencia = c.tendencia.map((p) => ({ fecha: p.fecha, gestiones: 0, efectivas: 0, promesas: p.promesas }));
+  const tendencia = c.tendencia.map((p) => ({
+    fecha: p.fecha,
+    gestiones: p.gestiones ?? 0,
+    efectivas: p.efectivas ?? 0,
+    promesas: p.promesas,
+  }));
 
   return (
     <div className="space-y-5">
@@ -94,6 +100,7 @@ export default function CarterasPage() {
                 <div className="flex items-center justify-between gap-2">
                   <div className="flex items-center gap-2">
                     <span className="tnum text-[11px] font-bold text-ink-ter">{i + 1}</span>
+                    <LogoCartera cartera={x.cartera} alto={24} />
                     <span className="text-sm font-semibold text-ink">{x.cartera}</span>
                   </div>
                   <ChipNivel nivel={x.nivel} />
@@ -116,9 +123,7 @@ export default function CarterasPage() {
           <div className="rounded-xl border border-line bg-surface p-5 shadow-card">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div className="flex items-center gap-3">
-                <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-accent-soft text-accent-claro">
-                  <Briefcase className="h-5 w-5" />
-                </span>
+                <LogoCartera cartera={c.cartera} alto={40} />
                 <div>
                   <div className="flex items-center gap-2">
                     <h2 className="text-xl font-extrabold text-ink">{c.cartera}</h2>
@@ -150,8 +155,14 @@ export default function CarterasPage() {
           </div>
 
           <div className="rounded-xl border border-line bg-surface p-5 shadow-card">
-            <h3 className="mb-3 text-sm font-bold text-ink">Promesas por día</h3>
-            <GraficoTendencia data={tendencia} />
+            <div className="mb-3 flex items-center justify-between gap-2">
+              <h3 className="text-sm font-bold text-ink">Trabajo por día</h3>
+              <span className="text-[11px] text-ink-ter">
+                Gestiones · efectivas · promesas ·{" "}
+                <span className="text-neg">▼ baja</span> = día flojo
+              </span>
+            </div>
+            <GraficoTendencia data={tendencia} resaltarBajas />
           </div>
 
           <div className="rounded-xl border border-line bg-surface p-5 shadow-card">
@@ -176,7 +187,12 @@ export default function CarterasPage() {
                 <tbody>
                   {asesores.map((g) => (
                     <tr key={g.gestor} className="border-b border-line/50 last:border-0 hover:bg-canvas/50">
-                      <td className="py-2 pr-3 font-medium text-ink">{titulo(g.gestor)}</td>
+                      <td className="py-2 pr-3">
+                        <div className="flex items-center gap-2">
+                          <LogoCartera cartera={g.cartera_principal} alto={22} />
+                          <span className="font-medium text-ink">{titulo(g.gestor)}</span>
+                        </div>
+                      </td>
                       <td className="py-2 text-center"><ChipNivel nivel={g.nivel} /></td>
                       <td className="tnum py-2 text-right text-ink-sec">{fmtNum(g.gestiones)}</td>
                       <td className="tnum py-2 text-center text-ink-sec">{fmtPct(g.tasa_contacto, 0)}</td>

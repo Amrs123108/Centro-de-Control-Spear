@@ -4,6 +4,7 @@ import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { fmtMoneda, fmtNum, fmtPct } from "@/lib/formato";
 import { Sparkline } from "@/components/graficos";
+import { LogoCartera } from "@/components/logo-cartera";
 import { Barra, CeldaCalor, ChipNivel, ScoreBar, Tip } from "@/components/ui";
 import type { Benchmarks, Cartera } from "@/types/mtd";
 
@@ -105,6 +106,7 @@ export function MatrizCarteras({
               <tr key={c.cartera} className="border-b border-line/50 last:border-0 hover:bg-canvas/50">
                 <td className="py-2.5 pr-3">
                   <div className="flex items-center gap-2">
+                    <LogoCartera cartera={c.cartera} alto={26} />
                     <span className="font-medium text-ink">{c.cartera}</span>
                     <ChipNivel nivel={c.nivel} />
                   </div>

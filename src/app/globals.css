@@ -450,6 +450,54 @@ html.lenis body {
   animation: logo-brillo 5.5s ease-in-out 2s infinite;
 }
 
+/* Marcador animado de día de baja producción (gráfica de tendencia) */
+@keyframes pulso-baja {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+  50% {
+    opacity: 0.35;
+    transform: scale(1.45);
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+}
+.marcador-baja {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pulso-baja 1.5s ease-in-out infinite;
+}
+
+/* Marca de agua de fondo: pulso de luz que recorre el asta de la lanza */
+.marca-fondo-luz {
+  transform-box: fill-box;
+}
+@keyframes marca-fondo-luz {
+  0% {
+    transform: translateX(-72px);
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  46% {
+    transform: translateX(300px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(300px);
+    opacity: 0;
+  }
+}
+.marca-fondo-luz {
+  opacity: 0;
+  animation: marca-fondo-luz 7s ease-in-out 1s infinite;
+}
+
 /* El guerrero vivo: mirada que se enciende y estrella que destella */
 @keyframes mirada-enciende {
   0%,
@@ -682,18 +730,148 @@ html.lenis body {
   stroke: rgba(120, 152, 255, 0.10);
 }
 
-/* Barra superior y rail también en vidrio */
+/* Barra superior y rail con el MISMO vidrio de los paneles — sin relleno sólido
+   ni línea divisoria: son parte del fondo. El sheen diagonal atrapa la luz y un
+   blur suave preserva la legibilidad mientras el fondo animado se filtra. */
 [data-tema="vidrio"] header.sticky,
 [data-tema="vidrio"] nav.sticky {
-  background-color: rgba(9, 18, 36, 0.72) !important;
-  -webkit-backdrop-filter: blur(16px) saturate(1.1);
-  backdrop-filter: blur(16px) saturate(1.1);
-  border-color: rgba(91, 140, 255, 0.13);
+  background-color: transparent !important;
+  background-image: none !important;
+  /* Totalmente transparente: sin backdrop-filter, así no hay borde donde termine
+     la región del filtro. El contenido se apoya directo sobre el fondo animado. */
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 
-/* Glow estratégico: solo el ícono de navegación activo */
-[data-tema="vidrio"] nav.sticky a[class*="bg-accent"] {
-  box-shadow: 0 0 22px rgba(91, 140, 255, 0.4) !important;
+/* ── Nodos HUD del rail lateral ────────────────────────────────────────────────
+   Cada ítem de navegación es un nodo sci-fi: núcleo con ícono, anillos y un halo
+   de brillo. En reposo se ve apagado y quieto; al pasar el mouse (o estar activo)
+   aparece el brillo y los anillos giran en sentidos opuestos. El color lo aporta
+   cada Link vía la variable --hud. */
+@keyframes hud-girar {
+  to { transform: rotate(360deg); }
+}
+@keyframes hud-girar-inv {
+  to { transform: rotate(-360deg); }
+}
+
+.hud-nodo {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 9999px;
+}
+
+.hud-core {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 9999px;
+  border: 1px solid var(--hud-soft);
+  background: radial-gradient(circle at 50% 42%, var(--hud-soft) 0%, transparent 72%);
+  color: #aeb8c8;
+  transition: color .3s ease, border-color .3s ease, box-shadow .3s ease, background .3s ease;
+}
+
+.hud-anillo {
+  position: absolute;
+  border-radius: 9999px;
+  opacity: 0;
+  transition: opacity .35s ease;
+  pointer-events: none;
+}
+/* Estilo A: arco sólido (resalta el cuarto superior) */
+.hud-anillo--a {
+  border: 1px solid transparent;
+  border-top-color: var(--hud);
+  border-right-color: var(--hud-mid);
+}
+/* Estilo B: línea punteada — idéntica a la del aro interior original */
+.hud-anillo--b {
+  border: 1px dashed var(--hud-mid);
+}
+/* Concéntricos: cada aro 5px más pequeño que el anterior */
+.hud-anillo--r1 { inset: 0; }
+.hud-anillo--r2 { inset: 5px; }
+.hud-anillo--r3 { inset: 10px; }
+.hud-anillo--r4 { inset: 15px; }
+
+.hud-glow {
+  position: absolute;
+  inset: -7px;
+  border-radius: 9999px;
+  opacity: 0;
+  background: radial-gradient(circle, var(--hud) 0%, transparent 62%);
+  filter: blur(7px);
+  transition: opacity .35s ease;
+  pointer-events: none;
+}
+
+.hud-diamante {
+  position: absolute;
+  top: -2px;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  margin-left: -2.5px;
+  background: var(--hud);
+  transform: rotate(45deg);
+  opacity: 0;
+  box-shadow: 0 0 6px var(--hud);
+  transition: opacity .35s ease;
+  pointer-events: none;
+}
+
+.hud-label {
+  color: rgba(226, 232, 240, 0.5);
+  transition: color .3s ease;
+}
+
+/* Estado activo y hover: el nodo se enciende y los anillos giran */
+.hud-link:hover .hud-glow,
+.hud-link[data-activo="true"] .hud-glow { opacity: .55; }
+
+.hud-link:hover .hud-anillo,
+.hud-link[data-activo="true"] .hud-anillo { opacity: 1; }
+
+.hud-link:hover .hud-diamante,
+.hud-link[data-activo="true"] .hud-diamante { opacity: .9; }
+
+.hud-link:hover .hud-core,
+.hud-link[data-activo="true"] .hud-core {
+  color: #fff;
+  border-color: var(--hud);
+  box-shadow: 0 0 16px var(--hud-mid);
+  background: radial-gradient(circle at 50% 42%, var(--hud-mid) 0%, transparent 72%);
+}
+
+.hud-link:hover .hud-label,
+.hud-link[data-activo="true"] .hud-label {
+  color: var(--hud);
+}
+
+/* Rotación: al pasar el mouse O si la sección está activa (el seleccionado gira
+   solo). Los aros estilo A van en un sentido y los B en el contrario, así cada
+   anillo gira opuesto al de al lado. */
+.hud-link:hover .hud-anillo--a,
+.hud-link[data-activo="true"] .hud-anillo--a { animation: hud-girar 3.6s linear infinite; }
+.hud-link:hover .hud-anillo--b,
+.hud-link[data-activo="true"] .hud-anillo--b { animation: hud-girar-inv 4.8s linear infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hud-link:hover .hud-anillo--a,
+  .hud-link:hover .hud-anillo--b,
+  .hud-link[data-activo="true"] .hud-anillo--a,
+  .hud-link[data-activo="true"] .hud-anillo--b { animation: none; }
 }
 
 /* Calma institucional en la landing: sin cursor propio ni lanzas cruzando */
@@ -731,6 +909,7 @@ html.lenis body {
   .logo-lanza-asta,
   .logo-lanza-punta,
   .logo-brillo,
+  .marca-fondo-luz,
   .casco-mirada,
   .casco-estrella,
   .lanza-vuela {

@@ -7,19 +7,42 @@ import {
   BarChart,
   CartesianGrid,
   Cell,
+  ComposedChart,
+  LabelList,
   Legend,
+  Line,
   Pie,
   PieChart,
   PolarAngleAxis,
   RadialBar,
   RadialBarChart,
-  ReferenceLine,
+  ReferenceDot,
   ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
+import { useState } from "react";
+import { fmtNum } from "@/lib/formato";
 import { useTema } from "@/components/tema";
+
+/**
+ * Controla el tooltip por hover real del contenedor. En recharts 3 el tooltip
+ * solo se oculta cuando `active` es false; si el chart no detecta el mouse-leave
+ * (pasa con paneles glass / fondos animados), el recuadro se queda "pegado".
+ * Forzamos `active=false` al salir del área del gráfico. Devuelve también los
+ * handlers para envolver el ResponsiveContainer.
+ */
+function useHoverActivo() {
+  const [hover, setHover] = useState(false);
+  return {
+    activo: hover ? undefined : (false as const),
+    bind: {
+      onMouseEnter: () => setHover(true),
+      onMouseLeave: () => setHover(false),
+    },
+  };
+}
 
 /* Paletas por tema: las gráficas siguen el sistema visual activo. */
 const PALETAS = {
@@ -66,6 +89,13 @@ function estilosTooltip(p: Paleta) {
       fontSize: 12,
     },
     labelStyle: { color: p.ink, fontWeight: 600 },
+    // itemStyle controla el color del texto de cada serie en el tooltip:
+    // sin esto recharts lo deja en negro y se vuelve ilegible sobre el fondo oscuro.
+    itemStyle: { color: p.ink },
+    // wrapperStyle evita el tooltip "pegado": sin pointer-events el recuadro no
+    // captura el cursor (no se queda bajo él) y sin transición no deja rastro al
+    // ocultarse cuando el mouse sale de la gráfica.
+    wrapperStyle: { pointerEvents: "none" as const, transition: "none" },
     legendStyle: { fontSize: 12, color: p.inkSec },
   };
 }
@@ -118,19 +148,11 @@ export function GraficoHoras({
 }) {
   const p = usePaleta();
   const ttip = estilosTooltip(p);
+  const { activo, bind } = useHoverActivo();
   return (
-    <ResponsiveContainer width="100%" height={280}>
-      <AreaChart data={data} margin={{ top: 8, right: 8, left: -12, bottom: 0 }}>
-        <defs>
-          <linearGradient id="gradGestiones" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor={p.accent} stopOpacity={0.25} />
-            <stop offset="100%" stopColor={p.accent} stopOpacity={0.02} />
-          </linearGradient>
-          <linearGradient id="gradEfectivas" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor={p.pos} stopOpacity={0.3} />
-            <stop offset="100%" stopColor={p.pos} stopOpacity={0.02} />
-          </linearGradient>
-        </defs>
+    <div {...bind}>
+      <ResponsiveContainer width="100%" height={280}>
+      <ComposedChart data={data} margin={{ top: 24, right: 8, left: -12, bottom: 0 }}>
         <CartesianGrid strokeDasharray="3 3" stroke={p.line} vertical={false} />
         <XAxis
           dataKey="hora"
@@ -145,43 +167,80 @@ export function GraficoHoras({
           tickLine={false}
         />
         <Tooltip
+          cursor={{ fill: "rgba(255,255,255,0.04)" }}
           contentStyle={ttip.contentStyle}
           labelStyle={ttip.labelStyle}
+          itemStyle={ttip.itemStyle}
+          wrapperStyle={ttip.wrapperStyle}
+          active={activo}
           labelFormatter={(h) => `${h}:00 — ${Number(h) + 1}:00`}
         />
         <Legend wrapperStyle={ttip.legendStyle} />
-        {mejorHora !== undefined && (
-          <ReferenceLine
-            x={mejorHora}
-            stroke={p.gold}
-            strokeWidth={2}
-            strokeDasharray="4 4"
-            label={{
-              value: "Mejor franja",
-              position: "top",
-              fill: p.gold,
-              fontSize: 10,
-            }}
-          />
-        )}
-        <Area
-          type="monotone"
-          dataKey="gestiones"
-          name="Gestiones"
-          stroke={p.accent}
-          strokeWidth={2}
-          fill="url(#gradGestiones)"
-        />
-        <Area
+        {/* Gestiones como barras; la mejor franja resaltada en dorado */}
+        <Bar dataKey="gestiones" name="Gestiones" radius={[3, 3, 0, 0]} maxBarSize={26}>
+          {data.map((d) => (
+            <Cell
+              key={d.hora}
+              fill={d.hora === mejorHora ? p.gold : p.accent}
+              fillOpacity={d.hora === mejorHora ? 1 : 0.62}
+            />
+          ))}
+        </Bar>
+        {/* Contactos efectivos como línea encima */}
+        <Line
           type="monotone"
           dataKey="efectivas"
           name="Contactos efectivos"
           stroke={p.pos}
-          strokeWidth={2}
-          fill="url(#gradEfectivas)"
+          strokeWidth={2.5}
+          dot={false}
+          activeDot={{ r: 4 }}
         />
-      </AreaChart>
-    </ResponsiveContainer>
+      </ComposedChart>
+      </ResponsiveContainer>
+    </div>
+  );
+}
+
+/**
+ * Mini gráfico de barras por día — informativo (resalta el día pico y muestra
+ * el valor al pasar el cursor). Reemplaza las sparklines decorativas.
+ */
+export function MiniBarras({
+  data,
+  color,
+  alto = 40,
+}: {
+  data: { etiqueta: string; valor: number }[];
+  color?: string;
+  alto?: number;
+}) {
+  const p = usePaleta();
+  const c = color ?? p.accent;
+  const max = Math.max(...data.map((d) => d.valor), 1);
+  const { activo, bind } = useHoverActivo();
+  return (
+    <div {...bind} className="h-full w-full">
+      <ResponsiveContainer width="100%" height={alto}>
+      <BarChart data={data} margin={{ top: 1, right: 0, left: 0, bottom: 0 }} barCategoryGap={1}>
+        <Tooltip
+          cursor={{ fill: "rgba(255,255,255,0.05)" }}
+          contentStyle={{ ...estilosTooltip(p).contentStyle, padding: "4px 8px" }}
+          labelStyle={{ color: p.inkSec, fontWeight: 600, fontSize: 11 }}
+          itemStyle={{ color: p.ink, fontWeight: 700 }}
+          wrapperStyle={{ pointerEvents: "none", transition: "none" }}
+          active={activo}
+          formatter={(v) => [fmtNum(Number(v)), ""] as [string, string]}
+          labelFormatter={(e) => String(e)}
+        />
+        <Bar dataKey="valor" radius={[2, 2, 0, 0]} isAnimationActive={false}>
+          {data.map((d, i) => (
+            <Cell key={i} fill={c} fillOpacity={d.valor >= max ? 1 : 0.4} />
+          ))}
+        </Bar>
+      </BarChart>
+      </ResponsiveContainer>
+    </div>
   );
 }
 
@@ -228,8 +287,10 @@ export function GraficoCategorias({
 }) {
   const p = usePaleta();
   const ttip = estilosTooltip(p);
+  const { activo, bind } = useHoverActivo();
   return (
-    <ResponsiveContainer width="100%" height={280}>
+    <div {...bind}>
+      <ResponsiveContainer width="100%" height={280}>
       <PieChart>
         <Pie
           data={data}
@@ -244,7 +305,7 @@ export function GraficoCategorias({
             <Cell key={i} fill={p.serie[i % p.serie.length]} />
           ))}
         </Pie>
-        <Tooltip contentStyle={ttip.contentStyle} labelStyle={ttip.labelStyle} />
+        <Tooltip contentStyle={ttip.contentStyle} labelStyle={ttip.labelStyle} itemStyle={ttip.itemStyle} wrapperStyle={ttip.wrapperStyle} active={activo} />
         <Legend
           layout="vertical"
           align="right"
@@ -254,23 +315,36 @@ export function GraficoCategorias({
           wrapperStyle={{ fontSize: 11, lineHeight: "20px", color: "#aebdd2" }}
         />
       </PieChart>
-    </ResponsiveContainer>
+      </ResponsiveContainer>
+    </div>
   );
 }
 
 export function GraficoTendencia({
   data,
+  resaltarBajas = false,
 }: {
   data: { fecha: string; gestiones: number; efectivas: number; promesas: number }[];
+  /** Marca con un pulso los días de baja producción (gestiones < ½ de la mediana). */
+  resaltarBajas?: boolean;
 }) {
   const p = usePaleta();
   const ttip = estilosTooltip(p);
+  const { activo, bind } = useHoverActivo();
   const fmt = (f: string) =>
     new Date(`${f}T12:00:00`).toLocaleDateString("es-PA", { day: "numeric", month: "short" });
 
+  // Detección de días flojos: gestiones por debajo de la mitad de la mediana.
+  const gestPos = data.map((d) => d.gestiones).filter((v) => v > 0).sort((a, b) => a - b);
+  const medianaGest = gestPos.length ? gestPos[Math.floor(gestPos.length / 2)] : 0;
+  const anomalias = resaltarBajas && medianaGest > 0
+    ? data.filter((d) => d.gestiones > 0 && d.gestiones < 0.5 * medianaGest)
+    : [];
+
   return (
-    <ResponsiveContainer width="100%" height={260}>
-      <AreaChart data={data} margin={{ top: 8, right: 8, left: -12, bottom: 0 }}>
+    <div {...bind}>
+      <ResponsiveContainer width="100%" height={260}>
+      <AreaChart data={data} margin={{ top: 18, right: 10, left: 6, bottom: 0 }}>
         <defs>
           <linearGradient id="gradGestT" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor={p.accent} stopOpacity={0.2} />
@@ -294,18 +368,46 @@ export function GraficoTendencia({
           tickLine={false}
           interval="preserveStartEnd"
         />
-        <YAxis tick={{ fontSize: 11, fill: p.inkTer }} axisLine={false} tickLine={false} />
+        {/* Sin eje Y: las etiquetas de datos dan la magnitud y el gráfico gana ancho */}
+        <YAxis hide domain={[0, "dataMax"]} />
         <Tooltip
           contentStyle={ttip.contentStyle}
           labelStyle={ttip.labelStyle}
+          itemStyle={ttip.itemStyle}
+          wrapperStyle={ttip.wrapperStyle}
+          active={activo}
           labelFormatter={(f: unknown) => fmt(String(f))}
         />
         <Legend wrapperStyle={ttip.legendStyle} />
-        <Area type="monotone" dataKey="gestiones" name="Gestiones" stroke={p.accent} strokeWidth={2} fill="url(#gradGestT)" />
-        <Area type="monotone" dataKey="efectivas" name="Efectivas" stroke={p.pos} strokeWidth={2} fill="url(#gradEfecT)" />
-        <Area type="monotone" dataKey="promesas" name="Promesas" stroke={p.gold} strokeWidth={2} fill="url(#gradPromT)" />
+        {/* type "linear": segmentos rectos entre días (no la curva exagerada);
+            dots: un punto por día; etiqueta de datos en las tres series. */}
+        <Area type="linear" dataKey="gestiones" name="Gestiones" stroke={p.accent} strokeWidth={2} fill="url(#gradGestT)" dot={{ r: 2, fill: p.accent, strokeWidth: 0 }} activeDot={{ r: 4 }}>
+          <LabelList dataKey="gestiones" position="top" offset={9} style={{ fill: p.accent, fontSize: 9, fontWeight: 700 }} formatter={(v: unknown) => fmtNum(Number(v))} />
+        </Area>
+        <Area type="linear" dataKey="efectivas" name="Efectivas" stroke={p.pos} strokeWidth={2} fill="url(#gradEfecT)" dot={{ r: 2, fill: p.pos, strokeWidth: 0 }} activeDot={{ r: 4 }}>
+          <LabelList dataKey="efectivas" position="bottom" offset={7} style={{ fill: p.pos, fontSize: 9, fontWeight: 700 }} formatter={(v: unknown) => fmtNum(Number(v))} />
+        </Area>
+        <Area type="linear" dataKey="promesas" name="Promesas" stroke={p.gold} strokeWidth={2} fill="url(#gradPromT)" dot={{ r: 2.5, fill: p.gold, strokeWidth: 0 }} activeDot={{ r: 4 }}>
+          <LabelList dataKey="promesas" position="bottom" offset={7} style={{ fill: p.gold, fontSize: 9, fontWeight: 700 }} formatter={(v: unknown) => fmtNum(Number(v))} />
+        </Area>
+        {/* Marca animada en días de baja producción */}
+        {anomalias.map((d) => (
+          <ReferenceDot
+            key={d.fecha}
+            x={d.fecha}
+            y={d.gestiones}
+            r={7}
+            fill="none"
+            stroke="#f0605e"
+            strokeWidth={2}
+            className="marcador-baja"
+            ifOverflow="extendDomain"
+            label={{ value: "▼ baja", position: "top", fill: "#f0605e", fontSize: 9, fontWeight: 700 }}
+          />
+        ))}
       </AreaChart>
-    </ResponsiveContainer>
+      </ResponsiveContainer>
+    </div>
   );
 }
 
@@ -316,8 +418,10 @@ export function GraficoCarteras({
 }) {
   const p = usePaleta();
   const ttip = estilosTooltip(p);
+  const { activo, bind } = useHoverActivo();
   return (
-    <ResponsiveContainer width="100%" height={300}>
+    <div {...bind}>
+      <ResponsiveContainer width="100%" height={300}>
       <BarChart
         data={data}
         layout="vertical"
@@ -338,7 +442,7 @@ export function GraficoCarteras({
           axisLine={false}
           tickLine={false}
         />
-        <Tooltip contentStyle={ttip.contentStyle} labelStyle={ttip.labelStyle} />
+        <Tooltip contentStyle={ttip.contentStyle} labelStyle={ttip.labelStyle} itemStyle={ttip.itemStyle} wrapperStyle={ttip.wrapperStyle} active={activo} />
         <Legend wrapperStyle={ttip.legendStyle} />
         <Bar
           dataKey="gestiones"
@@ -355,6 +459,7 @@ export function GraficoCarteras({
           barSize={12}
         />
       </BarChart>
-    </ResponsiveContainer>
+      </ResponsiveContainer>
+    </div>
   );
 }

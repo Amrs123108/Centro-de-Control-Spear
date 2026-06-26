@@ -624,10 +624,12 @@ def main(anio: str | None = None, mes: str | None = None) -> None:
         {**r, "fecha": str(r["fecha"])} for r in tendencia.to_dict(orient="records")
     ]
 
-    # ── Tendencia de promesas por cartera (sparkline) ─────────────────────────
+    # ── Tendencia diaria por cartera (gestiones/efectivas/promesas) ───────────
+    # Antes solo promesas; ahora las tres métricas para poder comparar el trabajo
+    # de cada día por cartera y detectar días de baja producción.
     tend_cart = (
         df_mes.groupby(["PROYECTO", df_mes["FECHA_ARCHIVO"].dt.date])
-        .agg(promesas=("es_promesa", "sum"))
+        .agg(gestiones=("GESTOR", "size"), efectivas=("efectiva", "sum"), promesas=("es_promesa", "sum"))
         .reset_index()
         .rename(columns={"FECHA_ARCHIVO": "fecha"})
         .sort_values("fecha")
@@ -635,7 +637,12 @@ def main(anio: str | None = None, mes: str | None = None) -> None:
     tend_por_cartera: dict[str, list] = {}
     for _, row in tend_cart.iterrows():
         tend_por_cartera.setdefault(row["PROYECTO"], []).append(
-            {"fecha": str(row["fecha"]), "promesas": int(row["promesas"])}
+            {
+                "fecha": str(row["fecha"]),
+                "gestiones": int(row["gestiones"]),
+                "efectivas": int(row["efectivas"]),
+                "promesas": int(row["promesas"]),
+            }
         )
 
     # ── Detalle por cartera (con monto, pagos, asesores y score) ──────────────

@@ -103,6 +103,87 @@ export function LogoSpearAnimado({
   );
 }
 
+/**
+ * Marca de agua de fondo: el logo Spear gigante y muy tenue, con un PULSO DE LUZ
+ * que recorre el asta de la lanza (de cola a punta) en bucle. El logo usa
+ * currentColor a baja opacidad; el destello lleva su propio degradado brillante,
+ * así la luz "viaja dentro de la flecha" sin que el watermark estorbe la lectura.
+ */
+export function MarcaFondo({ className = "" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 300 96"
+      className={className}
+      aria-hidden="true"
+      preserveAspectRatio="xMidYMid meet"
+    >
+      <defs>
+        {/* La luz se recorta a la unión asta + punta: viaja por el asta como una
+            franja fina y enciende toda la cabeza de flecha al llegar a la punta. */}
+        <clipPath id="marca-fondo-lanza">
+          <rect x="0" y="36" width="232" height="7" />
+          <path d="M226 26 268 39.5 226 53 236 39.5Z" />
+        </clipPath>
+        <linearGradient id="marca-fondo-luz-grad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stopColor="rgba(150,185,255,0)" />
+          <stop offset="45%" stopColor="rgba(190,212,255,1)" />
+          <stop offset="55%" stopColor="rgba(190,212,255,1)" />
+          <stop offset="100%" stopColor="rgba(150,185,255,0)" />
+        </linearGradient>
+        <filter id="marca-fondo-halo" x="-30%" y="-60%" width="160%" height="220%">
+          <feGaussianBlur stdDeviation="9" />
+        </filter>
+      </defs>
+
+      {/* Halo claro detrás del logo: el fondo de las letras se ve más blanco */}
+      <ellipse cx="140" cy="50" rx="160" ry="44" fill="rgba(255,255,255,0.06)" filter="url(#marca-fondo-halo)" />
+
+      {/* Dos tonos del logo real: SPEAR blanco, lanza y CONTACT en azul de marca */}
+      <text
+        x="20"
+        y="58"
+        fontFamily="var(--font-dm-sans), system-ui, sans-serif"
+        fontWeight="800"
+        fontSize="56"
+        letterSpacing="2"
+        fill="#ffffff"
+        opacity="0.34"
+      >
+        SPEAR
+      </text>
+      <g fill="#3b6cf0" opacity="0.55">
+        <rect x="0" y="36" width="232" height="7" />
+        <path d="M226 26 268 39.5 226 53 236 39.5Z" />
+      </g>
+      <text
+        x="222"
+        y="82"
+        textAnchor="end"
+        fontFamily="var(--font-dm-sans), system-ui, sans-serif"
+        fontWeight="800"
+        fontSize="22"
+        letterSpacing="3"
+        fill="#3b6cf0"
+        opacity="0.55"
+      >
+        CONTACT
+      </text>
+
+      {/* Pulso de luz que recorre la lanza hasta la punta */}
+      <g clipPath="url(#marca-fondo-lanza)">
+        <rect
+          className="marca-fondo-luz"
+          x="0"
+          y="24"
+          width="70"
+          height="48"
+          fill="url(#marca-fondo-luz-grad)"
+        />
+      </g>
+    </svg>
+  );
+}
+
 /** La lanza de la marca, sola — para divisores y lanzas en vuelo. */
 export function LanzaSpear({
   className = "h-3 w-auto",

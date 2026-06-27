@@ -2,18 +2,18 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import type { CSSProperties } from "react";
+import { Suspense, type CSSProperties } from "react";
 import {
   Briefcase,
-  CalendarDays,
+  GitCompareArrows,
   LayoutDashboard,
   LogOut,
   Network,
-  Radio,
   Users,
 } from "lucide-react";
 import type { Sesion } from "@/lib/auth";
 import { LogoSpearAnimado } from "@/components/marca";
+import { SelectorPeriodo } from "@/components/selector-periodo";
 
 const RUTAS = [
   {
@@ -32,6 +32,10 @@ const RUTAS = [
     href: "/supervisores", etiqueta: "Equipos", icono: Network,
     color: "#f472b6", soft: "rgba(244,114,182,0.18)", mid: "rgba(244,114,182,0.5)",
   },
+  {
+    href: "/comparativa", etiqueta: "Comparar", icono: GitCompareArrows,
+    color: "#fbbf24", soft: "rgba(251,191,36,0.16)", mid: "rgba(251,191,36,0.5)",
+  },
 ];
 
 const ROL_ETIQUETA: Record<string, string> = {
@@ -41,15 +45,7 @@ const ROL_ETIQUETA: Record<string, string> = {
 };
 
 /* ── Barra de comando superior ─────────────────────────────────────────────── */
-export function BarraComando({
-  sesion,
-  periodo,
-  corte,
-}: {
-  sesion: Sesion;
-  periodo: string;
-  corte: string;
-}) {
+export function BarraComando({ sesion }: { sesion: Sesion }) {
   const router = useRouter();
 
   async function salir() {
@@ -74,17 +70,11 @@ export function BarraComando({
         </div>
       </div>
 
-      {/* Contexto: período + corte */}
-      <div className="ml-2 hidden items-center gap-2 sm:flex">
-        <span className="flex items-center gap-1.5 rounded-md border border-line-dark bg-surface px-2.5 py-1 text-xs font-medium text-ink-sec">
-          <CalendarDays className="h-3.5 w-3.5 text-accent-claro" />
-          {periodo}
-          <span className="rounded bg-accent-soft px-1 text-[9px] font-bold uppercase tracking-wider text-accent-claro">MTD</span>
-        </span>
-        <span className="flex items-center gap-1.5 rounded-md border border-line-dark bg-surface px-2.5 py-1 text-xs text-ink-ter">
-          <Radio className="h-3.5 w-3.5 text-pos" />
-          {corte}
-        </span>
+      {/* Contexto: selector de período + corte */}
+      <div className="ml-2">
+        <Suspense fallback={null}>
+          <SelectorPeriodo />
+        </Suspense>
       </div>
 
       {/* Usuario */}

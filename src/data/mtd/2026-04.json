@@ -1,0 +1,6177 @@
+{
+  "generado": "2026-06-27T11:48:08",
+  "periodo": "2026-04",
+  "mes_nombre": "Abril",
+  "dias_procesados": [
+    "2026-04-01",
+    "2026-04-02",
+    "2026-04-06",
+    "2026-04-07",
+    "2026-04-08",
+    "2026-04-09",
+    "2026-04-10",
+    "2026-04-11",
+    "2026-04-13",
+    "2026-04-14",
+    "2026-04-15",
+    "2026-04-16",
+    "2026-04-17",
+    "2026-04-18",
+    "2026-04-20",
+    "2026-04-21",
+    "2026-04-22",
+    "2026-04-23",
+    "2026-04-24",
+    "2026-04-25",
+    "2026-04-27",
+    "2026-04-28",
+    "2026-04-29",
+    "2026-04-30"
+  ],
+  "pct_mes_transcurrido": 100.0,
+  "resumen": {
+    "total_gestores": 66,
+    "total_gestiones": 143015,
+    "total_efectivas": 48885,
+    "total_promesas": 22749,
+    "total_compromisos": 9731,
+    "total_pagos": 1960,
+    "total_recaudo": 1534920.91,
+    "tasa_contacto": 0.3418,
+    "ptp_rate": 0.4654,
+    "conversion": 0.1591,
+    "ticket_promedio": 67.47,
+    "gestiones_por_gestor": 2166.9,
+    "gestiones_por_dia": 5959.0,
+    "gestores_elite": 18,
+    "gestores_solido": 20,
+    "gestores_promedio": 16,
+    "gestores_bajo": 12,
+    "gestores_con_alerta": 14,
+    "gestores_cumpliendo": 0,
+    "gestores_cerca": 0,
+    "gestores_lejos": 0,
+    "gestores_sin_meta": 66,
+    "dias_procesados": 24,
+    "dias_habiles_mes": 22,
+    "pct_mes_transcurrido": 100.0
+  },
+  "benchmarks": {
+    "tasa_contacto": 0.3113,
+    "ptp_rate": 0.4231,
+    "conversion": 0.1431,
+    "gestiones_dia": 104.5,
+    "promesas_dia": 14.44
+  },
+  "gestores": [
+    {
+      "ranking": 1,
+      "gestor": "MILENA SIMMONS",
+      "cartera_principal": "KREDIYA",
+      "nivel": "elite",
+      "score": 95.9,
+      "alertas": [],
+      "estado": "sin_meta",
+      "gestiones": 3370,
+      "efectivas": 1708,
+      "promesas": 1590,
+      "compromisos": 365,
+      "pagos": 181,
+      "recaudo": 24978.98,
+      "dias_activos": 24,
+      "tasa_contacto": 0.5068,
+      "no_contacto": 0.4932,
+      "ptp_rate": 0.9309,
+      "conversion": 0.4718,
+      "gestiones_dia": 140.4,
+      "promesas_dia": 66.25,
+      "ticket": 15.71,
+      "delta_contacto": 0.1955,
+      "delta_ptp": 0.5078,
+      "delta_gestiones_dia": 35.9,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 2,
+      "gestor": "JOSELINE DE GRACIA",
+      "cartera_principal": "KREDIYA",
+      "nivel": "elite",
+      "score": 88.8,
+      "alertas": [],
+      "estado": "sin_meta",
+      "gestiones": 2458,
+      "efectivas": 971,
+      "promesas": 714,
+      "compromisos": 282,
+      "pagos": 29,
+      "recaudo": 14296.8,
+      "dias_activos": 18,
+      "tasa_contacto": 0.395,
+      "no_contacto": 0.605,
+      "ptp_rate": 0.7353,
+      "conversion": 0.2905,
+      "gestiones_dia": 136.6,
+      "promesas_dia": 39.67,
+      "ticket": 20.02,
+      "delta_contacto": 0.0837,
+      "delta_ptp": 0.3122,
+      "delta_gestiones_dia": 32.1,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 3,
+      "gestor": "YINORI RAMOS",
+      "cartera_principal": "TIGO",
+      "nivel": "elite",
+      "score": 88.0,
+      "alertas": [],
+      "estado": "sin_meta",
+      "gestiones": 3829,
+      "efectivas": 1616,
+      "promesas": 801,
+      "compromisos": 697,
+      "pagos": 0,
+      "recaudo": 34199.96,
+      "dias_activos": 20,
+      "tasa_contacto": 0.422,
+      "no_contacto": 0.578,
+      "ptp_rate": 0.4957,
+      "conversion": 0.2092,
+      "gestiones_dia": 191.4,
+      "promesas_dia": 40.05,
+      "ticket": 42.7,
+      "delta_contacto": 0.1107,
+      "delta_ptp": 0.0726,
+      "delta_gestiones_dia": 86.9,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 4,
+      "gestor": "MARIANELYS VERGARA",
+      "cartera_principal": "SURA",
+      "nivel": "elite",
+      "score": 87.6,
+      "alertas": [],
+      "estado": "sin_meta",
+      "gestiones": 3368,
+      "efectivas": 1570,
+      "promesas": 798,
+      "compromisos": 245,
+      "pagos": 234,
+      "recaudo": 43011.41,
+      "dias_activos": 21,
+      "tasa_contacto": 0.4662,
+      "no_contacto": 0.5338,
+      "ptp_rate": 0.5083,
+      "conversion": 0.2369,
+      "gestiones_dia": 160.4,
+      "promesas_dia": 38.0,
+      "ticket": 53.9,
+      "delta_contacto": 0.1549,
+      "delta_ptp": 0.0852,
+      "delta_gestiones_dia": 55.9,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 5,
+      "gestor": "HILDEMARO GONZÁLEZ",
+      "cartera_principal": "TIGO",
+      "nivel": "elite",
+      "score": 87.0,
+      "alertas": [],
+      "estado": "sin_meta",
+      "gestiones": 3915,
+      "efectivas": 1587,
+      "promesas": 836,
+      "compromisos": 703,
+      "pagos": 0,
+      "recaudo": 35072.62,
+      "dias_activos": 23,
+      "tasa_contacto": 0.4054,
+      "no_contacto": 0.5946,
+      "ptp_rate": 0.5268,
+      "conversion": 0.2135,
+      "gestiones_dia": 170.2,
+      "promesas_dia": 36.35,
+      "ticket": 41.95,
+      "delta_contacto": 0.0941,
+      "delta_ptp": 0.1037,
+      "delta_gestiones_dia": 65.7,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 6,
+      "gestor": "RODOLFO MILLER",
+      "cartera_principal": "SURA",
+      "nivel": "elite",
+      "score": 82.9,
+      "alertas": [],
+      "estado": "sin_meta",
+      "gestiones": 3013,
+      "efectivas": 1072,
+      "promesas": 631,
+      "compromisos": 228,
+      "pagos": 82,
+      "recaudo": 45914.35,
+      "dias_activos": 22,
+      "tasa_contacto": 0.3558,
+      "no_contacto": 0.6442,
+      "ptp_rate": 0.5886,
+      "conversion": 0.2094,
+      "gestiones_dia": 137.0,
+      "promesas_dia": 28.68,
+      "ticket": 72.76,
+      "delta_contacto": 0.0445,
+      "delta_ptp": 0.1655,
+      "delta_gestiones_dia": 32.5,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 7,
+      "gestor": "ERICKA SALINAS",
+      "cartera_principal": "BANISTMO ACTIVA",
+      "nivel": "elite",
+      "score": 79.7,
+      "alertas": [],
+      "estado": "sin_meta",
+      "gestiones": 3097,
+      "efectivas": 1147,
+      "promesas": 581,
+      "compromisos": 213,
+      "pagos": 6,
+      "recaudo": 53746.06,
+      "dias_activos": 22,
+      "tasa_contacto": 0.3704,
+      "no_contacto": 0.6296,
+      "ptp_rate": 0.5065,
+      "conversion": 0.1876,
+      "gestiones_dia": 140.8,
+      "promesas_dia": 26.41,
+      "ticket": 92.51,
+      "delta_contacto": 0.0591,
+      "delta_ptp": 0.0834,
+      "delta_gestiones_dia": 36.3,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 8,
+      "gestor": "NATALIE HERRERA",
+      "cartera_principal": "BANISTMO ACTIVA",
+      "nivel": "elite",
+      "score": 79.3,
+      "alertas": [],
+      "estado": "sin_meta",
+      "gestiones": 2734,
+      "efectivas": 1122,
+      "promesas": 573,
+      "compromisos": 156,
+      "pagos": 64,
+      "recaudo": 65179.25,
+      "dias_activos": 22,
+      "tasa_contacto": 0.4104,
+      "no_contacto": 0.5896,
+      "ptp_rate": 0.5107,
+      "conversion": 0.2096,
+      "gestiones_dia": 124.3,
+      "promesas_dia": 26.05,
+      "ticket": 113.75,
+      "delta_contacto": 0.0991,
+      "delta_ptp": 0.0876,
+      "delta_gestiones_dia": 19.8,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 9,
+      "gestor": "NATHALIE VERGARA",
+      "cartera_principal": "TIGO",
+      "nivel": "elite",
+      "score": 78.5,
+      "alertas": [],
+      "estado": "sin_meta",
+      "gestiones": 3956,
+      "efectivas": 2069,
+      "promesas": 844,
+      "compromisos": 773,
+      "pagos": 0,
+      "recaudo": 34338.64,
+      "dias_activos": 23,
+      "tasa_contacto": 0.523,
+      "no_contacto": 0.477,
+      "ptp_rate": 0.4079,
+      "conversion": 0.2133,
+      "gestiones_dia": 172.0,
+      "promesas_dia": 36.7,
+      "ticket": 40.69,
+      "delta_contacto": 0.2117,
+      "delta_ptp": -0.0152,
+      "delta_gestiones_dia": 67.5,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 10,
+      "gestor": "JHONN PUGA",
+      "cartera_principal": "TIGO",
+      "nivel": "elite",
+      "score": 77.9,
+      "alertas": [],
+      "estado": "sin_meta",
+      "gestiones": 4101,
+      "efectivas": 2527,
+      "promesas": 900,
+      "compromisos": 754,
+      "pagos": 0,
+      "recaudo": 38022.5,
+      "dias_activos": 22,
+      "tasa_contacto": 0.6162,
+      "no_contacto": 0.3838,
+      "ptp_rate": 0.3562,
+      "conversion": 0.2195,
+      "gestiones_dia": 186.4,
+      "promesas_dia": 40.91,
+      "ticket": 42.25,
+      "delta_contacto": 0.3049,
+      "delta_ptp": -0.0669,
+      "delta_gestiones_dia": 81.9,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 11,
+      "gestor": "DANNA RIVAS",
+      "cartera_principal": "SOLVE",
+      "nivel": "elite",
+      "score": 77.7,
+      "alertas": [],
+      "estado": "sin_meta",
+      "gestiones": 3018,
+      "efectivas": 838,
+      "promesas": 516,
+      "compromisos": 150,
+      "pagos": 110,
+      "recaudo": 17153.65,
+      "dias_activos": 21,
+      "tasa_contacto": 0.2777,
+      "no_contacto": 0.7223,
+      "ptp_rate": 0.6158,
+      "conversion": 0.171,
+      "gestiones_dia": 143.7,
+      "promesas_dia": 24.57,
+      "ticket": 33.24,
+      "delta_contacto": -0.0336,
+      "delta_ptp": 0.1927,
+      "delta_gestiones_dia": 39.2,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 12,
+      "gestor": "ALANA BARRAGAN",
+      "cartera_principal": "SURA",
+      "nivel": "elite",
+      "score": 77.5,
+      "alertas": [],
+      "estado": "sin_meta",
+      "gestiones": 2659,
+      "efectivas": 972,
+      "promesas": 550,
+      "compromisos": 224,
+      "pagos": 83,
+      "recaudo": 33886.22,
+      "dias_activos": 23,
+      "tasa_contacto": 0.3656,
+      "no_contacto": 0.6344,
+      "ptp_rate": 0.5658,
+      "conversion": 0.2068,
+      "gestiones_dia": 115.6,
+      "promesas_dia": 23.91,
+      "ticket": 61.61,
+      "delta_contacto": 0.0543,
+      "delta_ptp": 0.1427,
+      "delta_gestiones_dia": 11.1,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 13,
+      "gestor": "STEPHANIE LASTRA",
+      "cartera_principal": "SURA",
+      "nivel": "elite",
+      "score": 75.6,
+      "alertas": [
+        "pocos_dias"
+      ],
+      "estado": "sin_meta",
+      "gestiones": 1289,
+      "efectivas": 500,
+      "promesas": 246,
+      "compromisos": 105,
+      "pagos": 1,
+      "recaudo": 7763.18,
+      "dias_activos": 10,
+      "tasa_contacto": 0.3879,
+      "no_contacto": 0.6121,
+      "ptp_rate": 0.492,
+      "conversion": 0.1908,
+      "gestiones_dia": 128.9,
+      "promesas_dia": 24.6,
+      "ticket": 31.56,
+      "delta_contacto": 0.0766,
+      "delta_ptp": 0.0689,
+      "delta_gestiones_dia": 24.4,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 14,
+      "gestor": "YANITZA TORRES",
+      "cartera_principal": "TIGO",
+      "nivel": "elite",
+      "score": 72.8,
+      "alertas": [],
+      "estado": "sin_meta",
+      "gestiones": 4124,
+      "efectivas": 2506,
+      "promesas": 830,
+      "compromisos": 704,
+      "pagos": 0,
+      "recaudo": 37228.44,
+      "dias_activos": 23,
+      "tasa_contacto": 0.6077,
+      "no_contacto": 0.3923,
+      "ptp_rate": 0.3312,
+      "conversion": 0.2013,
+      "gestiones_dia": 179.3,
+      "promesas_dia": 36.09,
+      "ticket": 44.85,
+      "delta_contacto": 0.2964,
+      "delta_ptp": -0.0919,
+      "delta_gestiones_dia": 74.8,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 15,
+      "gestor": "NIURKA LOPEZ",
+      "cartera_principal": "SURA",
+      "nivel": "elite",
+      "score": 72.2,
+      "alertas": [],
+      "estado": "sin_meta",
+      "gestiones": 2771,
+      "efectivas": 1119,
+      "promesas": 547,
+      "compromisos": 198,
+      "pagos": 168,
+      "recaudo": 36872.47,
+      "dias_activos": 23,
+      "tasa_contacto": 0.4038,
+      "no_contacto": 0.5962,
+      "ptp_rate": 0.4888,
+      "conversion": 0.1974,
+      "gestiones_dia": 120.5,
+      "promesas_dia": 23.78,
+      "ticket": 67.41,
+      "delta_contacto": 0.0925,
+      "delta_ptp": 0.0657,
+      "delta_gestiones_dia": 16.0,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 16,
+      "gestor": "KATHERINE QUINTERO",
+      "cartera_principal": "BANISTMO ACTIVA",
+      "nivel": "elite",
+      "score": 72.0,
+      "alertas": [],
+      "estado": "sin_meta",
+      "gestiones": 2617,
+      "efectivas": 852,
+      "promesas": 455,
+      "compromisos": 164,
+      "pagos": 10,
+      "recaudo": 63205.62,
+      "dias_activos": 22,
+      "tasa_contacto": 0.3256,
+      "no_contacto": 0.6744,
+      "ptp_rate": 0.534,
+      "conversion": 0.1739,
+      "gestiones_dia": 119.0,
+      "promesas_dia": 20.68,
+      "ticket": 138.91,
+      "delta_contacto": 0.0143,
+      "delta_ptp": 0.1109,
+      "delta_gestiones_dia": 14.5,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 17,
+      "gestor": "SUSANA LORÉ",
+      "cartera_principal": "BANISTMO ACTIVA",
+      "nivel": "elite",
+      "score": 71.8,
+      "alertas": [],
+      "estado": "sin_meta",
+      "gestiones": 2839,
+      "efectivas": 886,
+      "promesas": 460,
+      "compromisos": 183,
+      "pagos": 0,
+      "recaudo": 54813.92,
+      "dias_activos": 22,
+      "tasa_contacto": 0.3121,
+      "no_contacto": 0.6879,
+      "ptp_rate": 0.5192,
+      "conversion": 0.162,
+      "gestiones_dia": 129.0,
+      "promesas_dia": 20.91,
+      "ticket": 119.16,
+      "delta_contacto": 0.0008,
+      "delta_ptp": 0.0961,
+      "delta_gestiones_dia": 24.5,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 18,
+      "gestor": "VICTOR ALVAREZ",
+      "cartera_principal": "BANISTMO ACTIVA",
+      "nivel": "elite",
+      "score": 70.1,
+      "alertas": [],
+      "estado": "sin_meta",
+      "gestiones": 2944,
+      "efectivas": 852,
+      "promesas": 472,
+      "compromisos": 195,
+      "pagos": 0,
+      "recaudo": 49868.02,
+      "dias_activos": 23,
+      "tasa_contacto": 0.2894,
+      "no_contacto": 0.7106,
+      "ptp_rate": 0.554,
+      "conversion": 0.1603,
+      "gestiones_dia": 128.0,
+      "promesas_dia": 20.52,
+      "ticket": 105.65,
+      "delta_contacto": -0.0219,
+      "delta_ptp": 0.1309,
+      "delta_gestiones_dia": 23.5,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 19,
+      "gestor": "ANGIE MUÑOZ",
+      "cartera_principal": "BANISTMO ACTIVA",
+      "nivel": "solido",
+      "score": 68.6,
+      "alertas": [],
+      "estado": "sin_meta",
+      "gestiones": 3437,
+      "efectivas": 1070,
+      "promesas": 507,
+      "compromisos": 211,
+      "pagos": 0,
+      "recaudo": 47765.0,
+      "dias_activos": 23,
+      "tasa_contacto": 0.3113,
+      "no_contacto": 0.6887,
+      "ptp_rate": 0.4738,
+      "conversion": 0.1475,
+      "gestiones_dia": 149.4,
+      "promesas_dia": 22.04,
+      "ticket": 94.21,
+      "delta_contacto": 0.0,
+      "delta_ptp": 0.0507,
+      "delta_gestiones_dia": 44.9,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 20,
+      "gestor": "DARLENIS CORREA",
+      "cartera_principal": "SOLVE",
+      "nivel": "solido",
+      "score": 68.5,
+      "alertas": [],
+      "estado": "sin_meta",
+      "gestiones": 3060,
+      "efectivas": 802,
+      "promesas": 438,
+      "compromisos": 146,
+      "pagos": 56,
+      "recaudo": 13176.49,
+      "dias_activos": 22,
+      "tasa_contacto": 0.2621,
+      "no_contacto": 0.7379,
+      "ptp_rate": 0.5461,
+      "conversion": 0.1431,
+      "gestiones_dia": 139.1,
+      "promesas_dia": 19.91,
+      "ticket": 30.08,
+      "delta_contacto": -0.0492,
+      "delta_ptp": 0.123,
+      "delta_gestiones_dia": 34.6,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 21,
+      "gestor": "YUNAYCKA REYES",
+      "cartera_principal": "BANCO LA HIPOTECARIA",
+      "nivel": "solido",
+      "score": 67.7,
+      "alertas": [],
+      "estado": "sin_meta",
+      "gestiones": 1497,
+      "efectivas": 482,
+      "promesas": 404,
+      "compromisos": 17,
+      "pagos": 21,
+      "recaudo": 4463.86,
+      "dias_activos": 21,
+      "tasa_contacto": 0.322,
+      "no_contacto": 0.678,
+      "ptp_rate": 0.8382,
+      "conversion": 0.2699,
+      "gestiones_dia": 71.3,
+      "promesas_dia": 19.24,
+      "ticket": 11.05,
+      "delta_contacto": 0.0107,
+      "delta_ptp": 0.4151,
+      "delta_gestiones_dia": -33.2,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 22,
+      "gestor": "BRENDA MOSQUERA",
+      "cartera_principal": "BANISTMO ACTIVA",
+      "nivel": "solido",
+      "score": 66.4,
+      "alertas": [],
+      "estado": "sin_meta",
+      "gestiones": 3369,
+      "efectivas": 1032,
+      "promesas": 496,
+      "compromisos": 232,
+      "pagos": 0,
+      "recaudo": 44163.22,
+      "dias_activos": 24,
+      "tasa_contacto": 0.3063,
+      "no_contacto": 0.6937,
+      "ptp_rate": 0.4806,
+      "conversion": 0.1472,
+      "gestiones_dia": 140.4,
+      "promesas_dia": 20.67,
+      "ticket": 89.04,
+      "delta_contacto": -0.005,
+      "delta_ptp": 0.0575,
+      "delta_gestiones_dia": 35.9,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 23,
+      "gestor": "KATHERINE BARRIOS",
+      "cartera_principal": "BANISTMO ACTIVA",
+      "nivel": "solido",
+      "score": 65.6,
+      "alertas": [],
+      "estado": "sin_meta",
+      "gestiones": 3260,
+      "efectivas": 972,
+      "promesas": 478,
+      "compromisos": 211,
+      "pagos": 0,
+      "recaudo": 67765.86,
+      "dias_activos": 24,
+      "tasa_contacto": 0.2982,
+      "no_contacto": 0.7018,
+      "ptp_rate": 0.4918,
+      "conversion": 0.1466,
+      "gestiones_dia": 135.8,
+      "promesas_dia": 19.92,
+      "ticket": 141.77,
+      "delta_contacto": -0.0131,
+      "delta_ptp": 0.0687,
+      "delta_gestiones_dia": 31.3,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 24,
+      "gestor": "SAMUEL DELAOLIVA",
+      "cartera_principal": "SURA",
+      "nivel": "solido",
+      "score": 61.4,
+      "alertas": [],
+      "estado": "sin_meta",
+      "gestiones": 2459,
+      "efectivas": 632,
+      "promesas": 374,
+      "compromisos": 229,
+      "pagos": 0,
+      "recaudo": 23561.52,
+      "dias_activos": 24,
+      "tasa_contacto": 0.257,
+      "no_contacto": 0.743,
+      "ptp_rate": 0.5918,
+      "conversion": 0.1521,
+      "gestiones_dia": 102.5,
+      "promesas_dia": 15.58,
+      "ticket": 63.0,
+      "delta_contacto": -0.0543,
+      "delta_ptp": 0.1687,
+      "delta_gestiones_dia": -2.0,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 25,
+      "gestor": "ARAMIS MARTÍNEZ",
+      "cartera_principal": "SURA",
+      "nivel": "solido",
+      "score": 60.8,
+      "alertas": [],
+      "estado": "sin_meta",
+      "gestiones": 1952,
+      "efectivas": 691,
+      "promesas": 355,
+      "compromisos": 142,
+      "pagos": 53,
+      "recaudo": 19141.41,
+      "dias_activos": 24,
+      "tasa_contacto": 0.354,
+      "no_contacto": 0.646,
+      "ptp_rate": 0.5137,
+      "conversion": 0.1819,
+      "gestiones_dia": 81.3,
+      "promesas_dia": 14.79,
+      "ticket": 53.92,
+      "delta_contacto": 0.0427,
+      "delta_ptp": 0.0906,
+      "delta_gestiones_dia": -23.2,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 26,
+      "gestor": "YANARIS CABALLERO",
+      "cartera_principal": "BANISTMO ACTIVA",
+      "nivel": "solido",
+      "score": 59.7,
+      "alertas": [],
+      "estado": "sin_meta",
+      "gestiones": 2687,
+      "efectivas": 862,
+      "promesas": 371,
+      "compromisos": 154,
+      "pagos": 7,
+      "recaudo": 47672.6,
+      "dias_activos": 21,
+      "tasa_contacto": 0.3208,
+      "no_contacto": 0.6792,
+      "ptp_rate": 0.4304,
+      "conversion": 0.1381,
+      "gestiones_dia": 128.0,
+      "promesas_dia": 17.67,
+      "ticket": 128.5,
+      "delta_contacto": 0.0095,
+      "delta_ptp": 0.0073,
+      "delta_gestiones_dia": 23.5,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 27,
+      "gestor": "MELANY PÉREZ",
+      "cartera_principal": "SURA",
+      "nivel": "solido",
+      "score": 59.7,
+      "alertas": [],
+      "estado": "sin_meta",
+      "gestiones": 2434,
+      "efectivas": 693,
+      "promesas": 366,
+      "compromisos": 218,
+      "pagos": 2,
+      "recaudo": 58588.75,
+      "dias_activos": 24,
+      "tasa_contacto": 0.2847,
+      "no_contacto": 0.7153,
+      "ptp_rate": 0.5281,
+      "conversion": 0.1504,
+      "gestiones_dia": 101.4,
+      "promesas_dia": 15.25,
+      "ticket": 160.08,
+      "delta_contacto": -0.0266,
+      "delta_ptp": 0.105,
+      "delta_gestiones_dia": -3.1,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 28,
+      "gestor": "NAJHAIRA ALVARADO",
+      "cartera_principal": "SURA",
+      "nivel": "solido",
+      "score": 59.3,
+      "alertas": [],
+      "estado": "sin_meta",
+      "gestiones": 2507,
+      "efectivas": 854,
+      "promesas": 399,
+      "compromisos": 130,
+      "pagos": 94,
+      "recaudo": 14306.24,
+      "dias_activos": 24,
+      "tasa_contacto": 0.3406,
+      "no_contacto": 0.6594,
+      "ptp_rate": 0.4672,
+      "conversion": 0.1592,
+      "gestiones_dia": 104.5,
+      "promesas_dia": 16.62,
+      "ticket": 35.86,
+      "delta_contacto": 0.0293,
+      "delta_ptp": 0.0441,
+      "delta_gestiones_dia": 0.0,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 29,
+      "gestor": "ALLISON GONZÁLEZ",
+      "cartera_principal": "BANISTMO ACTIVA",
+      "nivel": "solido",
+      "score": 58.8,
+      "alertas": [],
+      "estado": "sin_meta",
+      "gestiones": 2961,
+      "efectivas": 848,
+      "promesas": 408,
+      "compromisos": 160,
+      "pagos": 3,
+      "recaudo": 40761.41,
+      "dias_activos": 24,
+      "tasa_contacto": 0.2864,
+      "no_contacto": 0.7136,
+      "ptp_rate": 0.4811,
+      "conversion": 0.1378,
+      "gestiones_dia": 123.4,
+      "promesas_dia": 17.0,
+      "ticket": 99.91,
+      "delta_contacto": -0.0249,
+      "delta_ptp": 0.058,
+      "delta_gestiones_dia": 18.9,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 30,
+      "gestor": "GENESIS RODRÍGUEZ",
+      "cartera_principal": "BANISTMO ACTIVA",
+      "nivel": "solido",
+      "score": 56.3,
+      "alertas": [],
+      "estado": "sin_meta",
+      "gestiones": 3399,
+      "efectivas": 888,
+      "promesas": 389,
+      "compromisos": 153,
+      "pagos": 15,
+      "recaudo": 36489.98,
+      "dias_activos": 24,
+      "tasa_contacto": 0.2613,
+      "no_contacto": 0.7387,
+      "ptp_rate": 0.4381,
+      "conversion": 0.1144,
+      "gestiones_dia": 141.6,
+      "promesas_dia": 16.21,
+      "ticket": 93.8,
+      "delta_contacto": -0.05,
+      "delta_ptp": 0.015,
+      "delta_gestiones_dia": 37.1,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 31,
+      "gestor": "ELVIRA DUNCAN",
+      "cartera_principal": "SOLVE",
+      "nivel": "solido",
+      "score": 55.1,
+      "alertas": [],
+      "estado": "sin_meta",
+      "gestiones": 3430,
+      "efectivas": 1011,
+      "promesas": 398,
+      "compromisos": 93,
+      "pagos": 74,
+      "recaudo": 13910.12,
+      "dias_activos": 24,
+      "tasa_contacto": 0.2948,
+      "no_contacto": 0.7052,
+      "ptp_rate": 0.3937,
+      "conversion": 0.116,
+      "gestiones_dia": 142.9,
+      "promesas_dia": 16.58,
+      "ticket": 34.95,
+      "delta_contacto": -0.0165,
+      "delta_ptp": -0.0294,
+      "delta_gestiones_dia": 38.4,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 32,
+      "gestor": "RENE BARNES",
+      "cartera_principal": "BANISTMO RECOVERY",
+      "nivel": "solido",
+      "score": 54.3,
+      "alertas": [],
+      "estado": "sin_meta",
+      "gestiones": 2819,
+      "efectivas": 737,
+      "promesas": 362,
+      "compromisos": 41,
+      "pagos": 24,
+      "recaudo": 56661.37,
+      "dias_activos": 24,
+      "tasa_contacto": 0.2614,
+      "no_contacto": 0.7386,
+      "ptp_rate": 0.4912,
+      "conversion": 0.1284,
+      "gestiones_dia": 117.5,
+      "promesas_dia": 15.08,
+      "ticket": 156.52,
+      "delta_contacto": -0.0499,
+      "delta_ptp": 0.0681,
+      "delta_gestiones_dia": 13.0,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 33,
+      "gestor": "ALLISON COULSON",
+      "cartera_principal": "SURA",
+      "nivel": "solido",
+      "score": 52.3,
+      "alertas": [],
+      "estado": "sin_meta",
+      "gestiones": 1180,
+      "efectivas": 491,
+      "promesas": 206,
+      "compromisos": 95,
+      "pagos": 47,
+      "recaudo": 9453.56,
+      "dias_activos": 16,
+      "tasa_contacto": 0.4161,
+      "no_contacto": 0.5839,
+      "ptp_rate": 0.4196,
+      "conversion": 0.1746,
+      "gestiones_dia": 73.8,
+      "promesas_dia": 12.88,
+      "ticket": 45.89,
+      "delta_contacto": 0.1048,
+      "delta_ptp": -0.0035,
+      "delta_gestiones_dia": -30.7,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 34,
+      "gestor": "SUSAN GUZMÁN",
+      "cartera_principal": "SURA",
+      "nivel": "solido",
+      "score": 51.3,
+      "alertas": [
+        "pocos_dias"
+      ],
+      "estado": "sin_meta",
+      "gestiones": 155,
+      "efectivas": 63,
+      "promesas": 26,
+      "compromisos": 19,
+      "pagos": 1,
+      "recaudo": 1028.4,
+      "dias_activos": 2,
+      "tasa_contacto": 0.4065,
+      "no_contacto": 0.5935,
+      "ptp_rate": 0.4127,
+      "conversion": 0.1677,
+      "gestiones_dia": 77.5,
+      "promesas_dia": 13.0,
+      "ticket": 39.55,
+      "delta_contacto": 0.0952,
+      "delta_ptp": -0.0104,
+      "delta_gestiones_dia": -27.0,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 35,
+      "gestor": "TAYRETH OYAGA",
+      "cartera_principal": "BAC",
+      "nivel": "solido",
+      "score": 50.4,
+      "alertas": [],
+      "estado": "sin_meta",
+      "gestiones": 1845,
+      "efectivas": 627,
+      "promesas": 298,
+      "compromisos": 40,
+      "pagos": 106,
+      "recaudo": 21295.73,
+      "dias_activos": 24,
+      "tasa_contacto": 0.3398,
+      "no_contacto": 0.6602,
+      "ptp_rate": 0.4753,
+      "conversion": 0.1615,
+      "gestiones_dia": 76.9,
+      "promesas_dia": 12.42,
+      "ticket": 71.46,
+      "delta_contacto": 0.0285,
+      "delta_ptp": 0.0522,
+      "delta_gestiones_dia": -27.6,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 36,
+      "gestor": "LILIVETH CABALLERO",
+      "cartera_principal": "BANISTMO ACTIVA",
+      "nivel": "solido",
+      "score": 47.7,
+      "alertas": [
+        "pocos_dias"
+      ],
+      "estado": "sin_meta",
+      "gestiones": 1256,
+      "efectivas": 406,
+      "promesas": 130,
+      "compromisos": 63,
+      "pagos": 0,
+      "recaudo": 10095.54,
+      "dias_activos": 9,
+      "tasa_contacto": 0.3232,
+      "no_contacto": 0.6768,
+      "ptp_rate": 0.3202,
+      "conversion": 0.1035,
+      "gestiones_dia": 139.6,
+      "promesas_dia": 14.44,
+      "ticket": 77.66,
+      "delta_contacto": 0.0119,
+      "delta_ptp": -0.1029,
+      "delta_gestiones_dia": 35.1,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 37,
+      "gestor": "HILLARY LE GRAND",
+      "cartera_principal": "BANISTMO RECOVERY",
+      "nivel": "solido",
+      "score": 46.5,
+      "alertas": [
+        "actividad_baja"
+      ],
+      "estado": "sin_meta",
+      "gestiones": 1169,
+      "efectivas": 563,
+      "promesas": 233,
+      "compromisos": 21,
+      "pagos": 15,
+      "recaudo": 2364.34,
+      "dias_activos": 23,
+      "tasa_contacto": 0.4816,
+      "no_contacto": 0.5184,
+      "ptp_rate": 0.4139,
+      "conversion": 0.1993,
+      "gestiones_dia": 50.8,
+      "promesas_dia": 10.13,
+      "ticket": 10.15,
+      "delta_contacto": 0.1703,
+      "delta_ptp": -0.0092,
+      "delta_gestiones_dia": -53.7,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 38,
+      "gestor": "LIBIA AGUILAR",
+      "cartera_principal": "SURA",
+      "nivel": "solido",
+      "score": 45.2,
+      "alertas": [],
+      "estado": "sin_meta",
+      "gestiones": 2174,
+      "efectivas": 751,
+      "promesas": 286,
+      "compromisos": 132,
+      "pagos": 61,
+      "recaudo": 15011.81,
+      "dias_activos": 23,
+      "tasa_contacto": 0.3454,
+      "no_contacto": 0.6546,
+      "ptp_rate": 0.3808,
+      "conversion": 0.1316,
+      "gestiones_dia": 94.5,
+      "promesas_dia": 12.43,
+      "ticket": 52.49,
+      "delta_contacto": 0.0341,
+      "delta_ptp": -0.0423,
+      "delta_gestiones_dia": -10.0,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 39,
+      "gestor": "ELIAS CEDEÑO",
+      "cartera_principal": "BANISTMO ACTIVA",
+      "nivel": "promedio",
+      "score": 44.9,
+      "alertas": [],
+      "estado": "sin_meta",
+      "gestiones": 3061,
+      "efectivas": 826,
+      "promesas": 317,
+      "compromisos": 115,
+      "pagos": 0,
+      "recaudo": 25620.04,
+      "dias_activos": 24,
+      "tasa_contacto": 0.2698,
+      "no_contacto": 0.7302,
+      "ptp_rate": 0.3838,
+      "conversion": 0.1036,
+      "gestiones_dia": 127.5,
+      "promesas_dia": 13.21,
+      "ticket": 80.82,
+      "delta_contacto": -0.0415,
+      "delta_ptp": -0.0393,
+      "delta_gestiones_dia": 23.0,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 40,
+      "gestor": "PEBBLES VALDERRAMA",
+      "cartera_principal": "SURA",
+      "nivel": "promedio",
+      "score": 41.8,
+      "alertas": [],
+      "estado": "sin_meta",
+      "gestiones": 2426,
+      "efectivas": 560,
+      "promesas": 257,
+      "compromisos": 109,
+      "pagos": 19,
+      "recaudo": 27354.09,
+      "dias_activos": 24,
+      "tasa_contacto": 0.2308,
+      "no_contacto": 0.7692,
+      "ptp_rate": 0.4589,
+      "conversion": 0.1059,
+      "gestiones_dia": 101.1,
+      "promesas_dia": 10.71,
+      "ticket": 106.44,
+      "delta_contacto": -0.0805,
+      "delta_ptp": 0.0358,
+      "delta_gestiones_dia": -3.4,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 41,
+      "gestor": "CAPATICATION5",
+      "cartera_principal": "SURA",
+      "nivel": "promedio",
+      "score": 40.0,
+      "alertas": [
+        "pocos_dias"
+      ],
+      "estado": "sin_meta",
+      "gestiones": 247,
+      "efectivas": 107,
+      "promesas": 37,
+      "compromisos": 22,
+      "pagos": 0,
+      "recaudo": 1608.79,
+      "dias_activos": 4,
+      "tasa_contacto": 0.4332,
+      "no_contacto": 0.5668,
+      "ptp_rate": 0.3458,
+      "conversion": 0.1498,
+      "gestiones_dia": 61.8,
+      "promesas_dia": 9.25,
+      "ticket": 43.48,
+      "delta_contacto": 0.1219,
+      "delta_ptp": -0.0773,
+      "delta_gestiones_dia": -42.7,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 42,
+      "gestor": "VERÓNICA CASTRO",
+      "cartera_principal": "BANISTMO ACTIVA",
+      "nivel": "promedio",
+      "score": 39.8,
+      "alertas": [
+        "pocos_dias",
+        "contacto_bajo"
+      ],
+      "estado": "sin_meta",
+      "gestiones": 1697,
+      "efectivas": 312,
+      "promesas": 116,
+      "compromisos": 45,
+      "pagos": 9,
+      "recaudo": 8596.87,
+      "dias_activos": 10,
+      "tasa_contacto": 0.1839,
+      "no_contacto": 0.8161,
+      "ptp_rate": 0.3718,
+      "conversion": 0.0684,
+      "gestiones_dia": 169.7,
+      "promesas_dia": 11.6,
+      "ticket": 74.11,
+      "delta_contacto": -0.1274,
+      "delta_ptp": -0.0513,
+      "delta_gestiones_dia": 65.2,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 43,
+      "gestor": "ANGELES VANEGAS",
+      "cartera_principal": "BANISTMO ACTIVA",
+      "nivel": "promedio",
+      "score": 39.7,
+      "alertas": [],
+      "estado": "sin_meta",
+      "gestiones": 1827,
+      "efectivas": 415,
+      "promesas": 162,
+      "compromisos": 84,
+      "pagos": 0,
+      "recaudo": 12970.43,
+      "dias_activos": 14,
+      "tasa_contacto": 0.2271,
+      "no_contacto": 0.7729,
+      "ptp_rate": 0.3904,
+      "conversion": 0.0887,
+      "gestiones_dia": 130.5,
+      "promesas_dia": 11.57,
+      "ticket": 80.06,
+      "delta_contacto": -0.0842,
+      "delta_ptp": -0.0327,
+      "delta_gestiones_dia": 26.0,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 44,
+      "gestor": "KEREEN NOREÑA",
+      "cartera_principal": "BANISTMO ACTIVA",
+      "nivel": "promedio",
+      "score": 36.9,
+      "alertas": [],
+      "estado": "sin_meta",
+      "gestiones": 1777,
+      "efectivas": 338,
+      "promesas": 143,
+      "compromisos": 51,
+      "pagos": 1,
+      "recaudo": 8792.83,
+      "dias_activos": 16,
+      "tasa_contacto": 0.1902,
+      "no_contacto": 0.8098,
+      "ptp_rate": 0.4231,
+      "conversion": 0.0805,
+      "gestiones_dia": 111.1,
+      "promesas_dia": 8.94,
+      "ticket": 61.49,
+      "delta_contacto": -0.1211,
+      "delta_ptp": 0.0,
+      "delta_gestiones_dia": 6.6,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 45,
+      "gestor": "ZURY ANDRADE",
+      "cartera_principal": "SURA",
+      "nivel": "promedio",
+      "score": 36.8,
+      "alertas": [],
+      "estado": "sin_meta",
+      "gestiones": 2195,
+      "efectivas": 629,
+      "promesas": 234,
+      "compromisos": 94,
+      "pagos": 45,
+      "recaudo": 33753.11,
+      "dias_activos": 24,
+      "tasa_contacto": 0.2866,
+      "no_contacto": 0.7134,
+      "ptp_rate": 0.372,
+      "conversion": 0.1066,
+      "gestiones_dia": 91.5,
+      "promesas_dia": 9.75,
+      "ticket": 144.24,
+      "delta_contacto": -0.0247,
+      "delta_ptp": -0.0511,
+      "delta_gestiones_dia": -13.0,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 46,
+      "gestor": "AILEEN ESPINOSA",
+      "cartera_principal": "SURA",
+      "nivel": "promedio",
+      "score": 36.8,
+      "alertas": [
+        "actividad_baja"
+      ],
+      "estado": "sin_meta",
+      "gestiones": 1125,
+      "efectivas": 603,
+      "promesas": 188,
+      "compromisos": 89,
+      "pagos": 20,
+      "recaudo": 16027.17,
+      "dias_activos": 24,
+      "tasa_contacto": 0.536,
+      "no_contacto": 0.464,
+      "ptp_rate": 0.3118,
+      "conversion": 0.1671,
+      "gestiones_dia": 46.9,
+      "promesas_dia": 7.83,
+      "ticket": 85.25,
+      "delta_contacto": 0.2247,
+      "delta_ptp": -0.1113,
+      "delta_gestiones_dia": -57.6,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 47,
+      "gestor": "LOUTHER FRANCIS",
+      "cartera_principal": "BANISTMO RECOVERY",
+      "nivel": "promedio",
+      "score": 35.7,
+      "alertas": [],
+      "estado": "sin_meta",
+      "gestiones": 1649,
+      "efectivas": 773,
+      "promesas": 203,
+      "compromisos": 7,
+      "pagos": 35,
+      "recaudo": 4607.68,
+      "dias_activos": 24,
+      "tasa_contacto": 0.4688,
+      "no_contacto": 0.5312,
+      "ptp_rate": 0.2626,
+      "conversion": 0.1231,
+      "gestiones_dia": 68.7,
+      "promesas_dia": 8.46,
+      "ticket": 22.7,
+      "delta_contacto": 0.1575,
+      "delta_ptp": -0.1605,
+      "delta_gestiones_dia": -35.8,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 48,
+      "gestor": "JUAN GONZALEZ",
+      "cartera_principal": "SURA",
+      "nivel": "promedio",
+      "score": 31.4,
+      "alertas": [],
+      "estado": "sin_meta",
+      "gestiones": 1013,
+      "efectivas": 239,
+      "promesas": 102,
+      "compromisos": 62,
+      "pagos": 17,
+      "recaudo": 41812.76,
+      "dias_activos": 15,
+      "tasa_contacto": 0.2359,
+      "no_contacto": 0.7641,
+      "ptp_rate": 0.4268,
+      "conversion": 0.1007,
+      "gestiones_dia": 67.5,
+      "promesas_dia": 6.8,
+      "ticket": 409.93,
+      "delta_contacto": -0.0754,
+      "delta_ptp": 0.0037,
+      "delta_gestiones_dia": -37.0,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 49,
+      "gestor": "YULISSA LOPEZ",
+      "cartera_principal": "BANISTMO RECOVERY",
+      "nivel": "promedio",
+      "score": 30.9,
+      "alertas": [],
+      "estado": "sin_meta",
+      "gestiones": 1404,
+      "efectivas": 509,
+      "promesas": 163,
+      "compromisos": 7,
+      "pagos": 10,
+      "recaudo": 11830.03,
+      "dias_activos": 23,
+      "tasa_contacto": 0.3625,
+      "no_contacto": 0.6375,
+      "ptp_rate": 0.3202,
+      "conversion": 0.1161,
+      "gestiones_dia": 61.0,
+      "promesas_dia": 7.09,
+      "ticket": 72.58,
+      "delta_contacto": 0.0512,
+      "delta_ptp": -0.1029,
+      "delta_gestiones_dia": -43.5,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 50,
+      "gestor": "ANTHONY GARCÍA",
+      "cartera_principal": "BANISTMO RECOVERY",
+      "nivel": "promedio",
+      "score": 30.7,
+      "alertas": [],
+      "estado": "sin_meta",
+      "gestiones": 1756,
+      "efectivas": 640,
+      "promesas": 157,
+      "compromisos": 13,
+      "pagos": 25,
+      "recaudo": 4893.73,
+      "dias_activos": 22,
+      "tasa_contacto": 0.3645,
+      "no_contacto": 0.6355,
+      "ptp_rate": 0.2453,
+      "conversion": 0.0894,
+      "gestiones_dia": 79.8,
+      "promesas_dia": 7.14,
+      "ticket": 31.17,
+      "delta_contacto": 0.0532,
+      "delta_ptp": -0.1778,
+      "delta_gestiones_dia": -24.7,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 51,
+      "gestor": "MELANIE CEBALLOS",
+      "cartera_principal": "BAC",
+      "nivel": "promedio",
+      "score": 28.6,
+      "alertas": [],
+      "estado": "sin_meta",
+      "gestiones": 2261,
+      "efectivas": 530,
+      "promesas": 187,
+      "compromisos": 8,
+      "pagos": 28,
+      "recaudo": 7435.09,
+      "dias_activos": 24,
+      "tasa_contacto": 0.2344,
+      "no_contacto": 0.7656,
+      "ptp_rate": 0.3528,
+      "conversion": 0.0827,
+      "gestiones_dia": 94.2,
+      "promesas_dia": 7.79,
+      "ticket": 39.76,
+      "delta_contacto": -0.0769,
+      "delta_ptp": -0.0703,
+      "delta_gestiones_dia": -10.3,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 52,
+      "gestor": "CAPACITACIÓN 2",
+      "cartera_principal": "BANISTMO ACTIVA",
+      "nivel": "promedio",
+      "score": 28.6,
+      "alertas": [],
+      "estado": "sin_meta",
+      "gestiones": 964,
+      "efectivas": 221,
+      "promesas": 92,
+      "compromisos": 28,
+      "pagos": 0,
+      "recaudo": 3927.11,
+      "dias_activos": 14,
+      "tasa_contacto": 0.2293,
+      "no_contacto": 0.7707,
+      "ptp_rate": 0.4163,
+      "conversion": 0.0954,
+      "gestiones_dia": 68.9,
+      "promesas_dia": 6.57,
+      "ticket": 42.69,
+      "delta_contacto": -0.082,
+      "delta_ptp": -0.0068,
+      "delta_gestiones_dia": -35.6,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 53,
+      "gestor": "MEIVYS MORENO",
+      "cartera_principal": "BAC",
+      "nivel": "promedio",
+      "score": 27.7,
+      "alertas": [],
+      "estado": "sin_meta",
+      "gestiones": 1868,
+      "efectivas": 543,
+      "promesas": 167,
+      "compromisos": 21,
+      "pagos": 56,
+      "recaudo": 12224.68,
+      "dias_activos": 24,
+      "tasa_contacto": 0.2907,
+      "no_contacto": 0.7093,
+      "ptp_rate": 0.3076,
+      "conversion": 0.0894,
+      "gestiones_dia": 77.8,
+      "promesas_dia": 6.96,
+      "ticket": 73.2,
+      "delta_contacto": -0.0206,
+      "delta_ptp": -0.1155,
+      "delta_gestiones_dia": -26.7,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 54,
+      "gestor": "MIRIAM NUÑEZ",
+      "cartera_principal": "BANCO LA HIPOTECARIA",
+      "nivel": "promedio",
+      "score": 25.0,
+      "alertas": [
+        "actividad_baja",
+        "pocos_dias"
+      ],
+      "estado": "sin_meta",
+      "gestiones": 47,
+      "efectivas": 8,
+      "promesas": 4,
+      "compromisos": 0,
+      "pagos": 0,
+      "recaudo": 0.0,
+      "dias_activos": 2,
+      "tasa_contacto": 0.1702,
+      "no_contacto": 0.8298,
+      "ptp_rate": 0.5,
+      "conversion": 0.0851,
+      "gestiones_dia": 23.5,
+      "promesas_dia": 2.0,
+      "ticket": 0.0,
+      "delta_contacto": -0.1411,
+      "delta_ptp": 0.0769,
+      "delta_gestiones_dia": -81.0,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 55,
+      "gestor": "MADELIN OSES",
+      "cartera_principal": "BANISTMO RECOVERY",
+      "nivel": "bajo",
+      "score": 23.8,
+      "alertas": [],
+      "estado": "sin_meta",
+      "gestiones": 1280,
+      "efectivas": 254,
+      "promesas": 107,
+      "compromisos": 5,
+      "pagos": 25,
+      "recaudo": 20041.12,
+      "dias_activos": 21,
+      "tasa_contacto": 0.1984,
+      "no_contacto": 0.8016,
+      "ptp_rate": 0.4213,
+      "conversion": 0.0836,
+      "gestiones_dia": 61.0,
+      "promesas_dia": 5.1,
+      "ticket": 187.3,
+      "delta_contacto": -0.1129,
+      "delta_ptp": -0.0018,
+      "delta_gestiones_dia": -43.5,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 56,
+      "gestor": "CAPACITACIÓN 1",
+      "cartera_principal": "BAC",
+      "nivel": "bajo",
+      "score": 23.4,
+      "alertas": [
+        "pocos_dias"
+      ],
+      "estado": "sin_meta",
+      "gestiones": 552,
+      "efectivas": 140,
+      "promesas": 51,
+      "compromisos": 6,
+      "pagos": 3,
+      "recaudo": 1155.47,
+      "dias_activos": 9,
+      "tasa_contacto": 0.2536,
+      "no_contacto": 0.7464,
+      "ptp_rate": 0.3643,
+      "conversion": 0.0924,
+      "gestiones_dia": 61.3,
+      "promesas_dia": 5.67,
+      "ticket": 22.66,
+      "delta_contacto": -0.0577,
+      "delta_ptp": -0.0588,
+      "delta_gestiones_dia": -43.2,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 57,
+      "gestor": "CHECYLLIA ALEXANDER",
+      "cartera_principal": "BANISTMO RECOVERY",
+      "nivel": "bajo",
+      "score": 22.0,
+      "alertas": [],
+      "estado": "sin_meta",
+      "gestiones": 1280,
+      "efectivas": 478,
+      "promesas": 115,
+      "compromisos": 14,
+      "pagos": 11,
+      "recaudo": 4096.03,
+      "dias_activos": 23,
+      "tasa_contacto": 0.3734,
+      "no_contacto": 0.6266,
+      "ptp_rate": 0.2406,
+      "conversion": 0.0898,
+      "gestiones_dia": 55.7,
+      "promesas_dia": 5.0,
+      "ticket": 35.62,
+      "delta_contacto": 0.0621,
+      "delta_ptp": -0.1825,
+      "delta_gestiones_dia": -48.8,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 58,
+      "gestor": "ANGELY OLIVARDIA",
+      "cartera_principal": "BANISTMO RECOVERY",
+      "nivel": "bajo",
+      "score": 20.7,
+      "alertas": [
+        "contacto_bajo"
+      ],
+      "estado": "sin_meta",
+      "gestiones": 1751,
+      "efectivas": 297,
+      "promesas": 118,
+      "compromisos": 7,
+      "pagos": 23,
+      "recaudo": 2417.9,
+      "dias_activos": 24,
+      "tasa_contacto": 0.1696,
+      "no_contacto": 0.8304,
+      "ptp_rate": 0.3973,
+      "conversion": 0.0674,
+      "gestiones_dia": 73.0,
+      "promesas_dia": 4.92,
+      "ticket": 20.49,
+      "delta_contacto": -0.1417,
+      "delta_ptp": -0.0258,
+      "delta_gestiones_dia": -31.5,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 59,
+      "gestor": "KAYTHLEEN VAN",
+      "cartera_principal": "MULTIBANK",
+      "nivel": "bajo",
+      "score": 18.9,
+      "alertas": [],
+      "estado": "sin_meta",
+      "gestiones": 1941,
+      "efectivas": 402,
+      "promesas": 117,
+      "compromisos": 2,
+      "pagos": 1,
+      "recaudo": 1575.11,
+      "dias_activos": 22,
+      "tasa_contacto": 0.2071,
+      "no_contacto": 0.7929,
+      "ptp_rate": 0.291,
+      "conversion": 0.0603,
+      "gestiones_dia": 88.2,
+      "promesas_dia": 5.32,
+      "ticket": 13.46,
+      "delta_contacto": -0.1042,
+      "delta_ptp": -0.1321,
+      "delta_gestiones_dia": -16.3,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 60,
+      "gestor": "KELYNETH SANTOS",
+      "cartera_principal": "GLOBAL BANK",
+      "nivel": "bajo",
+      "score": 18.6,
+      "alertas": [
+        "contacto_bajo"
+      ],
+      "estado": "sin_meta",
+      "gestiones": 2469,
+      "efectivas": 444,
+      "promesas": 127,
+      "compromisos": 10,
+      "pagos": 53,
+      "recaudo": 7353.36,
+      "dias_activos": 24,
+      "tasa_contacto": 0.1798,
+      "no_contacto": 0.8202,
+      "ptp_rate": 0.286,
+      "conversion": 0.0514,
+      "gestiones_dia": 102.9,
+      "promesas_dia": 5.29,
+      "ticket": 57.9,
+      "delta_contacto": -0.1315,
+      "delta_ptp": -0.1371,
+      "delta_gestiones_dia": -1.6,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 61,
+      "gestor": "YARELIS GIRÓN",
+      "cartera_principal": "BAC",
+      "nivel": "bajo",
+      "score": 18.4,
+      "alertas": [],
+      "estado": "sin_meta",
+      "gestiones": 1574,
+      "efectivas": 342,
+      "promesas": 87,
+      "compromisos": 15,
+      "pagos": 7,
+      "recaudo": 6096.07,
+      "dias_activos": 16,
+      "tasa_contacto": 0.2173,
+      "no_contacto": 0.7827,
+      "ptp_rate": 0.2544,
+      "conversion": 0.0553,
+      "gestiones_dia": 98.4,
+      "promesas_dia": 5.44,
+      "ticket": 70.07,
+      "delta_contacto": -0.094,
+      "delta_ptp": -0.1687,
+      "delta_gestiones_dia": -6.1,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 62,
+      "gestor": "YILDA GIRON",
+      "cartera_principal": "BAC",
+      "nivel": "bajo",
+      "score": 16.7,
+      "alertas": [
+        "actividad_baja",
+        "pocos_dias"
+      ],
+      "estado": "sin_meta",
+      "gestiones": 5,
+      "efectivas": 2,
+      "promesas": 0,
+      "compromisos": 0,
+      "pagos": 0,
+      "recaudo": 0.0,
+      "dias_activos": 2,
+      "tasa_contacto": 0.4,
+      "no_contacto": 0.6,
+      "ptp_rate": 0.0,
+      "conversion": 0.0,
+      "gestiones_dia": 2.5,
+      "promesas_dia": 0.0,
+      "ticket": 0.0,
+      "delta_contacto": 0.0887,
+      "delta_ptp": -0.4231,
+      "delta_gestiones_dia": -102.0,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 63,
+      "gestor": "VIVIAN QUINTERO",
+      "cartera_principal": "BANISTMO RECOVERY",
+      "nivel": "bajo",
+      "score": 14.4,
+      "alertas": [],
+      "estado": "sin_meta",
+      "gestiones": 1245,
+      "efectivas": 303,
+      "promesas": 83,
+      "compromisos": 12,
+      "pagos": 19,
+      "recaudo": 25452.8,
+      "dias_activos": 20,
+      "tasa_contacto": 0.2434,
+      "no_contacto": 0.7566,
+      "ptp_rate": 0.2739,
+      "conversion": 0.0667,
+      "gestiones_dia": 62.2,
+      "promesas_dia": 4.15,
+      "ticket": 306.66,
+      "delta_contacto": -0.0679,
+      "delta_ptp": -0.1492,
+      "delta_gestiones_dia": -42.3,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 64,
+      "gestor": "ANGIE HERRERA",
+      "cartera_principal": "BANISTMO RECOVERY",
+      "nivel": "bajo",
+      "score": 11.1,
+      "alertas": [],
+      "estado": "sin_meta",
+      "gestiones": 1314,
+      "efectivas": 337,
+      "promesas": 80,
+      "compromisos": 12,
+      "pagos": 5,
+      "recaudo": 2431.05,
+      "dias_activos": 22,
+      "tasa_contacto": 0.2565,
+      "no_contacto": 0.7435,
+      "ptp_rate": 0.2374,
+      "conversion": 0.0609,
+      "gestiones_dia": 59.7,
+      "promesas_dia": 3.64,
+      "ticket": 30.39,
+      "delta_contacto": -0.0548,
+      "delta_ptp": -0.1857,
+      "delta_gestiones_dia": -44.8,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 65,
+      "gestor": "ERISHKA SAMANIEGO",
+      "cartera_principal": "RODELAG",
+      "nivel": "bajo",
+      "score": 9.9,
+      "alertas": [
+        "actividad_baja"
+      ],
+      "estado": "sin_meta",
+      "gestiones": 997,
+      "efectivas": 225,
+      "promesas": 63,
+      "compromisos": 47,
+      "pagos": 1,
+      "recaudo": 5618.29,
+      "dias_activos": 22,
+      "tasa_contacto": 0.2257,
+      "no_contacto": 0.7743,
+      "ptp_rate": 0.28,
+      "conversion": 0.0632,
+      "gestiones_dia": 45.3,
+      "promesas_dia": 2.86,
+      "ticket": 89.18,
+      "delta_contacto": -0.0856,
+      "delta_ptp": -0.1431,
+      "delta_gestiones_dia": -59.2,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    },
+    {
+      "ranking": 66,
+      "gestor": "MARTA NUÑEZ",
+      "cartera_principal": "BAC",
+      "nivel": "bajo",
+      "score": 6.2,
+      "alertas": [
+        "pocos_dias",
+        "contacto_bajo"
+      ],
+      "estado": "sin_meta",
+      "gestiones": 138,
+      "efectivas": 19,
+      "promesas": 4,
+      "compromisos": 0,
+      "pagos": 0,
+      "recaudo": 0.0,
+      "dias_activos": 2,
+      "tasa_contacto": 0.1377,
+      "no_contacto": 0.8623,
+      "ptp_rate": 0.2105,
+      "conversion": 0.029,
+      "gestiones_dia": 69.0,
+      "promesas_dia": 2.0,
+      "ticket": 0.0,
+      "delta_contacto": -0.1736,
+      "delta_ptp": -0.2126,
+      "delta_gestiones_dia": -35.5,
+      "meta_gestiones": null,
+      "meta_efectivas": null,
+      "meta_promesas": null,
+      "meta_recaudo": null,
+      "pct_gestiones": null,
+      "pct_efectivas": null,
+      "pct_promesas": null,
+      "pct_recaudo": null
+    }
+  ],
+  "carteras": [
+    {
+      "cartera": "BANISTMO ACTIVA",
+      "gestiones": 43095,
+      "efectivas": 12943,
+      "promesas": 6111,
+      "compromisos": 2415,
+      "pagos": 114,
+      "monto": 640928.31,
+      "num_asesores": 18,
+      "tasa_contacto": 0.3003,
+      "ptp_rate": 0.4721,
+      "conversion": 0.1418,
+      "ticket": 104.88,
+      "score": 69.5,
+      "nivel": "solido",
+      "mejor_asesor": "ERICKA SALINAS",
+      "asesores_alerta": 2,
+      "tendencia": [
+        {
+          "fecha": "2026-04-01",
+          "gestiones": 1852,
+          "efectivas": 587,
+          "promesas": 233
+        },
+        {
+          "fecha": "2026-04-02",
+          "gestiones": 1056,
+          "efectivas": 308,
+          "promesas": 114
+        },
+        {
+          "fecha": "2026-04-06",
+          "gestiones": 1793,
+          "efectivas": 428,
+          "promesas": 170
+        },
+        {
+          "fecha": "2026-04-07",
+          "gestiones": 1739,
+          "efectivas": 537,
+          "promesas": 242
+        },
+        {
+          "fecha": "2026-04-08",
+          "gestiones": 1457,
+          "efectivas": 919,
+          "promesas": 503
+        },
+        {
+          "fecha": "2026-04-09",
+          "gestiones": 1757,
+          "efectivas": 866,
+          "promesas": 503
+        },
+        {
+          "fecha": "2026-04-10",
+          "gestiones": 1989,
+          "efectivas": 683,
+          "promesas": 443
+        },
+        {
+          "fecha": "2026-04-11",
+          "gestiones": 751,
+          "efectivas": 315,
+          "promesas": 169
+        },
+        {
+          "fecha": "2026-04-13",
+          "gestiones": 1928,
+          "efectivas": 553,
+          "promesas": 262
+        },
+        {
+          "fecha": "2026-04-14",
+          "gestiones": 2457,
+          "efectivas": 491,
+          "promesas": 224
+        },
+        {
+          "fecha": "2026-04-15",
+          "gestiones": 1601,
+          "efectivas": 472,
+          "promesas": 162
+        },
+        {
+          "fecha": "2026-04-16",
+          "gestiones": 1786,
+          "efectivas": 622,
+          "promesas": 180
+        },
+        {
+          "fecha": "2026-04-17",
+          "gestiones": 1907,
+          "efectivas": 624,
+          "promesas": 238
+        },
+        {
+          "fecha": "2026-04-18",
+          "gestiones": 1046,
+          "efectivas": 233,
+          "promesas": 116
+        },
+        {
+          "fecha": "2026-04-20",
+          "gestiones": 2113,
+          "efectivas": 668,
+          "promesas": 272
+        },
+        {
+          "fecha": "2026-04-21",
+          "gestiones": 1673,
+          "efectivas": 430,
+          "promesas": 207
+        },
+        {
+          "fecha": "2026-04-22",
+          "gestiones": 1863,
+          "efectivas": 384,
+          "promesas": 160
+        },
+        {
+          "fecha": "2026-04-23",
+          "gestiones": 2106,
+          "efectivas": 557,
+          "promesas": 342
+        },
+        {
+          "fecha": "2026-04-24",
+          "gestiones": 2217,
+          "efectivas": 591,
+          "promesas": 370
+        },
+        {
+          "fecha": "2026-04-25",
+          "gestiones": 1032,
+          "efectivas": 268,
+          "promesas": 114
+        },
+        {
+          "fecha": "2026-04-27",
+          "gestiones": 2145,
+          "efectivas": 566,
+          "promesas": 329
+        },
+        {
+          "fecha": "2026-04-28",
+          "gestiones": 2085,
+          "efectivas": 686,
+          "promesas": 371
+        },
+        {
+          "fecha": "2026-04-29",
+          "gestiones": 2129,
+          "efectivas": 470,
+          "promesas": 238
+        },
+        {
+          "fecha": "2026-04-30",
+          "gestiones": 2613,
+          "efectivas": 685,
+          "promesas": 149
+        }
+      ]
+    },
+    {
+      "cartera": "SURA",
+      "gestiones": 32910,
+      "efectivas": 11529,
+      "promesas": 5595,
+      "compromisos": 2334,
+      "pagos": 927,
+      "monto": 428828.65,
+      "num_asesores": 17,
+      "tasa_contacto": 0.3503,
+      "ptp_rate": 0.4853,
+      "conversion": 0.17,
+      "ticket": 76.64,
+      "score": 80.5,
+      "nivel": "elite",
+      "mejor_asesor": "MARIANELYS VERGARA",
+      "asesores_alerta": 4,
+      "tendencia": [
+        {
+          "fecha": "2026-04-01",
+          "gestiones": 965,
+          "efectivas": 388,
+          "promesas": 189
+        },
+        {
+          "fecha": "2026-04-02",
+          "gestiones": 734,
+          "efectivas": 281,
+          "promesas": 140
+        },
+        {
+          "fecha": "2026-04-06",
+          "gestiones": 1343,
+          "efectivas": 528,
+          "promesas": 203
+        },
+        {
+          "fecha": "2026-04-07",
+          "gestiones": 1182,
+          "efectivas": 447,
+          "promesas": 179
+        },
+        {
+          "fecha": "2026-04-08",
+          "gestiones": 1141,
+          "efectivas": 350,
+          "promesas": 214
+        },
+        {
+          "fecha": "2026-04-09",
+          "gestiones": 1331,
+          "efectivas": 401,
+          "promesas": 244
+        },
+        {
+          "fecha": "2026-04-10",
+          "gestiones": 1638,
+          "efectivas": 505,
+          "promesas": 334
+        },
+        {
+          "fecha": "2026-04-11",
+          "gestiones": 851,
+          "efectivas": 270,
+          "promesas": 171
+        },
+        {
+          "fecha": "2026-04-13",
+          "gestiones": 1616,
+          "efectivas": 541,
+          "promesas": 343
+        },
+        {
+          "fecha": "2026-04-14",
+          "gestiones": 1613,
+          "efectivas": 590,
+          "promesas": 330
+        },
+        {
+          "fecha": "2026-04-15",
+          "gestiones": 1690,
+          "efectivas": 591,
+          "promesas": 215
+        },
+        {
+          "fecha": "2026-04-16",
+          "gestiones": 1693,
+          "efectivas": 560,
+          "promesas": 215
+        },
+        {
+          "fecha": "2026-04-17",
+          "gestiones": 1511,
+          "efectivas": 511,
+          "promesas": 283
+        },
+        {
+          "fecha": "2026-04-18",
+          "gestiones": 805,
+          "efectivas": 294,
+          "promesas": 142
+        },
+        {
+          "fecha": "2026-04-20",
+          "gestiones": 1657,
+          "efectivas": 614,
+          "promesas": 346
+        },
+        {
+          "fecha": "2026-04-21",
+          "gestiones": 1830,
+          "efectivas": 628,
+          "promesas": 310
+        },
+        {
+          "fecha": "2026-04-22",
+          "gestiones": 1294,
+          "efectivas": 440,
+          "promesas": 267
+        },
+        {
+          "fecha": "2026-04-23",
+          "gestiones": 1491,
+          "efectivas": 546,
+          "promesas": 281
+        },
+        {
+          "fecha": "2026-04-24",
+          "gestiones": 1599,
+          "efectivas": 533,
+          "promesas": 231
+        },
+        {
+          "fecha": "2026-04-25",
+          "gestiones": 893,
+          "efectivas": 318,
+          "promesas": 125
+        },
+        {
+          "fecha": "2026-04-27",
+          "gestiones": 1760,
+          "efectivas": 591,
+          "promesas": 212
+        },
+        {
+          "fecha": "2026-04-28",
+          "gestiones": 1422,
+          "efectivas": 385,
+          "promesas": 176
+        },
+        {
+          "fecha": "2026-04-29",
+          "gestiones": 1377,
+          "efectivas": 437,
+          "promesas": 231
+        },
+        {
+          "fecha": "2026-04-30",
+          "gestiones": 1474,
+          "efectivas": 780,
+          "promesas": 214
+        }
+      ]
+    },
+    {
+      "cartera": "TIGO",
+      "gestiones": 19533,
+      "efectivas": 10264,
+      "promesas": 4180,
+      "compromisos": 3629,
+      "pagos": 0,
+      "monto": 178627.25,
+      "num_asesores": 6,
+      "tasa_contacto": 0.5255,
+      "ptp_rate": 0.4072,
+      "conversion": 0.214,
+      "ticket": 42.73,
+      "score": 77.3,
+      "nivel": "elite",
+      "mejor_asesor": "JHONN PUGA",
+      "asesores_alerta": 0,
+      "tendencia": [
+        {
+          "fecha": "2026-04-01",
+          "gestiones": 826,
+          "efectivas": 368,
+          "promesas": 199
+        },
+        {
+          "fecha": "2026-04-02",
+          "gestiones": 428,
+          "efectivas": 245,
+          "promesas": 55
+        },
+        {
+          "fecha": "2026-04-06",
+          "gestiones": 789,
+          "efectivas": 387,
+          "promesas": 101
+        },
+        {
+          "fecha": "2026-04-07",
+          "gestiones": 457,
+          "efectivas": 237,
+          "promesas": 91
+        },
+        {
+          "fecha": "2026-04-08",
+          "gestiones": 607,
+          "efectivas": 326,
+          "promesas": 135
+        },
+        {
+          "fecha": "2026-04-09",
+          "gestiones": 767,
+          "efectivas": 284,
+          "promesas": 138
+        },
+        {
+          "fecha": "2026-04-10",
+          "gestiones": 802,
+          "efectivas": 353,
+          "promesas": 204
+        },
+        {
+          "fecha": "2026-04-11",
+          "gestiones": 531,
+          "efectivas": 203,
+          "promesas": 68
+        },
+        {
+          "fecha": "2026-04-13",
+          "gestiones": 906,
+          "efectivas": 288,
+          "promesas": 50
+        },
+        {
+          "fecha": "2026-04-14",
+          "gestiones": 768,
+          "efectivas": 274,
+          "promesas": 13
+        },
+        {
+          "fecha": "2026-04-17",
+          "gestiones": 1114,
+          "efectivas": 599,
+          "promesas": 473
+        },
+        {
+          "fecha": "2026-04-18",
+          "gestiones": 744,
+          "efectivas": 309,
+          "promesas": 195
+        },
+        {
+          "fecha": "2026-04-20",
+          "gestiones": 1191,
+          "efectivas": 599,
+          "promesas": 218
+        },
+        {
+          "fecha": "2026-04-21",
+          "gestiones": 1151,
+          "efectivas": 652,
+          "promesas": 266
+        },
+        {
+          "fecha": "2026-04-22",
+          "gestiones": 1100,
+          "efectivas": 625,
+          "promesas": 271
+        },
+        {
+          "fecha": "2026-04-23",
+          "gestiones": 1264,
+          "efectivas": 714,
+          "promesas": 347
+        },
+        {
+          "fecha": "2026-04-24",
+          "gestiones": 1217,
+          "efectivas": 751,
+          "promesas": 291
+        },
+        {
+          "fecha": "2026-04-25",
+          "gestiones": 546,
+          "efectivas": 381,
+          "promesas": 57
+        },
+        {
+          "fecha": "2026-04-27",
+          "gestiones": 1408,
+          "efectivas": 1021,
+          "promesas": 550
+        },
+        {
+          "fecha": "2026-04-28",
+          "gestiones": 750,
+          "efectivas": 493,
+          "promesas": 178
+        },
+        {
+          "fecha": "2026-04-29",
+          "gestiones": 1056,
+          "efectivas": 599,
+          "promesas": 239
+        },
+        {
+          "fecha": "2026-04-30",
+          "gestiones": 1111,
+          "efectivas": 556,
+          "promesas": 41
+        }
+      ]
+    },
+    {
+      "cartera": "BANISTMO RECOVERY",
+      "gestiones": 15602,
+      "efectivas": 4876,
+      "promesas": 1614,
+      "compromisos": 139,
+      "pagos": 192,
+      "monto": 134796.05,
+      "num_asesores": 10,
+      "tasa_contacto": 0.3125,
+      "ptp_rate": 0.331,
+      "conversion": 0.1034,
+      "ticket": 83.52,
+      "score": 55.0,
+      "nivel": "solido",
+      "mejor_asesor": "RENE BARNES",
+      "asesores_alerta": 2,
+      "tendencia": [
+        {
+          "fecha": "2026-04-01",
+          "gestiones": 517,
+          "efectivas": 249,
+          "promesas": 90
+        },
+        {
+          "fecha": "2026-04-02",
+          "gestiones": 339,
+          "efectivas": 106,
+          "promesas": 40
+        },
+        {
+          "fecha": "2026-04-06",
+          "gestiones": 805,
+          "efectivas": 255,
+          "promesas": 91
+        },
+        {
+          "fecha": "2026-04-07",
+          "gestiones": 773,
+          "efectivas": 204,
+          "promesas": 45
+        },
+        {
+          "fecha": "2026-04-08",
+          "gestiones": 626,
+          "efectivas": 205,
+          "promesas": 58
+        },
+        {
+          "fecha": "2026-04-09",
+          "gestiones": 651,
+          "efectivas": 233,
+          "promesas": 51
+        },
+        {
+          "fecha": "2026-04-10",
+          "gestiones": 606,
+          "efectivas": 181,
+          "promesas": 48
+        },
+        {
+          "fecha": "2026-04-11",
+          "gestiones": 396,
+          "efectivas": 160,
+          "promesas": 37
+        },
+        {
+          "fecha": "2026-04-13",
+          "gestiones": 680,
+          "efectivas": 280,
+          "promesas": 98
+        },
+        {
+          "fecha": "2026-04-14",
+          "gestiones": 803,
+          "efectivas": 248,
+          "promesas": 72
+        },
+        {
+          "fecha": "2026-04-15",
+          "gestiones": 768,
+          "efectivas": 286,
+          "promesas": 144
+        },
+        {
+          "fecha": "2026-04-16",
+          "gestiones": 642,
+          "efectivas": 231,
+          "promesas": 89
+        },
+        {
+          "fecha": "2026-04-17",
+          "gestiones": 501,
+          "efectivas": 133,
+          "promesas": 63
+        },
+        {
+          "fecha": "2026-04-18",
+          "gestiones": 311,
+          "efectivas": 126,
+          "promesas": 33
+        },
+        {
+          "fecha": "2026-04-20",
+          "gestiones": 609,
+          "efectivas": 224,
+          "promesas": 73
+        },
+        {
+          "fecha": "2026-04-21",
+          "gestiones": 833,
+          "efectivas": 184,
+          "promesas": 61
+        },
+        {
+          "fecha": "2026-04-22",
+          "gestiones": 715,
+          "efectivas": 118,
+          "promesas": 44
+        },
+        {
+          "fecha": "2026-04-23",
+          "gestiones": 679,
+          "efectivas": 209,
+          "promesas": 71
+        },
+        {
+          "fecha": "2026-04-24",
+          "gestiones": 928,
+          "efectivas": 239,
+          "promesas": 88
+        },
+        {
+          "fecha": "2026-04-25",
+          "gestiones": 439,
+          "efectivas": 95,
+          "promesas": 23
+        },
+        {
+          "fecha": "2026-04-27",
+          "gestiones": 689,
+          "efectivas": 198,
+          "promesas": 50
+        },
+        {
+          "fecha": "2026-04-28",
+          "gestiones": 736,
+          "efectivas": 178,
+          "promesas": 36
+        },
+        {
+          "fecha": "2026-04-29",
+          "gestiones": 866,
+          "efectivas": 243,
+          "promesas": 78
+        },
+        {
+          "fecha": "2026-04-30",
+          "gestiones": 690,
+          "efectivas": 291,
+          "promesas": 131
+        }
+      ]
+    },
+    {
+      "cartera": "SOLVE",
+      "gestiones": 9677,
+      "efectivas": 2654,
+      "promesas": 1355,
+      "compromisos": 391,
+      "pagos": 240,
+      "monto": 44290.26,
+      "num_asesores": 4,
+      "tasa_contacto": 0.2743,
+      "ptp_rate": 0.5106,
+      "conversion": 0.14,
+      "ticket": 32.69,
+      "score": 64.5,
+      "nivel": "solido",
+      "mejor_asesor": "DANNA RIVAS",
+      "asesores_alerta": 0,
+      "tendencia": [
+        {
+          "fecha": "2026-04-01",
+          "gestiones": 516,
+          "efectivas": 166,
+          "promesas": 136
+        },
+        {
+          "fecha": "2026-04-02",
+          "gestiones": 258,
+          "efectivas": 100,
+          "promesas": 89
+        },
+        {
+          "fecha": "2026-04-06",
+          "gestiones": 338,
+          "efectivas": 137,
+          "promesas": 74
+        },
+        {
+          "fecha": "2026-04-07",
+          "gestiones": 445,
+          "efectivas": 186,
+          "promesas": 104
+        },
+        {
+          "fecha": "2026-04-08",
+          "gestiones": 379,
+          "efectivas": 177,
+          "promesas": 87
+        },
+        {
+          "fecha": "2026-04-09",
+          "gestiones": 424,
+          "efectivas": 149,
+          "promesas": 52
+        },
+        {
+          "fecha": "2026-04-10",
+          "gestiones": 554,
+          "efectivas": 134,
+          "promesas": 83
+        },
+        {
+          "fecha": "2026-04-11",
+          "gestiones": 273,
+          "efectivas": 69,
+          "promesas": 30
+        },
+        {
+          "fecha": "2026-04-13",
+          "gestiones": 574,
+          "efectivas": 150,
+          "promesas": 67
+        },
+        {
+          "fecha": "2026-04-14",
+          "gestiones": 524,
+          "efectivas": 149,
+          "promesas": 89
+        },
+        {
+          "fecha": "2026-04-15",
+          "gestiones": 493,
+          "efectivas": 106,
+          "promesas": 43
+        },
+        {
+          "fecha": "2026-04-16",
+          "gestiones": 334,
+          "efectivas": 107,
+          "promesas": 43
+        },
+        {
+          "fecha": "2026-04-17",
+          "gestiones": 354,
+          "efectivas": 121,
+          "promesas": 39
+        },
+        {
+          "fecha": "2026-04-18",
+          "gestiones": 203,
+          "efectivas": 65,
+          "promesas": 31
+        },
+        {
+          "fecha": "2026-04-20",
+          "gestiones": 577,
+          "efectivas": 156,
+          "promesas": 82
+        },
+        {
+          "fecha": "2026-04-21",
+          "gestiones": 403,
+          "efectivas": 123,
+          "promesas": 52
+        },
+        {
+          "fecha": "2026-04-22",
+          "gestiones": 337,
+          "efectivas": 46,
+          "promesas": 19
+        },
+        {
+          "fecha": "2026-04-23",
+          "gestiones": 133,
+          "efectivas": 34,
+          "promesas": 21
+        },
+        {
+          "fecha": "2026-04-24",
+          "gestiones": 428,
+          "efectivas": 76,
+          "promesas": 35
+        },
+        {
+          "fecha": "2026-04-25",
+          "gestiones": 336,
+          "efectivas": 34,
+          "promesas": 14
+        },
+        {
+          "fecha": "2026-04-27",
+          "gestiones": 453,
+          "efectivas": 74,
+          "promesas": 36
+        },
+        {
+          "fecha": "2026-04-28",
+          "gestiones": 492,
+          "efectivas": 86,
+          "promesas": 52
+        },
+        {
+          "fecha": "2026-04-29",
+          "gestiones": 455,
+          "efectivas": 77,
+          "promesas": 33
+        },
+        {
+          "fecha": "2026-04-30",
+          "gestiones": 394,
+          "efectivas": 132,
+          "promesas": 44
+        }
+      ]
+    },
+    {
+      "cartera": "BAC",
+      "gestiones": 8978,
+      "efectivas": 2295,
+      "promesas": 820,
+      "compromisos": 93,
+      "pagos": 201,
+      "monto": 48712.49,
+      "num_asesores": 8,
+      "tasa_contacto": 0.2556,
+      "ptp_rate": 0.3573,
+      "conversion": 0.0913,
+      "ticket": 59.41,
+      "score": 44.5,
+      "nivel": "promedio",
+      "mejor_asesor": "TAYRETH OYAGA",
+      "asesores_alerta": 3,
+      "tendencia": [
+        {
+          "fecha": "2026-04-01",
+          "gestiones": 341,
+          "efectivas": 84,
+          "promesas": 42
+        },
+        {
+          "fecha": "2026-04-02",
+          "gestiones": 191,
+          "efectivas": 36,
+          "promesas": 19
+        },
+        {
+          "fecha": "2026-04-06",
+          "gestiones": 261,
+          "efectivas": 72,
+          "promesas": 38
+        },
+        {
+          "fecha": "2026-04-07",
+          "gestiones": 422,
+          "efectivas": 61,
+          "promesas": 31
+        },
+        {
+          "fecha": "2026-04-08",
+          "gestiones": 319,
+          "efectivas": 98,
+          "promesas": 40
+        },
+        {
+          "fecha": "2026-04-09",
+          "gestiones": 293,
+          "efectivas": 136,
+          "promesas": 32
+        },
+        {
+          "fecha": "2026-04-10",
+          "gestiones": 341,
+          "efectivas": 120,
+          "promesas": 26
+        },
+        {
+          "fecha": "2026-04-11",
+          "gestiones": 150,
+          "efectivas": 21,
+          "promesas": 5
+        },
+        {
+          "fecha": "2026-04-13",
+          "gestiones": 524,
+          "efectivas": 101,
+          "promesas": 30
+        },
+        {
+          "fecha": "2026-04-14",
+          "gestiones": 319,
+          "efectivas": 117,
+          "promesas": 34
+        },
+        {
+          "fecha": "2026-04-15",
+          "gestiones": 416,
+          "efectivas": 138,
+          "promesas": 78
+        },
+        {
+          "fecha": "2026-04-16",
+          "gestiones": 362,
+          "efectivas": 113,
+          "promesas": 48
+        },
+        {
+          "fecha": "2026-04-17",
+          "gestiones": 391,
+          "efectivas": 86,
+          "promesas": 41
+        },
+        {
+          "fecha": "2026-04-18",
+          "gestiones": 213,
+          "efectivas": 46,
+          "promesas": 20
+        },
+        {
+          "fecha": "2026-04-20",
+          "gestiones": 344,
+          "efectivas": 91,
+          "promesas": 32
+        },
+        {
+          "fecha": "2026-04-21",
+          "gestiones": 467,
+          "efectivas": 179,
+          "promesas": 54
+        },
+        {
+          "fecha": "2026-04-22",
+          "gestiones": 375,
+          "efectivas": 82,
+          "promesas": 30
+        },
+        {
+          "fecha": "2026-04-23",
+          "gestiones": 443,
+          "efectivas": 52,
+          "promesas": 19
+        },
+        {
+          "fecha": "2026-04-24",
+          "gestiones": 481,
+          "efectivas": 67,
+          "promesas": 27
+        },
+        {
+          "fecha": "2026-04-25",
+          "gestiones": 311,
+          "efectivas": 36,
+          "promesas": 11
+        },
+        {
+          "fecha": "2026-04-27",
+          "gestiones": 453,
+          "efectivas": 104,
+          "promesas": 36
+        },
+        {
+          "fecha": "2026-04-28",
+          "gestiones": 512,
+          "efectivas": 109,
+          "promesas": 24
+        },
+        {
+          "fecha": "2026-04-29",
+          "gestiones": 484,
+          "efectivas": 126,
+          "promesas": 25
+        },
+        {
+          "fecha": "2026-04-30",
+          "gestiones": 565,
+          "efectivas": 220,
+          "promesas": 78
+        }
+      ]
+    },
+    {
+      "cartera": "KREDIYA",
+      "gestiones": 6203,
+      "efectivas": 2747,
+      "promesas": 2352,
+      "compromisos": 654,
+      "pagos": 210,
+      "monto": 39727.28,
+      "num_asesores": 9,
+      "tasa_contacto": 0.4429,
+      "ptp_rate": 0.8562,
+      "conversion": 0.3792,
+      "ticket": 16.89,
+      "score": 83.2,
+      "nivel": "elite",
+      "mejor_asesor": "MILENA SIMMONS",
+      "asesores_alerta": 0,
+      "tendencia": [
+        {
+          "fecha": "2026-04-01",
+          "gestiones": 35,
+          "efectivas": 21,
+          "promesas": 21
+        },
+        {
+          "fecha": "2026-04-02",
+          "gestiones": 50,
+          "efectivas": 35,
+          "promesas": 35
+        },
+        {
+          "fecha": "2026-04-06",
+          "gestiones": 146,
+          "efectivas": 79,
+          "promesas": 77
+        },
+        {
+          "fecha": "2026-04-07",
+          "gestiones": 138,
+          "efectivas": 83,
+          "promesas": 80
+        },
+        {
+          "fecha": "2026-04-08",
+          "gestiones": 174,
+          "efectivas": 82,
+          "promesas": 79
+        },
+        {
+          "fecha": "2026-04-09",
+          "gestiones": 248,
+          "efectivas": 94,
+          "promesas": 80
+        },
+        {
+          "fecha": "2026-04-10",
+          "gestiones": 273,
+          "efectivas": 124,
+          "promesas": 110
+        },
+        {
+          "fecha": "2026-04-11",
+          "gestiones": 122,
+          "efectivas": 89,
+          "promesas": 81
+        },
+        {
+          "fecha": "2026-04-13",
+          "gestiones": 282,
+          "efectivas": 167,
+          "promesas": 136
+        },
+        {
+          "fecha": "2026-04-14",
+          "gestiones": 445,
+          "efectivas": 129,
+          "promesas": 111
+        },
+        {
+          "fecha": "2026-04-15",
+          "gestiones": 363,
+          "efectivas": 188,
+          "promesas": 160
+        },
+        {
+          "fecha": "2026-04-16",
+          "gestiones": 803,
+          "efectivas": 184,
+          "promesas": 157
+        },
+        {
+          "fecha": "2026-04-17",
+          "gestiones": 384,
+          "efectivas": 167,
+          "promesas": 124
+        },
+        {
+          "fecha": "2026-04-18",
+          "gestiones": 138,
+          "efectivas": 70,
+          "promesas": 65
+        },
+        {
+          "fecha": "2026-04-20",
+          "gestiones": 350,
+          "efectivas": 171,
+          "promesas": 130
+        },
+        {
+          "fecha": "2026-04-21",
+          "gestiones": 267,
+          "efectivas": 111,
+          "promesas": 99
+        },
+        {
+          "fecha": "2026-04-22",
+          "gestiones": 199,
+          "efectivas": 87,
+          "promesas": 81
+        },
+        {
+          "fecha": "2026-04-23",
+          "gestiones": 220,
+          "efectivas": 119,
+          "promesas": 96
+        },
+        {
+          "fecha": "2026-04-24",
+          "gestiones": 210,
+          "efectivas": 132,
+          "promesas": 116
+        },
+        {
+          "fecha": "2026-04-25",
+          "gestiones": 165,
+          "efectivas": 91,
+          "promesas": 79
+        },
+        {
+          "fecha": "2026-04-27",
+          "gestiones": 165,
+          "efectivas": 64,
+          "promesas": 53
+        },
+        {
+          "fecha": "2026-04-28",
+          "gestiones": 394,
+          "efectivas": 87,
+          "promesas": 74
+        },
+        {
+          "fecha": "2026-04-29",
+          "gestiones": 366,
+          "efectivas": 131,
+          "promesas": 90
+        },
+        {
+          "fecha": "2026-04-30",
+          "gestiones": 266,
+          "efectivas": 242,
+          "promesas": 218
+        }
+      ]
+    },
+    {
+      "cartera": "GLOBAL BANK",
+      "gestiones": 2469,
+      "efectivas": 444,
+      "promesas": 127,
+      "compromisos": 10,
+      "pagos": 53,
+      "monto": 7353.36,
+      "num_asesores": 1,
+      "tasa_contacto": 0.1798,
+      "ptp_rate": 0.286,
+      "conversion": 0.0514,
+      "ticket": 57.9,
+      "score": 19.5,
+      "nivel": "bajo",
+      "mejor_asesor": "KELYNETH SANTOS",
+      "asesores_alerta": 1,
+      "tendencia": [
+        {
+          "fecha": "2026-04-01",
+          "gestiones": 54,
+          "efectivas": 32,
+          "promesas": 10
+        },
+        {
+          "fecha": "2026-04-02",
+          "gestiones": 50,
+          "efectivas": 26,
+          "promesas": 16
+        },
+        {
+          "fecha": "2026-04-06",
+          "gestiones": 114,
+          "efectivas": 12,
+          "promesas": 6
+        },
+        {
+          "fecha": "2026-04-07",
+          "gestiones": 117,
+          "efectivas": 11,
+          "promesas": 2
+        },
+        {
+          "fecha": "2026-04-08",
+          "gestiones": 93,
+          "efectivas": 12,
+          "promesas": 4
+        },
+        {
+          "fecha": "2026-04-09",
+          "gestiones": 101,
+          "efectivas": 11,
+          "promesas": 3
+        },
+        {
+          "fecha": "2026-04-10",
+          "gestiones": 119,
+          "efectivas": 19,
+          "promesas": 5
+        },
+        {
+          "fecha": "2026-04-11",
+          "gestiones": 73,
+          "efectivas": 6,
+          "promesas": 1
+        },
+        {
+          "fecha": "2026-04-13",
+          "gestiones": 157,
+          "efectivas": 18,
+          "promesas": 5
+        },
+        {
+          "fecha": "2026-04-14",
+          "gestiones": 133,
+          "efectivas": 18,
+          "promesas": 2
+        },
+        {
+          "fecha": "2026-04-15",
+          "gestiones": 89,
+          "efectivas": 57,
+          "promesas": 26
+        },
+        {
+          "fecha": "2026-04-16",
+          "gestiones": 113,
+          "efectivas": 45,
+          "promesas": 15
+        },
+        {
+          "fecha": "2026-04-17",
+          "gestiones": 128,
+          "efectivas": 23,
+          "promesas": 4
+        },
+        {
+          "fecha": "2026-04-18",
+          "gestiones": 81,
+          "efectivas": 13,
+          "promesas": 1
+        },
+        {
+          "fecha": "2026-04-20",
+          "gestiones": 127,
+          "efectivas": 22,
+          "promesas": 2
+        },
+        {
+          "fecha": "2026-04-21",
+          "gestiones": 102,
+          "efectivas": 10,
+          "promesas": 2
+        },
+        {
+          "fecha": "2026-04-22",
+          "gestiones": 79,
+          "efectivas": 8,
+          "promesas": 0
+        },
+        {
+          "fecha": "2026-04-23",
+          "gestiones": 93,
+          "efectivas": 11,
+          "promesas": 0
+        },
+        {
+          "fecha": "2026-04-24",
+          "gestiones": 108,
+          "efectivas": 15,
+          "promesas": 0
+        },
+        {
+          "fecha": "2026-04-25",
+          "gestiones": 73,
+          "efectivas": 3,
+          "promesas": 1
+        },
+        {
+          "fecha": "2026-04-27",
+          "gestiones": 101,
+          "efectivas": 10,
+          "promesas": 2
+        },
+        {
+          "fecha": "2026-04-28",
+          "gestiones": 114,
+          "efectivas": 12,
+          "promesas": 0
+        },
+        {
+          "fecha": "2026-04-29",
+          "gestiones": 131,
+          "efectivas": 13,
+          "promesas": 3
+        },
+        {
+          "fecha": "2026-04-30",
+          "gestiones": 119,
+          "efectivas": 37,
+          "promesas": 17
+        }
+      ]
+    },
+    {
+      "cartera": "MULTIBANK",
+      "gestiones": 1942,
+      "efectivas": 403,
+      "promesas": 117,
+      "compromisos": 2,
+      "pagos": 1,
+      "monto": 1575.11,
+      "num_asesores": 2,
+      "tasa_contacto": 0.2075,
+      "ptp_rate": 0.2903,
+      "conversion": 0.0602,
+      "ticket": 13.46,
+      "score": 24.1,
+      "nivel": "bajo",
+      "mejor_asesor": "KAYTHLEEN VAN",
+      "asesores_alerta": 0,
+      "tendencia": [
+        {
+          "fecha": "2026-04-01",
+          "gestiones": 81,
+          "efectivas": 23,
+          "promesas": 8
+        },
+        {
+          "fecha": "2026-04-02",
+          "gestiones": 59,
+          "efectivas": 12,
+          "promesas": 3
+        },
+        {
+          "fecha": "2026-04-06",
+          "gestiones": 101,
+          "efectivas": 12,
+          "promesas": 6
+        },
+        {
+          "fecha": "2026-04-07",
+          "gestiones": 114,
+          "efectivas": 19,
+          "promesas": 11
+        },
+        {
+          "fecha": "2026-04-08",
+          "gestiones": 114,
+          "efectivas": 30,
+          "promesas": 21
+        },
+        {
+          "fecha": "2026-04-09",
+          "gestiones": 124,
+          "efectivas": 8,
+          "promesas": 1
+        },
+        {
+          "fecha": "2026-04-10",
+          "gestiones": 110,
+          "efectivas": 16,
+          "promesas": 9
+        },
+        {
+          "fecha": "2026-04-11",
+          "gestiones": 69,
+          "efectivas": 14,
+          "promesas": 1
+        },
+        {
+          "fecha": "2026-04-13",
+          "gestiones": 112,
+          "efectivas": 14,
+          "promesas": 2
+        },
+        {
+          "fecha": "2026-04-14",
+          "gestiones": 91,
+          "efectivas": 25,
+          "promesas": 6
+        },
+        {
+          "fecha": "2026-04-15",
+          "gestiones": 76,
+          "efectivas": 28,
+          "promesas": 3
+        },
+        {
+          "fecha": "2026-04-17",
+          "gestiones": 71,
+          "efectivas": 23,
+          "promesas": 1
+        },
+        {
+          "fecha": "2026-04-18",
+          "gestiones": 65,
+          "efectivas": 9,
+          "promesas": 1
+        },
+        {
+          "fecha": "2026-04-20",
+          "gestiones": 44,
+          "efectivas": 12,
+          "promesas": 1
+        },
+        {
+          "fecha": "2026-04-21",
+          "gestiones": 94,
+          "efectivas": 22,
+          "promesas": 5
+        },
+        {
+          "fecha": "2026-04-23",
+          "gestiones": 87,
+          "efectivas": 17,
+          "promesas": 5
+        },
+        {
+          "fecha": "2026-04-24",
+          "gestiones": 113,
+          "efectivas": 25,
+          "promesas": 11
+        },
+        {
+          "fecha": "2026-04-25",
+          "gestiones": 60,
+          "efectivas": 9,
+          "promesas": 3
+        },
+        {
+          "fecha": "2026-04-27",
+          "gestiones": 87,
+          "efectivas": 18,
+          "promesas": 5
+        },
+        {
+          "fecha": "2026-04-28",
+          "gestiones": 116,
+          "efectivas": 21,
+          "promesas": 4
+        },
+        {
+          "fecha": "2026-04-29",
+          "gestiones": 80,
+          "efectivas": 22,
+          "promesas": 7
+        },
+        {
+          "fecha": "2026-04-30",
+          "gestiones": 74,
+          "efectivas": 24,
+          "promesas": 3
+        }
+      ]
+    },
+    {
+      "cartera": "BANCO LA HIPOTECARIA",
+      "gestiones": 1609,
+      "efectivas": 505,
+      "promesas": 415,
+      "compromisos": 17,
+      "pagos": 21,
+      "monto": 4463.86,
+      "num_asesores": 12,
+      "tasa_contacto": 0.3139,
+      "ptp_rate": 0.8218,
+      "conversion": 0.2579,
+      "ticket": 10.76,
+      "score": 66.4,
+      "nivel": "solido",
+      "mejor_asesor": "YUNAYCKA REYES",
+      "asesores_alerta": 1,
+      "tendencia": [
+        {
+          "fecha": "2026-04-01",
+          "gestiones": 93,
+          "efectivas": 34,
+          "promesas": 32
+        },
+        {
+          "fecha": "2026-04-02",
+          "gestiones": 44,
+          "efectivas": 12,
+          "promesas": 11
+        },
+        {
+          "fecha": "2026-04-06",
+          "gestiones": 93,
+          "efectivas": 39,
+          "promesas": 34
+        },
+        {
+          "fecha": "2026-04-07",
+          "gestiones": 113,
+          "efectivas": 23,
+          "promesas": 20
+        },
+        {
+          "fecha": "2026-04-08",
+          "gestiones": 78,
+          "efectivas": 16,
+          "promesas": 11
+        },
+        {
+          "fecha": "2026-04-09",
+          "gestiones": 118,
+          "efectivas": 19,
+          "promesas": 15
+        },
+        {
+          "fecha": "2026-04-10",
+          "gestiones": 81,
+          "efectivas": 19,
+          "promesas": 18
+        },
+        {
+          "fecha": "2026-04-11",
+          "gestiones": 31,
+          "efectivas": 8,
+          "promesas": 8
+        },
+        {
+          "fecha": "2026-04-13",
+          "gestiones": 82,
+          "efectivas": 14,
+          "promesas": 8
+        },
+        {
+          "fecha": "2026-04-14",
+          "gestiones": 69,
+          "efectivas": 12,
+          "promesas": 11
+        },
+        {
+          "fecha": "2026-04-15",
+          "gestiones": 66,
+          "efectivas": 33,
+          "promesas": 26
+        },
+        {
+          "fecha": "2026-04-16",
+          "gestiones": 87,
+          "efectivas": 48,
+          "promesas": 43
+        },
+        {
+          "fecha": "2026-04-17",
+          "gestiones": 98,
+          "efectivas": 34,
+          "promesas": 25
+        },
+        {
+          "fecha": "2026-04-18",
+          "gestiones": 42,
+          "efectivas": 16,
+          "promesas": 15
+        },
+        {
+          "fecha": "2026-04-21",
+          "gestiones": 101,
+          "efectivas": 16,
+          "promesas": 8
+        },
+        {
+          "fecha": "2026-04-22",
+          "gestiones": 6,
+          "efectivas": 4,
+          "promesas": 1
+        },
+        {
+          "fecha": "2026-04-23",
+          "gestiones": 55,
+          "efectivas": 34,
+          "promesas": 31
+        },
+        {
+          "fecha": "2026-04-24",
+          "gestiones": 81,
+          "efectivas": 20,
+          "promesas": 18
+        },
+        {
+          "fecha": "2026-04-25",
+          "gestiones": 30,
+          "efectivas": 10,
+          "promesas": 9
+        },
+        {
+          "fecha": "2026-04-27",
+          "gestiones": 52,
+          "efectivas": 20,
+          "promesas": 13
+        },
+        {
+          "fecha": "2026-04-28",
+          "gestiones": 64,
+          "efectivas": 14,
+          "promesas": 7
+        },
+        {
+          "fecha": "2026-04-29",
+          "gestiones": 53,
+          "efectivas": 18,
+          "promesas": 16
+        },
+        {
+          "fecha": "2026-04-30",
+          "gestiones": 72,
+          "efectivas": 42,
+          "promesas": 35
+        }
+      ]
+    },
+    {
+      "cartera": "RODELAG",
+      "gestiones": 997,
+      "efectivas": 225,
+      "promesas": 63,
+      "compromisos": 47,
+      "pagos": 1,
+      "monto": 5618.29,
+      "num_asesores": 1,
+      "tasa_contacto": 0.2257,
+      "ptp_rate": 0.28,
+      "conversion": 0.0632,
+      "ticket": 89.18,
+      "score": 15.5,
+      "nivel": "bajo",
+      "mejor_asesor": "ERISHKA SAMANIEGO",
+      "asesores_alerta": 1,
+      "tendencia": [
+        {
+          "fecha": "2026-04-02",
+          "gestiones": 22,
+          "efectivas": 6,
+          "promesas": 0
+        },
+        {
+          "fecha": "2026-04-06",
+          "gestiones": 45,
+          "efectivas": 13,
+          "promesas": 3
+        },
+        {
+          "fecha": "2026-04-07",
+          "gestiones": 44,
+          "efectivas": 11,
+          "promesas": 3
+        },
+        {
+          "fecha": "2026-04-08",
+          "gestiones": 40,
+          "efectivas": 4,
+          "promesas": 3
+        },
+        {
+          "fecha": "2026-04-09",
+          "gestiones": 23,
+          "efectivas": 4,
+          "promesas": 1
+        },
+        {
+          "fecha": "2026-04-10",
+          "gestiones": 47,
+          "efectivas": 9,
+          "promesas": 2
+        },
+        {
+          "fecha": "2026-04-11",
+          "gestiones": 22,
+          "efectivas": 2,
+          "promesas": 1
+        },
+        {
+          "fecha": "2026-04-13",
+          "gestiones": 38,
+          "efectivas": 8,
+          "promesas": 5
+        },
+        {
+          "fecha": "2026-04-14",
+          "gestiones": 28,
+          "efectivas": 11,
+          "promesas": 3
+        },
+        {
+          "fecha": "2026-04-15",
+          "gestiones": 41,
+          "efectivas": 16,
+          "promesas": 4
+        },
+        {
+          "fecha": "2026-04-16",
+          "gestiones": 40,
+          "efectivas": 12,
+          "promesas": 6
+        },
+        {
+          "fecha": "2026-04-17",
+          "gestiones": 89,
+          "efectivas": 19,
+          "promesas": 8
+        },
+        {
+          "fecha": "2026-04-20",
+          "gestiones": 68,
+          "efectivas": 23,
+          "promesas": 5
+        },
+        {
+          "fecha": "2026-04-21",
+          "gestiones": 64,
+          "efectivas": 14,
+          "promesas": 2
+        },
+        {
+          "fecha": "2026-04-22",
+          "gestiones": 33,
+          "efectivas": 6,
+          "promesas": 1
+        },
+        {
+          "fecha": "2026-04-23",
+          "gestiones": 31,
+          "efectivas": 6,
+          "promesas": 5
+        },
+        {
+          "fecha": "2026-04-24",
+          "gestiones": 53,
+          "efectivas": 10,
+          "promesas": 3
+        },
+        {
+          "fecha": "2026-04-25",
+          "gestiones": 20,
+          "efectivas": 3,
+          "promesas": 1
+        },
+        {
+          "fecha": "2026-04-27",
+          "gestiones": 70,
+          "efectivas": 17,
+          "promesas": 3
+        },
+        {
+          "fecha": "2026-04-28",
+          "gestiones": 63,
+          "efectivas": 15,
+          "promesas": 2
+        },
+        {
+          "fecha": "2026-04-29",
+          "gestiones": 50,
+          "efectivas": 5,
+          "promesas": 0
+        },
+        {
+          "fecha": "2026-04-30",
+          "gestiones": 66,
+          "efectivas": 11,
+          "promesas": 2
+        }
+      ]
+    }
+  ],
+  "categorias": [
+    {
+      "categoria": "NO_CONTACTO",
+      "etiqueta": "No contacto",
+      "contacto_efectivo": false,
+      "total": 56677
+    },
+    {
+      "categoria": "PROMESA_PAGO",
+      "etiqueta": "Promesa de pago (PTP)",
+      "contacto_efectivo": true,
+      "total": 20456
+    },
+    {
+      "categoria": "GESTION_ESCRITA",
+      "etiqueta": "Gestión escrita",
+      "contacto_efectivo": false,
+      "total": 17490
+    },
+    {
+      "categoria": "DISPUTA_ACLARACION",
+      "etiqueta": "Disputa / aclaración",
+      "contacto_efectivo": true,
+      "total": 10414
+    },
+    {
+      "categoria": "CONTACTO_TERCERO",
+      "etiqueta": "Contacto indirecto",
+      "contacto_efectivo": false,
+      "total": 10032
+    },
+    {
+      "categoria": "VOLVER_A_LLAMAR",
+      "etiqueta": "Volver a llamar",
+      "contacto_efectivo": true,
+      "total": 9487
+    },
+    {
+      "categoria": "TRAMITE_ADMIN",
+      "etiqueta": "Trámite administrativo",
+      "contacto_efectivo": false,
+      "total": 5868
+    },
+    {
+      "categoria": "CONTACTO_SIN_ACUERDO",
+      "etiqueta": "Contacto sin acuerdo",
+      "contacto_efectivo": true,
+      "total": 3268
+    },
+    {
+      "categoria": "ILOCALIZABLE",
+      "etiqueta": "Ilocalizable",
+      "contacto_efectivo": false,
+      "total": 3025
+    },
+    {
+      "categoria": "PAGO_CONFIRMADO",
+      "etiqueta": "Pago confirmado",
+      "contacto_efectivo": true,
+      "total": 2967
+    },
+    {
+      "categoria": "SEGUIMIENTO_PTP",
+      "etiqueta": "Seguimiento de promesa",
+      "contacto_efectivo": true,
+      "total": 2293
+    },
+    {
+      "categoria": "SIN_MAPEAR",
+      "etiqueta": "Sin mapear",
+      "contacto_efectivo": false,
+      "total": 979
+    },
+    {
+      "categoria": "VISITA",
+      "etiqueta": "Visita de campo",
+      "contacto_efectivo": false,
+      "total": 59
+    }
+  ],
+  "funnel": [
+    {
+      "etapa": "Gestiones",
+      "valor": 143015,
+      "tasa": 1.0
+    },
+    {
+      "etapa": "Contactos efectivos",
+      "valor": 48885,
+      "tasa": 0.3418
+    },
+    {
+      "etapa": "Promesas de pago",
+      "valor": 22749,
+      "tasa": 0.4654
+    },
+    {
+      "etapa": "Compromisos",
+      "valor": 9731,
+      "tasa": 0.4278
+    },
+    {
+      "etapa": "Pagos",
+      "valor": 1960,
+      "tasa": 0.2014
+    }
+  ],
+  "insights": [
+    {
+      "tipo": "alerta",
+      "titulo": "66% de las gestiones no logra contacto efectivo",
+      "detalle": "La contactabilidad es el cuello de botella del mes. Mejorar horarios de marcación y calidad de las bases telefónicas es la palanca de mayor impacto."
+    },
+    {
+      "tipo": "oportunidad",
+      "titulo": "KREDIYA convierte 86% de contactos; RODELAG solo 28%",
+      "detalle": "Hay 58 puntos de diferencia entre la mejor y la peor cartera. Replicar el guion de KREDIYA en RODELAG eleva la recuperación sin más nómina."
+    },
+    {
+      "tipo": "alerta",
+      "titulo": "14 de 66 asesores tienen al menos una alerta de desempeño",
+      "detalle": "Baja actividad, baja conversión o baja contactabilidad respecto al equipo. Revisa la vista de Asesores para coaching dirigido."
+    },
+    {
+      "tipo": "logro",
+      "titulo": "Milena Simmons lidera el mes con 1590 promesas",
+      "detalle": "Score 96/100 · PTP 93% · 140 gestiones/día. Documentar su método y replicarlo en el equipo."
+    },
+    {
+      "tipo": "logro",
+      "titulo": "PTP Rate del mes: 47% de los contactos terminan en promesa",
+      "detalle": "Cuando el equipo logra hablar con el titular, cierra. El problema no es negociar: es contactar."
+    }
+  ],
+  "por_hora": [],
+  "tendencia_diaria": [
+    {
+      "fecha": "2026-04-01",
+      "gestiones": 5280,
+      "efectivas": 1952,
+      "promesas": 960,
+      "recaudo": 107234.46
+    },
+    {
+      "fecha": "2026-04-02",
+      "gestiones": 3231,
+      "efectivas": 1167,
+      "promesas": 522,
+      "recaudo": 36992.63
+    },
+    {
+      "fecha": "2026-04-06",
+      "gestiones": 5828,
+      "efectivas": 1962,
+      "promesas": 803,
+      "recaudo": 70503.58
+    },
+    {
+      "fecha": "2026-04-07",
+      "gestiones": 5544,
+      "efectivas": 1819,
+      "promesas": 808,
+      "recaudo": 96883.59
+    },
+    {
+      "fecha": "2026-04-08",
+      "gestiones": 5028,
+      "efectivas": 2219,
+      "promesas": 1155,
+      "recaudo": 90835.97
+    },
+    {
+      "fecha": "2026-04-09",
+      "gestiones": 5837,
+      "efectivas": 2205,
+      "promesas": 1120,
+      "recaudo": 80232.38
+    },
+    {
+      "fecha": "2026-04-10",
+      "gestiones": 6560,
+      "efectivas": 2163,
+      "promesas": 1282,
+      "recaudo": 105438.53
+    },
+    {
+      "fecha": "2026-04-11",
+      "gestiones": 3269,
+      "efectivas": 1157,
+      "promesas": 572,
+      "recaudo": 29066.41
+    },
+    {
+      "fecha": "2026-04-13",
+      "gestiones": 6899,
+      "efectivas": 2134,
+      "promesas": 1006,
+      "recaudo": 50130.79
+    },
+    {
+      "fecha": "2026-04-14",
+      "gestiones": 7250,
+      "efectivas": 2064,
+      "promesas": 895,
+      "recaudo": 50911.47
+    },
+    {
+      "fecha": "2026-04-15",
+      "gestiones": 5603,
+      "efectivas": 1915,
+      "promesas": 861,
+      "recaudo": 41158.49
+    },
+    {
+      "fecha": "2026-04-16",
+      "gestiones": 5860,
+      "efectivas": 1922,
+      "promesas": 796,
+      "recaudo": 35597.89
+    },
+    {
+      "fecha": "2026-04-17",
+      "gestiones": 6548,
+      "efectivas": 2340,
+      "promesas": 1299,
+      "recaudo": 83959.57
+    },
+    {
+      "fecha": "2026-04-18",
+      "gestiones": 3648,
+      "efectivas": 1181,
+      "promesas": 619,
+      "recaudo": 27554.27
+    },
+    {
+      "fecha": "2026-04-20",
+      "gestiones": 7080,
+      "efectivas": 2580,
+      "promesas": 1161,
+      "recaudo": 54512.93
+    },
+    {
+      "fecha": "2026-04-21",
+      "gestiones": 6985,
+      "efectivas": 2369,
+      "promesas": 1066,
+      "recaudo": 48405.77
+    },
+    {
+      "fecha": "2026-04-22",
+      "gestiones": 6001,
+      "efectivas": 1800,
+      "promesas": 874,
+      "recaudo": 59782.71
+    },
+    {
+      "fecha": "2026-04-23",
+      "gestiones": 6602,
+      "efectivas": 2299,
+      "promesas": 1218,
+      "recaudo": 78371.65
+    },
+    {
+      "fecha": "2026-04-24",
+      "gestiones": 7435,
+      "efectivas": 2459,
+      "promesas": 1190,
+      "recaudo": 82212.05
+    },
+    {
+      "fecha": "2026-04-25",
+      "gestiones": 3905,
+      "efectivas": 1248,
+      "promesas": 437,
+      "recaudo": 23320.18
+    },
+    {
+      "fecha": "2026-04-27",
+      "gestiones": 7383,
+      "efectivas": 2683,
+      "promesas": 1289,
+      "recaudo": 97115.99
+    },
+    {
+      "fecha": "2026-04-28",
+      "gestiones": 6748,
+      "efectivas": 2086,
+      "promesas": 924,
+      "recaudo": 69674.13
+    },
+    {
+      "fecha": "2026-04-29",
+      "gestiones": 7047,
+      "efectivas": 2141,
+      "promesas": 960,
+      "recaudo": 77218.79
+    },
+    {
+      "fecha": "2026-04-30",
+      "gestiones": 7444,
+      "efectivas": 3020,
+      "promesas": 932,
+      "recaudo": 37806.68
+    }
+  ],
+  "por_cartera": [
+    {
+      "cartera": "BANISTMO ACTIVA",
+      "gestiones": 43095,
+      "efectivas": 12943,
+      "promesas": 6111,
+      "compromisos": 2415,
+      "pagos": 114,
+      "monto": 640928.31,
+      "num_asesores": 18,
+      "tasa_contacto": 0.3003,
+      "ptp_rate": 0.4721,
+      "conversion": 0.1418,
+      "ticket": 104.88,
+      "score": 69.5,
+      "nivel": "solido",
+      "mejor_asesor": "ERICKA SALINAS",
+      "asesores_alerta": 2,
+      "tendencia": [
+        {
+          "fecha": "2026-04-01",
+          "gestiones": 1852,
+          "efectivas": 587,
+          "promesas": 233
+        },
+        {
+          "fecha": "2026-04-02",
+          "gestiones": 1056,
+          "efectivas": 308,
+          "promesas": 114
+        },
+        {
+          "fecha": "2026-04-06",
+          "gestiones": 1793,
+          "efectivas": 428,
+          "promesas": 170
+        },
+        {
+          "fecha": "2026-04-07",
+          "gestiones": 1739,
+          "efectivas": 537,
+          "promesas": 242
+        },
+        {
+          "fecha": "2026-04-08",
+          "gestiones": 1457,
+          "efectivas": 919,
+          "promesas": 503
+        },
+        {
+          "fecha": "2026-04-09",
+          "gestiones": 1757,
+          "efectivas": 866,
+          "promesas": 503
+        },
+        {
+          "fecha": "2026-04-10",
+          "gestiones": 1989,
+          "efectivas": 683,
+          "promesas": 443
+        },
+        {
+          "fecha": "2026-04-11",
+          "gestiones": 751,
+          "efectivas": 315,
+          "promesas": 169
+        },
+        {
+          "fecha": "2026-04-13",
+          "gestiones": 1928,
+          "efectivas": 553,
+          "promesas": 262
+        },
+        {
+          "fecha": "2026-04-14",
+          "gestiones": 2457,
+          "efectivas": 491,
+          "promesas": 224
+        },
+        {
+          "fecha": "2026-04-15",
+          "gestiones": 1601,
+          "efectivas": 472,
+          "promesas": 162
+        },
+        {
+          "fecha": "2026-04-16",
+          "gestiones": 1786,
+          "efectivas": 622,
+          "promesas": 180
+        },
+        {
+          "fecha": "2026-04-17",
+          "gestiones": 1907,
+          "efectivas": 624,
+          "promesas": 238
+        },
+        {
+          "fecha": "2026-04-18",
+          "gestiones": 1046,
+          "efectivas": 233,
+          "promesas": 116
+        },
+        {
+          "fecha": "2026-04-20",
+          "gestiones": 2113,
+          "efectivas": 668,
+          "promesas": 272
+        },
+        {
+          "fecha": "2026-04-21",
+          "gestiones": 1673,
+          "efectivas": 430,
+          "promesas": 207
+        },
+        {
+          "fecha": "2026-04-22",
+          "gestiones": 1863,
+          "efectivas": 384,
+          "promesas": 160
+        },
+        {
+          "fecha": "2026-04-23",
+          "gestiones": 2106,
+          "efectivas": 557,
+          "promesas": 342
+        },
+        {
+          "fecha": "2026-04-24",
+          "gestiones": 2217,
+          "efectivas": 591,
+          "promesas": 370
+        },
+        {
+          "fecha": "2026-04-25",
+          "gestiones": 1032,
+          "efectivas": 268,
+          "promesas": 114
+        },
+        {
+          "fecha": "2026-04-27",
+          "gestiones": 2145,
+          "efectivas": 566,
+          "promesas": 329
+        },
+        {
+          "fecha": "2026-04-28",
+          "gestiones": 2085,
+          "efectivas": 686,
+          "promesas": 371
+        },
+        {
+          "fecha": "2026-04-29",
+          "gestiones": 2129,
+          "efectivas": 470,
+          "promesas": 238
+        },
+        {
+          "fecha": "2026-04-30",
+          "gestiones": 2613,
+          "efectivas": 685,
+          "promesas": 149
+        }
+      ]
+    },
+    {
+      "cartera": "SURA",
+      "gestiones": 32910,
+      "efectivas": 11529,
+      "promesas": 5595,
+      "compromisos": 2334,
+      "pagos": 927,
+      "monto": 428828.65,
+      "num_asesores": 17,
+      "tasa_contacto": 0.3503,
+      "ptp_rate": 0.4853,
+      "conversion": 0.17,
+      "ticket": 76.64,
+      "score": 80.5,
+      "nivel": "elite",
+      "mejor_asesor": "MARIANELYS VERGARA",
+      "asesores_alerta": 4,
+      "tendencia": [
+        {
+          "fecha": "2026-04-01",
+          "gestiones": 965,
+          "efectivas": 388,
+          "promesas": 189
+        },
+        {
+          "fecha": "2026-04-02",
+          "gestiones": 734,
+          "efectivas": 281,
+          "promesas": 140
+        },
+        {
+          "fecha": "2026-04-06",
+          "gestiones": 1343,
+          "efectivas": 528,
+          "promesas": 203
+        },
+        {
+          "fecha": "2026-04-07",
+          "gestiones": 1182,
+          "efectivas": 447,
+          "promesas": 179
+        },
+        {
+          "fecha": "2026-04-08",
+          "gestiones": 1141,
+          "efectivas": 350,
+          "promesas": 214
+        },
+        {
+          "fecha": "2026-04-09",
+          "gestiones": 1331,
+          "efectivas": 401,
+          "promesas": 244
+        },
+        {
+          "fecha": "2026-04-10",
+          "gestiones": 1638,
+          "efectivas": 505,
+          "promesas": 334
+        },
+        {
+          "fecha": "2026-04-11",
+          "gestiones": 851,
+          "efectivas": 270,
+          "promesas": 171
+        },
+        {
+          "fecha": "2026-04-13",
+          "gestiones": 1616,
+          "efectivas": 541,
+          "promesas": 343
+        },
+        {
+          "fecha": "2026-04-14",
+          "gestiones": 1613,
+          "efectivas": 590,
+          "promesas": 330
+        },
+        {
+          "fecha": "2026-04-15",
+          "gestiones": 1690,
+          "efectivas": 591,
+          "promesas": 215
+        },
+        {
+          "fecha": "2026-04-16",
+          "gestiones": 1693,
+          "efectivas": 560,
+          "promesas": 215
+        },
+        {
+          "fecha": "2026-04-17",
+          "gestiones": 1511,
+          "efectivas": 511,
+          "promesas": 283
+        },
+        {
+          "fecha": "2026-04-18",
+          "gestiones": 805,
+          "efectivas": 294,
+          "promesas": 142
+        },
+        {
+          "fecha": "2026-04-20",
+          "gestiones": 1657,
+          "efectivas": 614,
+          "promesas": 346
+        },
+        {
+          "fecha": "2026-04-21",
+          "gestiones": 1830,
+          "efectivas": 628,
+          "promesas": 310
+        },
+        {
+          "fecha": "2026-04-22",
+          "gestiones": 1294,
+          "efectivas": 440,
+          "promesas": 267
+        },
+        {
+          "fecha": "2026-04-23",
+          "gestiones": 1491,
+          "efectivas": 546,
+          "promesas": 281
+        },
+        {
+          "fecha": "2026-04-24",
+          "gestiones": 1599,
+          "efectivas": 533,
+          "promesas": 231
+        },
+        {
+          "fecha": "2026-04-25",
+          "gestiones": 893,
+          "efectivas": 318,
+          "promesas": 125
+        },
+        {
+          "fecha": "2026-04-27",
+          "gestiones": 1760,
+          "efectivas": 591,
+          "promesas": 212
+        },
+        {
+          "fecha": "2026-04-28",
+          "gestiones": 1422,
+          "efectivas": 385,
+          "promesas": 176
+        },
+        {
+          "fecha": "2026-04-29",
+          "gestiones": 1377,
+          "efectivas": 437,
+          "promesas": 231
+        },
+        {
+          "fecha": "2026-04-30",
+          "gestiones": 1474,
+          "efectivas": 780,
+          "promesas": 214
+        }
+      ]
+    },
+    {
+      "cartera": "TIGO",
+      "gestiones": 19533,
+      "efectivas": 10264,
+      "promesas": 4180,
+      "compromisos": 3629,
+      "pagos": 0,
+      "monto": 178627.25,
+      "num_asesores": 6,
+      "tasa_contacto": 0.5255,
+      "ptp_rate": 0.4072,
+      "conversion": 0.214,
+      "ticket": 42.73,
+      "score": 77.3,
+      "nivel": "elite",
+      "mejor_asesor": "JHONN PUGA",
+      "asesores_alerta": 0,
+      "tendencia": [
+        {
+          "fecha": "2026-04-01",
+          "gestiones": 826,
+          "efectivas": 368,
+          "promesas": 199
+        },
+        {
+          "fecha": "2026-04-02",
+          "gestiones": 428,
+          "efectivas": 245,
+          "promesas": 55
+        },
+        {
+          "fecha": "2026-04-06",
+          "gestiones": 789,
+          "efectivas": 387,
+          "promesas": 101
+        },
+        {
+          "fecha": "2026-04-07",
+          "gestiones": 457,
+          "efectivas": 237,
+          "promesas": 91
+        },
+        {
+          "fecha": "2026-04-08",
+          "gestiones": 607,
+          "efectivas": 326,
+          "promesas": 135
+        },
+        {
+          "fecha": "2026-04-09",
+          "gestiones": 767,
+          "efectivas": 284,
+          "promesas": 138
+        },
+        {
+          "fecha": "2026-04-10",
+          "gestiones": 802,
+          "efectivas": 353,
+          "promesas": 204
+        },
+        {
+          "fecha": "2026-04-11",
+          "gestiones": 531,
+          "efectivas": 203,
+          "promesas": 68
+        },
+        {
+          "fecha": "2026-04-13",
+          "gestiones": 906,
+          "efectivas": 288,
+          "promesas": 50
+        },
+        {
+          "fecha": "2026-04-14",
+          "gestiones": 768,
+          "efectivas": 274,
+          "promesas": 13
+        },
+        {
+          "fecha": "2026-04-17",
+          "gestiones": 1114,
+          "efectivas": 599,
+          "promesas": 473
+        },
+        {
+          "fecha": "2026-04-18",
+          "gestiones": 744,
+          "efectivas": 309,
+          "promesas": 195
+        },
+        {
+          "fecha": "2026-04-20",
+          "gestiones": 1191,
+          "efectivas": 599,
+          "promesas": 218
+        },
+        {
+          "fecha": "2026-04-21",
+          "gestiones": 1151,
+          "efectivas": 652,
+          "promesas": 266
+        },
+        {
+          "fecha": "2026-04-22",
+          "gestiones": 1100,
+          "efectivas": 625,
+          "promesas": 271
+        },
+        {
+          "fecha": "2026-04-23",
+          "gestiones": 1264,
+          "efectivas": 714,
+          "promesas": 347
+        },
+        {
+          "fecha": "2026-04-24",
+          "gestiones": 1217,
+          "efectivas": 751,
+          "promesas": 291
+        },
+        {
+          "fecha": "2026-04-25",
+          "gestiones": 546,
+          "efectivas": 381,
+          "promesas": 57
+        },
+        {
+          "fecha": "2026-04-27",
+          "gestiones": 1408,
+          "efectivas": 1021,
+          "promesas": 550
+        },
+        {
+          "fecha": "2026-04-28",
+          "gestiones": 750,
+          "efectivas": 493,
+          "promesas": 178
+        },
+        {
+          "fecha": "2026-04-29",
+          "gestiones": 1056,
+          "efectivas": 599,
+          "promesas": 239
+        },
+        {
+          "fecha": "2026-04-30",
+          "gestiones": 1111,
+          "efectivas": 556,
+          "promesas": 41
+        }
+      ]
+    },
+    {
+      "cartera": "BANISTMO RECOVERY",
+      "gestiones": 15602,
+      "efectivas": 4876,
+      "promesas": 1614,
+      "compromisos": 139,
+      "pagos": 192,
+      "monto": 134796.05,
+      "num_asesores": 10,
+      "tasa_contacto": 0.3125,
+      "ptp_rate": 0.331,
+      "conversion": 0.1034,
+      "ticket": 83.52,
+      "score": 55.0,
+      "nivel": "solido",
+      "mejor_asesor": "RENE BARNES",
+      "asesores_alerta": 2,
+      "tendencia": [
+        {
+          "fecha": "2026-04-01",
+          "gestiones": 517,
+          "efectivas": 249,
+          "promesas": 90
+        },
+        {
+          "fecha": "2026-04-02",
+          "gestiones": 339,
+          "efectivas": 106,
+          "promesas": 40
+        },
+        {
+          "fecha": "2026-04-06",
+          "gestiones": 805,
+          "efectivas": 255,
+          "promesas": 91
+        },
+        {
+          "fecha": "2026-04-07",
+          "gestiones": 773,
+          "efectivas": 204,
+          "promesas": 45
+        },
+        {
+          "fecha": "2026-04-08",
+          "gestiones": 626,
+          "efectivas": 205,
+          "promesas": 58
+        },
+        {
+          "fecha": "2026-04-09",
+          "gestiones": 651,
+          "efectivas": 233,
+          "promesas": 51
+        },
+        {
+          "fecha": "2026-04-10",
+          "gestiones": 606,
+          "efectivas": 181,
+          "promesas": 48
+        },
+        {
+          "fecha": "2026-04-11",
+          "gestiones": 396,
+          "efectivas": 160,
+          "promesas": 37
+        },
+        {
+          "fecha": "2026-04-13",
+          "gestiones": 680,
+          "efectivas": 280,
+          "promesas": 98
+        },
+        {
+          "fecha": "2026-04-14",
+          "gestiones": 803,
+          "efectivas": 248,
+          "promesas": 72
+        },
+        {
+          "fecha": "2026-04-15",
+          "gestiones": 768,
+          "efectivas": 286,
+          "promesas": 144
+        },
+        {
+          "fecha": "2026-04-16",
+          "gestiones": 642,
+          "efectivas": 231,
+          "promesas": 89
+        },
+        {
+          "fecha": "2026-04-17",
+          "gestiones": 501,
+          "efectivas": 133,
+          "promesas": 63
+        },
+        {
+          "fecha": "2026-04-18",
+          "gestiones": 311,
+          "efectivas": 126,
+          "promesas": 33
+        },
+        {
+          "fecha": "2026-04-20",
+          "gestiones": 609,
+          "efectivas": 224,
+          "promesas": 73
+        },
+        {
+          "fecha": "2026-04-21",
+          "gestiones": 833,
+          "efectivas": 184,
+          "promesas": 61
+        },
+        {
+          "fecha": "2026-04-22",
+          "gestiones": 715,
+          "efectivas": 118,
+          "promesas": 44
+        },
+        {
+          "fecha": "2026-04-23",
+          "gestiones": 679,
+          "efectivas": 209,
+          "promesas": 71
+        },
+        {
+          "fecha": "2026-04-24",
+          "gestiones": 928,
+          "efectivas": 239,
+          "promesas": 88
+        },
+        {
+          "fecha": "2026-04-25",
+          "gestiones": 439,
+          "efectivas": 95,
+          "promesas": 23
+        },
+        {
+          "fecha": "2026-04-27",
+          "gestiones": 689,
+          "efectivas": 198,
+          "promesas": 50
+        },
+        {
+          "fecha": "2026-04-28",
+          "gestiones": 736,
+          "efectivas": 178,
+          "promesas": 36
+        },
+        {
+          "fecha": "2026-04-29",
+          "gestiones": 866,
+          "efectivas": 243,
+          "promesas": 78
+        },
+        {
+          "fecha": "2026-04-30",
+          "gestiones": 690,
+          "efectivas": 291,
+          "promesas": 131
+        }
+      ]
+    },
+    {
+      "cartera": "SOLVE",
+      "gestiones": 9677,
+      "efectivas": 2654,
+      "promesas": 1355,
+      "compromisos": 391,
+      "pagos": 240,
+      "monto": 44290.26,
+      "num_asesores": 4,
+      "tasa_contacto": 0.2743,
+      "ptp_rate": 0.5106,
+      "conversion": 0.14,
+      "ticket": 32.69,
+      "score": 64.5,
+      "nivel": "solido",
+      "mejor_asesor": "DANNA RIVAS",
+      "asesores_alerta": 0,
+      "tendencia": [
+        {
+          "fecha": "2026-04-01",
+          "gestiones": 516,
+          "efectivas": 166,
+          "promesas": 136
+        },
+        {
+          "fecha": "2026-04-02",
+          "gestiones": 258,
+          "efectivas": 100,
+          "promesas": 89
+        },
+        {
+          "fecha": "2026-04-06",
+          "gestiones": 338,
+          "efectivas": 137,
+          "promesas": 74
+        },
+        {
+          "fecha": "2026-04-07",
+          "gestiones": 445,
+          "efectivas": 186,
+          "promesas": 104
+        },
+        {
+          "fecha": "2026-04-08",
+          "gestiones": 379,
+          "efectivas": 177,
+          "promesas": 87
+        },
+        {
+          "fecha": "2026-04-09",
+          "gestiones": 424,
+          "efectivas": 149,
+          "promesas": 52
+        },
+        {
+          "fecha": "2026-04-10",
+          "gestiones": 554,
+          "efectivas": 134,
+          "promesas": 83
+        },
+        {
+          "fecha": "2026-04-11",
+          "gestiones": 273,
+          "efectivas": 69,
+          "promesas": 30
+        },
+        {
+          "fecha": "2026-04-13",
+          "gestiones": 574,
+          "efectivas": 150,
+          "promesas": 67
+        },
+        {
+          "fecha": "2026-04-14",
+          "gestiones": 524,
+          "efectivas": 149,
+          "promesas": 89
+        },
+        {
+          "fecha": "2026-04-15",
+          "gestiones": 493,
+          "efectivas": 106,
+          "promesas": 43
+        },
+        {
+          "fecha": "2026-04-16",
+          "gestiones": 334,
+          "efectivas": 107,
+          "promesas": 43
+        },
+        {
+          "fecha": "2026-04-17",
+          "gestiones": 354,
+          "efectivas": 121,
+          "promesas": 39
+        },
+        {
+          "fecha": "2026-04-18",
+          "gestiones": 203,
+          "efectivas": 65,
+          "promesas": 31
+        },
+        {
+          "fecha": "2026-04-20",
+          "gestiones": 577,
+          "efectivas": 156,
+          "promesas": 82
+        },
+        {
+          "fecha": "2026-04-21",
+          "gestiones": 403,
+          "efectivas": 123,
+          "promesas": 52
+        },
+        {
+          "fecha": "2026-04-22",
+          "gestiones": 337,
+          "efectivas": 46,
+          "promesas": 19
+        },
+        {
+          "fecha": "2026-04-23",
+          "gestiones": 133,
+          "efectivas": 34,
+          "promesas": 21
+        },
+        {
+          "fecha": "2026-04-24",
+          "gestiones": 428,
+          "efectivas": 76,
+          "promesas": 35
+        },
+        {
+          "fecha": "2026-04-25",
+          "gestiones": 336,
+          "efectivas": 34,
+          "promesas": 14
+        },
+        {
+          "fecha": "2026-04-27",
+          "gestiones": 453,
+          "efectivas": 74,
+          "promesas": 36
+        },
+        {
+          "fecha": "2026-04-28",
+          "gestiones": 492,
+          "efectivas": 86,
+          "promesas": 52
+        },
+        {
+          "fecha": "2026-04-29",
+          "gestiones": 455,
+          "efectivas": 77,
+          "promesas": 33
+        },
+        {
+          "fecha": "2026-04-30",
+          "gestiones": 394,
+          "efectivas": 132,
+          "promesas": 44
+        }
+      ]
+    },
+    {
+      "cartera": "BAC",
+      "gestiones": 8978,
+      "efectivas": 2295,
+      "promesas": 820,
+      "compromisos": 93,
+      "pagos": 201,
+      "monto": 48712.49,
+      "num_asesores": 8,
+      "tasa_contacto": 0.2556,
+      "ptp_rate": 0.3573,
+      "conversion": 0.0913,
+      "ticket": 59.41,
+      "score": 44.5,
+      "nivel": "promedio",
+      "mejor_asesor": "TAYRETH OYAGA",
+      "asesores_alerta": 3,
+      "tendencia": [
+        {
+          "fecha": "2026-04-01",
+          "gestiones": 341,
+          "efectivas": 84,
+          "promesas": 42
+        },
+        {
+          "fecha": "2026-04-02",
+          "gestiones": 191,
+          "efectivas": 36,
+          "promesas": 19
+        },
+        {
+          "fecha": "2026-04-06",
+          "gestiones": 261,
+          "efectivas": 72,
+          "promesas": 38
+        },
+        {
+          "fecha": "2026-04-07",
+          "gestiones": 422,
+          "efectivas": 61,
+          "promesas": 31
+        },
+        {
+          "fecha": "2026-04-08",
+          "gestiones": 319,
+          "efectivas": 98,
+          "promesas": 40
+        },
+        {
+          "fecha": "2026-04-09",
+          "gestiones": 293,
+          "efectivas": 136,
+          "promesas": 32
+        },
+        {
+          "fecha": "2026-04-10",
+          "gestiones": 341,
+          "efectivas": 120,
+          "promesas": 26
+        },
+        {
+          "fecha": "2026-04-11",
+          "gestiones": 150,
+          "efectivas": 21,
+          "promesas": 5
+        },
+        {
+          "fecha": "2026-04-13",
+          "gestiones": 524,
+          "efectivas": 101,
+          "promesas": 30
+        },
+        {
+          "fecha": "2026-04-14",
+          "gestiones": 319,
+          "efectivas": 117,
+          "promesas": 34
+        },
+        {
+          "fecha": "2026-04-15",
+          "gestiones": 416,
+          "efectivas": 138,
+          "promesas": 78
+        },
+        {
+          "fecha": "2026-04-16",
+          "gestiones": 362,
+          "efectivas": 113,
+          "promesas": 48
+        },
+        {
+          "fecha": "2026-04-17",
+          "gestiones": 391,
+          "efectivas": 86,
+          "promesas": 41
+        },
+        {
+          "fecha": "2026-04-18",
+          "gestiones": 213,
+          "efectivas": 46,
+          "promesas": 20
+        },
+        {
+          "fecha": "2026-04-20",
+          "gestiones": 344,
+          "efectivas": 91,
+          "promesas": 32
+        },
+        {
+          "fecha": "2026-04-21",
+          "gestiones": 467,
+          "efectivas": 179,
+          "promesas": 54
+        },
+        {
+          "fecha": "2026-04-22",
+          "gestiones": 375,
+          "efectivas": 82,
+          "promesas": 30
+        },
+        {
+          "fecha": "2026-04-23",
+          "gestiones": 443,
+          "efectivas": 52,
+          "promesas": 19
+        },
+        {
+          "fecha": "2026-04-24",
+          "gestiones": 481,
+          "efectivas": 67,
+          "promesas": 27
+        },
+        {
+          "fecha": "2026-04-25",
+          "gestiones": 311,
+          "efectivas": 36,
+          "promesas": 11
+        },
+        {
+          "fecha": "2026-04-27",
+          "gestiones": 453,
+          "efectivas": 104,
+          "promesas": 36
+        },
+        {
+          "fecha": "2026-04-28",
+          "gestiones": 512,
+          "efectivas": 109,
+          "promesas": 24
+        },
+        {
+          "fecha": "2026-04-29",
+          "gestiones": 484,
+          "efectivas": 126,
+          "promesas": 25
+        },
+        {
+          "fecha": "2026-04-30",
+          "gestiones": 565,
+          "efectivas": 220,
+          "promesas": 78
+        }
+      ]
+    },
+    {
+      "cartera": "KREDIYA",
+      "gestiones": 6203,
+      "efectivas": 2747,
+      "promesas": 2352,
+      "compromisos": 654,
+      "pagos": 210,
+      "monto": 39727.28,
+      "num_asesores": 9,
+      "tasa_contacto": 0.4429,
+      "ptp_rate": 0.8562,
+      "conversion": 0.3792,
+      "ticket": 16.89,
+      "score": 83.2,
+      "nivel": "elite",
+      "mejor_asesor": "MILENA SIMMONS",
+      "asesores_alerta": 0,
+      "tendencia": [
+        {
+          "fecha": "2026-04-01",
+          "gestiones": 35,
+          "efectivas": 21,
+          "promesas": 21
+        },
+        {
+          "fecha": "2026-04-02",
+          "gestiones": 50,
+          "efectivas": 35,
+          "promesas": 35
+        },
+        {
+          "fecha": "2026-04-06",
+          "gestiones": 146,
+          "efectivas": 79,
+          "promesas": 77
+        },
+        {
+          "fecha": "2026-04-07",
+          "gestiones": 138,
+          "efectivas": 83,
+          "promesas": 80
+        },
+        {
+          "fecha": "2026-04-08",
+          "gestiones": 174,
+          "efectivas": 82,
+          "promesas": 79
+        },
+        {
+          "fecha": "2026-04-09",
+          "gestiones": 248,
+          "efectivas": 94,
+          "promesas": 80
+        },
+        {
+          "fecha": "2026-04-10",
+          "gestiones": 273,
+          "efectivas": 124,
+          "promesas": 110
+        },
+        {
+          "fecha": "2026-04-11",
+          "gestiones": 122,
+          "efectivas": 89,
+          "promesas": 81
+        },
+        {
+          "fecha": "2026-04-13",
+          "gestiones": 282,
+          "efectivas": 167,
+          "promesas": 136
+        },
+        {
+          "fecha": "2026-04-14",
+          "gestiones": 445,
+          "efectivas": 129,
+          "promesas": 111
+        },
+        {
+          "fecha": "2026-04-15",
+          "gestiones": 363,
+          "efectivas": 188,
+          "promesas": 160
+        },
+        {
+          "fecha": "2026-04-16",
+          "gestiones": 803,
+          "efectivas": 184,
+          "promesas": 157
+        },
+        {
+          "fecha": "2026-04-17",
+          "gestiones": 384,
+          "efectivas": 167,
+          "promesas": 124
+        },
+        {
+          "fecha": "2026-04-18",
+          "gestiones": 138,
+          "efectivas": 70,
+          "promesas": 65
+        },
+        {
+          "fecha": "2026-04-20",
+          "gestiones": 350,
+          "efectivas": 171,
+          "promesas": 130
+        },
+        {
+          "fecha": "2026-04-21",
+          "gestiones": 267,
+          "efectivas": 111,
+          "promesas": 99
+        },
+        {
+          "fecha": "2026-04-22",
+          "gestiones": 199,
+          "efectivas": 87,
+          "promesas": 81
+        },
+        {
+          "fecha": "2026-04-23",
+          "gestiones": 220,
+          "efectivas": 119,
+          "promesas": 96
+        },
+        {
+          "fecha": "2026-04-24",
+          "gestiones": 210,
+          "efectivas": 132,
+          "promesas": 116
+        },
+        {
+          "fecha": "2026-04-25",
+          "gestiones": 165,
+          "efectivas": 91,
+          "promesas": 79
+        },
+        {
+          "fecha": "2026-04-27",
+          "gestiones": 165,
+          "efectivas": 64,
+          "promesas": 53
+        },
+        {
+          "fecha": "2026-04-28",
+          "gestiones": 394,
+          "efectivas": 87,
+          "promesas": 74
+        },
+        {
+          "fecha": "2026-04-29",
+          "gestiones": 366,
+          "efectivas": 131,
+          "promesas": 90
+        },
+        {
+          "fecha": "2026-04-30",
+          "gestiones": 266,
+          "efectivas": 242,
+          "promesas": 218
+        }
+      ]
+    },
+    {
+      "cartera": "GLOBAL BANK",
+      "gestiones": 2469,
+      "efectivas": 444,
+      "promesas": 127,
+      "compromisos": 10,
+      "pagos": 53,
+      "monto": 7353.36,
+      "num_asesores": 1,
+      "tasa_contacto": 0.1798,
+      "ptp_rate": 0.286,
+      "conversion": 0.0514,
+      "ticket": 57.9,
+      "score": 19.5,
+      "nivel": "bajo",
+      "mejor_asesor": "KELYNETH SANTOS",
+      "asesores_alerta": 1,
+      "tendencia": [
+        {
+          "fecha": "2026-04-01",
+          "gestiones": 54,
+          "efectivas": 32,
+          "promesas": 10
+        },
+        {
+          "fecha": "2026-04-02",
+          "gestiones": 50,
+          "efectivas": 26,
+          "promesas": 16
+        },
+        {
+          "fecha": "2026-04-06",
+          "gestiones": 114,
+          "efectivas": 12,
+          "promesas": 6
+        },
+        {
+          "fecha": "2026-04-07",
+          "gestiones": 117,
+          "efectivas": 11,
+          "promesas": 2
+        },
+        {
+          "fecha": "2026-04-08",
+          "gestiones": 93,
+          "efectivas": 12,
+          "promesas": 4
+        },
+        {
+          "fecha": "2026-04-09",
+          "gestiones": 101,
+          "efectivas": 11,
+          "promesas": 3
+        },
+        {
+          "fecha": "2026-04-10",
+          "gestiones": 119,
+          "efectivas": 19,
+          "promesas": 5
+        },
+        {
+          "fecha": "2026-04-11",
+          "gestiones": 73,
+          "efectivas": 6,
+          "promesas": 1
+        },
+        {
+          "fecha": "2026-04-13",
+          "gestiones": 157,
+          "efectivas": 18,
+          "promesas": 5
+        },
+        {
+          "fecha": "2026-04-14",
+          "gestiones": 133,
+          "efectivas": 18,
+          "promesas": 2
+        },
+        {
+          "fecha": "2026-04-15",
+          "gestiones": 89,
+          "efectivas": 57,
+          "promesas": 26
+        },
+        {
+          "fecha": "2026-04-16",
+          "gestiones": 113,
+          "efectivas": 45,
+          "promesas": 15
+        },
+        {
+          "fecha": "2026-04-17",
+          "gestiones": 128,
+          "efectivas": 23,
+          "promesas": 4
+        },
+        {
+          "fecha": "2026-04-18",
+          "gestiones": 81,
+          "efectivas": 13,
+          "promesas": 1
+        },
+        {
+          "fecha": "2026-04-20",
+          "gestiones": 127,
+          "efectivas": 22,
+          "promesas": 2
+        },
+        {
+          "fecha": "2026-04-21",
+          "gestiones": 102,
+          "efectivas": 10,
+          "promesas": 2
+        },
+        {
+          "fecha": "2026-04-22",
+          "gestiones": 79,
+          "efectivas": 8,
+          "promesas": 0
+        },
+        {
+          "fecha": "2026-04-23",
+          "gestiones": 93,
+          "efectivas": 11,
+          "promesas": 0
+        },
+        {
+          "fecha": "2026-04-24",
+          "gestiones": 108,
+          "efectivas": 15,
+          "promesas": 0
+        },
+        {
+          "fecha": "2026-04-25",
+          "gestiones": 73,
+          "efectivas": 3,
+          "promesas": 1
+        },
+        {
+          "fecha": "2026-04-27",
+          "gestiones": 101,
+          "efectivas": 10,
+          "promesas": 2
+        },
+        {
+          "fecha": "2026-04-28",
+          "gestiones": 114,
+          "efectivas": 12,
+          "promesas": 0
+        },
+        {
+          "fecha": "2026-04-29",
+          "gestiones": 131,
+          "efectivas": 13,
+          "promesas": 3
+        },
+        {
+          "fecha": "2026-04-30",
+          "gestiones": 119,
+          "efectivas": 37,
+          "promesas": 17
+        }
+      ]
+    },
+    {
+      "cartera": "MULTIBANK",
+      "gestiones": 1942,
+      "efectivas": 403,
+      "promesas": 117,
+      "compromisos": 2,
+      "pagos": 1,
+      "monto": 1575.11,
+      "num_asesores": 2,
+      "tasa_contacto": 0.2075,
+      "ptp_rate": 0.2903,
+      "conversion": 0.0602,
+      "ticket": 13.46,
+      "score": 24.1,
+      "nivel": "bajo",
+      "mejor_asesor": "KAYTHLEEN VAN",
+      "asesores_alerta": 0,
+      "tendencia": [
+        {
+          "fecha": "2026-04-01",
+          "gestiones": 81,
+          "efectivas": 23,
+          "promesas": 8
+        },
+        {
+          "fecha": "2026-04-02",
+          "gestiones": 59,
+          "efectivas": 12,
+          "promesas": 3
+        },
+        {
+          "fecha": "2026-04-06",
+          "gestiones": 101,
+          "efectivas": 12,
+          "promesas": 6
+        },
+        {
+          "fecha": "2026-04-07",
+          "gestiones": 114,
+          "efectivas": 19,
+          "promesas": 11
+        },
+        {
+          "fecha": "2026-04-08",
+          "gestiones": 114,
+          "efectivas": 30,
+          "promesas": 21
+        },
+        {
+          "fecha": "2026-04-09",
+          "gestiones": 124,
+          "efectivas": 8,
+          "promesas": 1
+        },
+        {
+          "fecha": "2026-04-10",
+          "gestiones": 110,
+          "efectivas": 16,
+          "promesas": 9
+        },
+        {
+          "fecha": "2026-04-11",
+          "gestiones": 69,
+          "efectivas": 14,
+          "promesas": 1
+        },
+        {
+          "fecha": "2026-04-13",
+          "gestiones": 112,
+          "efectivas": 14,
+          "promesas": 2
+        },
+        {
+          "fecha": "2026-04-14",
+          "gestiones": 91,
+          "efectivas": 25,
+          "promesas": 6
+        },
+        {
+          "fecha": "2026-04-15",
+          "gestiones": 76,
+          "efectivas": 28,
+          "promesas": 3
+        },
+        {
+          "fecha": "2026-04-17",
+          "gestiones": 71,
+          "efectivas": 23,
+          "promesas": 1
+        },
+        {
+          "fecha": "2026-04-18",
+          "gestiones": 65,
+          "efectivas": 9,
+          "promesas": 1
+        },
+        {
+          "fecha": "2026-04-20",
+          "gestiones": 44,
+          "efectivas": 12,
+          "promesas": 1
+        },
+        {
+          "fecha": "2026-04-21",
+          "gestiones": 94,
+          "efectivas": 22,
+          "promesas": 5
+        },
+        {
+          "fecha": "2026-04-23",
+          "gestiones": 87,
+          "efectivas": 17,
+          "promesas": 5
+        },
+        {
+          "fecha": "2026-04-24",
+          "gestiones": 113,
+          "efectivas": 25,
+          "promesas": 11
+        },
+        {
+          "fecha": "2026-04-25",
+          "gestiones": 60,
+          "efectivas": 9,
+          "promesas": 3
+        },
+        {
+          "fecha": "2026-04-27",
+          "gestiones": 87,
+          "efectivas": 18,
+          "promesas": 5
+        },
+        {
+          "fecha": "2026-04-28",
+          "gestiones": 116,
+          "efectivas": 21,
+          "promesas": 4
+        },
+        {
+          "fecha": "2026-04-29",
+          "gestiones": 80,
+          "efectivas": 22,
+          "promesas": 7
+        },
+        {
+          "fecha": "2026-04-30",
+          "gestiones": 74,
+          "efectivas": 24,
+          "promesas": 3
+        }
+      ]
+    },
+    {
+      "cartera": "BANCO LA HIPOTECARIA",
+      "gestiones": 1609,
+      "efectivas": 505,
+      "promesas": 415,
+      "compromisos": 17,
+      "pagos": 21,
+      "monto": 4463.86,
+      "num_asesores": 12,
+      "tasa_contacto": 0.3139,
+      "ptp_rate": 0.8218,
+      "conversion": 0.2579,
+      "ticket": 10.76,
+      "score": 66.4,
+      "nivel": "solido",
+      "mejor_asesor": "YUNAYCKA REYES",
+      "asesores_alerta": 1,
+      "tendencia": [
+        {
+          "fecha": "2026-04-01",
+          "gestiones": 93,
+          "efectivas": 34,
+          "promesas": 32
+        },
+        {
+          "fecha": "2026-04-02",
+          "gestiones": 44,
+          "efectivas": 12,
+          "promesas": 11
+        },
+        {
+          "fecha": "2026-04-06",
+          "gestiones": 93,
+          "efectivas": 39,
+          "promesas": 34
+        },
+        {
+          "fecha": "2026-04-07",
+          "gestiones": 113,
+          "efectivas": 23,
+          "promesas": 20
+        },
+        {
+          "fecha": "2026-04-08",
+          "gestiones": 78,
+          "efectivas": 16,
+          "promesas": 11
+        },
+        {
+          "fecha": "2026-04-09",
+          "gestiones": 118,
+          "efectivas": 19,
+          "promesas": 15
+        },
+        {
+          "fecha": "2026-04-10",
+          "gestiones": 81,
+          "efectivas": 19,
+          "promesas": 18
+        },
+        {
+          "fecha": "2026-04-11",
+          "gestiones": 31,
+          "efectivas": 8,
+          "promesas": 8
+        },
+        {
+          "fecha": "2026-04-13",
+          "gestiones": 82,
+          "efectivas": 14,
+          "promesas": 8
+        },
+        {
+          "fecha": "2026-04-14",
+          "gestiones": 69,
+          "efectivas": 12,
+          "promesas": 11
+        },
+        {
+          "fecha": "2026-04-15",
+          "gestiones": 66,
+          "efectivas": 33,
+          "promesas": 26
+        },
+        {
+          "fecha": "2026-04-16",
+          "gestiones": 87,
+          "efectivas": 48,
+          "promesas": 43
+        },
+        {
+          "fecha": "2026-04-17",
+          "gestiones": 98,
+          "efectivas": 34,
+          "promesas": 25
+        },
+        {
+          "fecha": "2026-04-18",
+          "gestiones": 42,
+          "efectivas": 16,
+          "promesas": 15
+        },
+        {
+          "fecha": "2026-04-21",
+          "gestiones": 101,
+          "efectivas": 16,
+          "promesas": 8
+        },
+        {
+          "fecha": "2026-04-22",
+          "gestiones": 6,
+          "efectivas": 4,
+          "promesas": 1
+        },
+        {
+          "fecha": "2026-04-23",
+          "gestiones": 55,
+          "efectivas": 34,
+          "promesas": 31
+        },
+        {
+          "fecha": "2026-04-24",
+          "gestiones": 81,
+          "efectivas": 20,
+          "promesas": 18
+        },
+        {
+          "fecha": "2026-04-25",
+          "gestiones": 30,
+          "efectivas": 10,
+          "promesas": 9
+        },
+        {
+          "fecha": "2026-04-27",
+          "gestiones": 52,
+          "efectivas": 20,
+          "promesas": 13
+        },
+        {
+          "fecha": "2026-04-28",
+          "gestiones": 64,
+          "efectivas": 14,
+          "promesas": 7
+        },
+        {
+          "fecha": "2026-04-29",
+          "gestiones": 53,
+          "efectivas": 18,
+          "promesas": 16
+        },
+        {
+          "fecha": "2026-04-30",
+          "gestiones": 72,
+          "efectivas": 42,
+          "promesas": 35
+        }
+      ]
+    },
+    {
+      "cartera": "RODELAG",
+      "gestiones": 997,
+      "efectivas": 225,
+      "promesas": 63,
+      "compromisos": 47,
+      "pagos": 1,
+      "monto": 5618.29,
+      "num_asesores": 1,
+      "tasa_contacto": 0.2257,
+      "ptp_rate": 0.28,
+      "conversion": 0.0632,
+      "ticket": 89.18,
+      "score": 15.5,
+      "nivel": "bajo",
+      "mejor_asesor": "ERISHKA SAMANIEGO",
+      "asesores_alerta": 1,
+      "tendencia": [
+        {
+          "fecha": "2026-04-02",
+          "gestiones": 22,
+          "efectivas": 6,
+          "promesas": 0
+        },
+        {
+          "fecha": "2026-04-06",
+          "gestiones": 45,
+          "efectivas": 13,
+          "promesas": 3
+        },
+        {
+          "fecha": "2026-04-07",
+          "gestiones": 44,
+          "efectivas": 11,
+          "promesas": 3
+        },
+        {
+          "fecha": "2026-04-08",
+          "gestiones": 40,
+          "efectivas": 4,
+          "promesas": 3
+        },
+        {
+          "fecha": "2026-04-09",
+          "gestiones": 23,
+          "efectivas": 4,
+          "promesas": 1
+        },
+        {
+          "fecha": "2026-04-10",
+          "gestiones": 47,
+          "efectivas": 9,
+          "promesas": 2
+        },
+        {
+          "fecha": "2026-04-11",
+          "gestiones": 22,
+          "efectivas": 2,
+          "promesas": 1
+        },
+        {
+          "fecha": "2026-04-13",
+          "gestiones": 38,
+          "efectivas": 8,
+          "promesas": 5
+        },
+        {
+          "fecha": "2026-04-14",
+          "gestiones": 28,
+          "efectivas": 11,
+          "promesas": 3
+        },
+        {
+          "fecha": "2026-04-15",
+          "gestiones": 41,
+          "efectivas": 16,
+          "promesas": 4
+        },
+        {
+          "fecha": "2026-04-16",
+          "gestiones": 40,
+          "efectivas": 12,
+          "promesas": 6
+        },
+        {
+          "fecha": "2026-04-17",
+          "gestiones": 89,
+          "efectivas": 19,
+          "promesas": 8
+        },
+        {
+          "fecha": "2026-04-20",
+          "gestiones": 68,
+          "efectivas": 23,
+          "promesas": 5
+        },
+        {
+          "fecha": "2026-04-21",
+          "gestiones": 64,
+          "efectivas": 14,
+          "promesas": 2
+        },
+        {
+          "fecha": "2026-04-22",
+          "gestiones": 33,
+          "efectivas": 6,
+          "promesas": 1
+        },
+        {
+          "fecha": "2026-04-23",
+          "gestiones": 31,
+          "efectivas": 6,
+          "promesas": 5
+        },
+        {
+          "fecha": "2026-04-24",
+          "gestiones": 53,
+          "efectivas": 10,
+          "promesas": 3
+        },
+        {
+          "fecha": "2026-04-25",
+          "gestiones": 20,
+          "efectivas": 3,
+          "promesas": 1
+        },
+        {
+          "fecha": "2026-04-27",
+          "gestiones": 70,
+          "efectivas": 17,
+          "promesas": 3
+        },
+        {
+          "fecha": "2026-04-28",
+          "gestiones": 63,
+          "efectivas": 15,
+          "promesas": 2
+        },
+        {
+          "fecha": "2026-04-29",
+          "gestiones": 50,
+          "efectivas": 5,
+          "promesas": 0
+        },
+        {
+          "fecha": "2026-04-30",
+          "gestiones": 66,
+          "efectivas": 11,
+          "promesas": 2
+        }
+      ]
+    }
+  ]
+}

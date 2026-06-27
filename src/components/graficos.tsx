@@ -11,6 +11,7 @@ import {
   LabelList,
   Legend,
   Line,
+  LineChart,
   Pie,
   PieChart,
   PolarAngleAxis,
@@ -23,7 +24,7 @@ import {
   YAxis,
 } from "recharts";
 import { useState } from "react";
-import { fmtNum } from "@/lib/formato";
+import { fmtMoneda, fmtNum } from "@/lib/formato";
 import { useTema } from "@/components/tema";
 
 /**
@@ -406,6 +407,134 @@ export function GraficoTendencia({
           />
         ))}
       </AreaChart>
+      </ResponsiveContainer>
+    </div>
+  );
+}
+
+/**
+ * Comparativo mes anterior vs actual en barras agrupadas. Una categoría por
+ * indicador (ej. Gestiones, Efectivas, Promesas) con dos barras cada una.
+ */
+export function GraficoComparativo({
+  categorias,
+  labelActual,
+  labelAnterior,
+  formato = "num",
+  colorActual,
+}: {
+  categorias: { nombre: string; actual: number; anterior: number }[];
+  labelActual: string;
+  labelAnterior: string;
+  formato?: "num" | "moneda";
+  colorActual?: string;
+}) {
+  const p = usePaleta();
+  const ttip = estilosTooltip(p);
+  const { activo, bind } = useHoverActivo();
+  const cAct = colorActual ?? p.accent;
+  const fmt = (v: number) => (formato === "moneda" ? fmtMoneda(v) : fmtNum(Math.round(v)));
+  return (
+    <div {...bind} className="h-full w-full">
+      <ResponsiveContainer width="100%" height={300}>
+        <BarChart data={categorias} margin={{ top: 24, right: 8, left: -8, bottom: 0 }} barCategoryGap="22%">
+          <CartesianGrid strokeDasharray="3 3" stroke={p.line} vertical={false} />
+          <XAxis
+            dataKey="nombre"
+            tick={{ fontSize: 12, fill: p.ink, fontWeight: 600 }}
+            axisLine={{ stroke: p.line }}
+            tickLine={false}
+          />
+          <YAxis hide domain={[0, "dataMax"]} />
+          <Tooltip
+            cursor={{ fill: "rgba(255,255,255,0.04)" }}
+            contentStyle={ttip.contentStyle}
+            labelStyle={ttip.labelStyle}
+            itemStyle={ttip.itemStyle}
+            wrapperStyle={ttip.wrapperStyle}
+            active={activo}
+            formatter={(v) => [fmt(Number(v)), ""] as [string, string]}
+          />
+          <Legend wrapperStyle={ttip.legendStyle} />
+          <Bar dataKey="anterior" name={labelAnterior} fill={p.inkTer} fillOpacity={0.55} radius={[4, 4, 0, 0]} maxBarSize={64}>
+            <LabelList dataKey="anterior" position="top" offset={8} style={{ fill: p.inkSec, fontSize: 10, fontWeight: 700 }} formatter={(v: unknown) => fmt(Number(v))} />
+          </Bar>
+          <Bar dataKey="actual" name={labelActual} fill={cAct} radius={[4, 4, 0, 0]} maxBarSize={64}>
+            <LabelList dataKey="actual" position="top" offset={8} style={{ fill: cAct, fontSize: 10, fontWeight: 700 }} formatter={(v: unknown) => fmt(Number(v))} />
+          </Bar>
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
+  );
+}
+
+/**
+ * Líneas diarias mes anterior vs actual (alineadas por día de mes). Permite ver
+ * por día si subimos, bajamos o nos mantenemos respecto al mes pasado.
+ */
+export function GraficoLineasComparativo({
+  data,
+  labelActual,
+  labelAnterior,
+  formato = "num",
+  colorActual,
+}: {
+  data: { dia: number; actual: number | null; anterior: number | null }[];
+  labelActual: string;
+  labelAnterior: string;
+  formato?: "num" | "moneda";
+  colorActual?: string;
+}) {
+  const p = usePaleta();
+  const ttip = estilosTooltip(p);
+  const { activo, bind } = useHoverActivo();
+  const cAct = colorActual ?? p.accent;
+  const fmt = (v: number) => (formato === "moneda" ? fmtMoneda(v) : fmtNum(Math.round(v)));
+  return (
+    <div {...bind} className="h-full w-full">
+      <ResponsiveContainer width="100%" height={300}>
+        <LineChart data={data} margin={{ top: 16, right: 12, left: -8, bottom: 0 }}>
+          <CartesianGrid strokeDasharray="3 3" stroke={p.line} vertical={false} />
+          <XAxis
+            dataKey="dia"
+            tick={{ fontSize: 11, fill: p.inkTer }}
+            axisLine={{ stroke: p.line }}
+            tickLine={false}
+            tickFormatter={(d) => `${d}`}
+          />
+          <YAxis tick={{ fontSize: 11, fill: p.inkTer }} axisLine={false} tickLine={false} width={44} tickFormatter={(v) => fmt(Number(v))} />
+          <Tooltip
+            contentStyle={ttip.contentStyle}
+            labelStyle={ttip.labelStyle}
+            itemStyle={ttip.itemStyle}
+            wrapperStyle={ttip.wrapperStyle}
+            active={activo}
+            formatter={(v) => [v == null ? "—" : fmt(Number(v)), ""] as [string, string]}
+            labelFormatter={(d) => `Día ${d}`}
+          />
+          <Legend wrapperStyle={ttip.legendStyle} />
+          <Line
+            type="monotone"
+            dataKey="anterior"
+            name={labelAnterior}
+            stroke={p.inkTer}
+            strokeWidth={2}
+            strokeDasharray="5 4"
+            dot={false}
+            activeDot={{ r: 4 }}
+            connectNulls
+          />
+          <Line
+            type="monotone"
+            dataKey="actual"
+            name={labelActual}
+            stroke={cAct}
+            strokeWidth={2.5}
+            dot={false}
+            activeDot={{ r: 5 }}
+            connectNulls
+          />
+        </LineChart>
       </ResponsiveContainer>
     </div>
   );

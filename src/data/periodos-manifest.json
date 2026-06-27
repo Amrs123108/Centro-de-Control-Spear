@@ -1,0 +1,57 @@
+{
+  "generado": "2026-06-27T11:57:28",
+  "default": "2026-06",
+  "periodos": [
+    {
+      "periodo": "2026-06",
+      "mes_nombre": "Junio",
+      "anio": "2026",
+      "dias": 23,
+      "primer_dia": "2026-06-01",
+      "ultimo_dia": "2026-06-26",
+      "generado": "2026-06-27T11:57:27",
+      "total_gestores": 80,
+      "total_gestiones": 163157,
+      "total_efectivas": 52374,
+      "total_promesas": 24110,
+      "total_recaudo": 2168509.51,
+      "tasa_contacto": 0.321,
+      "ptp_rate": 0.4603,
+      "con_metas": true
+    },
+    {
+      "periodo": "2026-05",
+      "mes_nombre": "Mayo",
+      "anio": "2026",
+      "dias": 24,
+      "primer_dia": "2026-05-02",
+      "ultimo_dia": "2026-05-30",
+      "generado": "2026-06-27T11:52:06",
+      "total_gestores": 69,
+      "total_gestiones": 154262,
+      "total_efectivas": 53028,
+      "total_promesas": 23962,
+      "total_recaudo": 1646214.89,
+      "tasa_contacto": 0.3438,
+      "ptp_rate": 0.4519,
+      "con_metas": false
+    },
+    {
+      "periodo": "2026-04",
+      "mes_nombre": "Abril",
+      "anio": "2026",
+      "dias": 24,
+      "primer_dia": "2026-04-01",
+      "ultimo_dia": "2026-04-30",
+      "generado": "2026-06-27T11:48:08",
+      "total_gestores": 66,
+      "total_gestiones": 143015,
+      "total_efectivas": 48885,
+      "total_promesas": 22749,
+      "total_recaudo": 1534920.91,
+      "tasa_contacto": 0.3418,
+      "ptp_rate": 0.4654,
+      "con_metas": false
+    }
+  ]
+}

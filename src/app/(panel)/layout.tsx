@@ -3,14 +3,6 @@ import { BarraComando, RailIconos } from "@/components/nav";
 import { FondoTecno } from "@/components/fondo-tecno";
 import { MarcaFondo } from "@/components/marca";
 import { obtenerSesion } from "@/lib/auth";
-import mtd from "@/data/mtd_gestores.json";
-
-function fechaCorta(iso: string): string {
-  return new Date(`${iso}T12:00:00`).toLocaleDateString("es-PA", {
-    day: "numeric",
-    month: "short",
-  });
-}
 
 export default async function PanelLayout({
   children,
@@ -18,13 +10,9 @@ export default async function PanelLayout({
   const sesion = await obtenerSesion();
   if (!sesion) redirect("/login");
 
-  const dias = mtd.dias_procesados;
-  const periodo = `${mtd.mes_nombre} ${mtd.periodo.slice(0, 4)}`;
-  const corte = `Corte ${fechaCorta(dias[dias.length - 1])} · ${dias.length} días`;
-
   return (
     <div className="flex min-h-screen flex-col">
-      <BarraComando sesion={sesion} periodo={periodo} corte={corte} />
+      <BarraComando sesion={sesion} />
       <div className="flex flex-1">
         <RailIconos />
         <main className="relative min-w-0 flex-1 overflow-x-hidden">

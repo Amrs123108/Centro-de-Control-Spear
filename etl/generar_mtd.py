@@ -15,7 +15,8 @@ MARLIN ZELEDON = sistema predictivo → excluido del scoreboard.
 Salida: src/data/mtd_gestores.json  (PII-free, se commitea al repo)
 
 Uso:
-    python etl/generar_mtd.py
+    python etl/generar_mtd.py --all        (procesa TODOS los meses en Z:)  <- recomendado
+    python etl/generar_mtd.py              (solo el mes en curso)
     python etl/generar_mtd.py 2026 Junio   (año y mes explícito)
 """
 import json
@@ -55,7 +56,9 @@ from normalizar_clasificaciones import Normalizador  # noqa: E402
 # ── Rutas ────────────────────────────────────────────────────────────────────
 BASE_GESTIONES = Path(r"Z:\My Folders\General de Gestiones")
 METAS_PATH = Path(r"C:\Users\Angel Reyna\OneDrive - Spear Contact\METAS ASESORES.xlsx")
-SALIDA = Path(__file__).parent.parent / "src" / "data" / "mtd_gestores.json"
+DATA_DIR = Path(__file__).parent.parent / "src" / "data"
+DIR_MTD = DATA_DIR / "mtd"                       # un JSON por período: mtd/2026-06.json
+SALIDA = DATA_DIR / "mtd_gestores.json"          # compatibilidad: copia del período más reciente
 
 # ── Columnas seguras (no PII) ─────────────────────────────────────────────────
 COLS_SAFE = ["GESTOR", "CLASIFICACION", "FECHA_CLAS", "MONTO", "ESTADO", "TIPO_DE_TRAMITE", "PROYECTO"]
@@ -198,14 +201,32 @@ def leer_dia(filepath: Path, fecha_archivo: date_type | None = None) -> pd.DataF
     return df
 
 
-def leer_metas() -> pd.DataFrame:
+def leer_metas(mes_nombre: str | None = None) -> pd.DataFrame:
+    """Metas del archivo corporativo, filtradas al mes en proceso.
+
+    El archivo trae una columna 'FECHA DE LA META' con el nombre del mes
+    (p. ej. 'JUNIO'). Filtramos por ese mes para que las metas de un mes no
+    contaminen otro. Si la columna no existe o ningún registro coincide con el
+    mes en proceso, se devuelven metas vacías (asesores quedan 'sin_meta').
+    """
+    cols_base = ["ASESOR", "CARTERA", "META GESTIONES", "META PROMESAS", "META EFECTIVAS", "META RECAUDO"]
     if not METAS_PATH.exists():
         print(f"ADVERTENCIA: No se encontro {METAS_PATH}. Metas omitidas.")
-        return pd.DataFrame(columns=["ASESOR", "CARTERA", "META GESTIONES", "META PROMESAS", "META EFECTIVAS", "META RECAUDO"])
+        return pd.DataFrame(columns=cols_base)
     try:
         df = pd.read_excel(METAS_PATH, dtype=str)
         df.columns = [c.strip().upper() for c in df.columns]
         df = df.dropna(subset=["ASESOR"])
+
+        # Filtrar al mes en proceso si el archivo trae la columna de fecha
+        if "FECHA DE LA META" in df.columns and mes_nombre:
+            objetivo = mes_nombre.strip().upper()
+            mes_col = df["FECHA DE LA META"].fillna("").str.strip().str.upper()
+            df = df[mes_col == objetivo]
+            if len(df) == 0:
+                print(f"ADVERTENCIA: Sin metas para {objetivo} en el archivo. Mes sin metas.")
+                return pd.DataFrame(columns=cols_base)
+
         for col in ["META GESTIONES", "META PROMESAS", "META EFECTIVAS", "META RECAUDO"]:
             if col in df.columns:
                 df[col] = pd.to_numeric(df[col], errors="coerce").fillna(0.0)
@@ -215,7 +236,7 @@ def leer_metas() -> pd.DataFrame:
         return df
     except Exception as e:
         print(f"ADVERTENCIA: No se pudo leer metas: {e}")
-        return pd.DataFrame(columns=["ASESOR", "CARTERA", "META GESTIONES", "META PROMESAS", "META EFECTIVAS", "META RECAUDO"])
+        return pd.DataFrame(columns=cols_base)
 
 
 def nivel_por_score(score: float) -> str:
@@ -295,6 +316,115 @@ def construir_insights_mtd(resumen, carteras, agg, n_alertas) -> list[dict]:
     })
 
     return ins[:5]
+
+
+def regenerar_indices() -> None:
+    """Reconstruye, a partir de los JSON en src/data/mtd/:
+       - periodos-manifest.json : lista liviana de períodos (para el selector)
+       - mtd/index.ts           : barrel con los datasets completos (server)
+       - mtd_gestores.json      : copia del período más reciente (compatibilidad)
+    """
+    archivos = sorted(DIR_MTD.glob("20*.json"))
+    periodos = []
+    for f in archivos:
+        d = json.loads(f.read_text(encoding="utf-8"))
+        dias = d.get("dias_procesados", [])
+        r = d.get("resumen", {})
+        periodos.append({
+            "periodo": d["periodo"],
+            "mes_nombre": d["mes_nombre"],
+            "anio": d["periodo"][:4],
+            "dias": len(dias),
+            "primer_dia": dias[0] if dias else None,
+            "ultimo_dia": dias[-1] if dias else None,
+            "generado": d.get("generado"),
+            "total_gestores": r.get("total_gestores", 0),
+            "total_gestiones": r.get("total_gestiones", 0),
+            "total_efectivas": r.get("total_efectivas", 0),
+            "total_promesas": r.get("total_promesas", 0),
+            "total_recaudo": r.get("total_recaudo", 0),
+            "tasa_contacto": r.get("tasa_contacto", 0),
+            "ptp_rate": r.get("ptp_rate", 0),
+            "con_metas": r.get("gestores_sin_meta", 0) < r.get("total_gestores", 0),
+        })
+    periodos.sort(key=lambda x: x["periodo"], reverse=True)  # más reciente primero
+
+    manifest = {
+        "generado": datetime.now().isoformat(timespec="seconds"),
+        "default": periodos[0]["periodo"] if periodos else None,
+        "periodos": periodos,
+    }
+    (DATA_DIR / "periodos-manifest.json").write_text(
+        json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
+
+    # Barrel TS (import estático de cada período → bundle de Next)
+    lineas = ['import type { MTDData } from "@/types/mtd";', ""]
+    mapeo = []
+    for p in periodos:
+        var = "p_" + p["periodo"].replace("-", "_")
+        lineas.append(f'import {var} from "./{p["periodo"]}.json";')
+        mapeo.append((p["periodo"], var))
+    lineas += ["", "export const DATASETS: Record<string, MTDData> = {"]
+    for periodo, var in mapeo:
+        lineas.append(f'  "{periodo}": {var} as unknown as MTDData,')
+    lineas.append("};")
+    (DIR_MTD / "index.ts").write_text("\n".join(lineas) + "\n", encoding="utf-8")
+
+    # Compatibilidad: el archivo único apunta al período más reciente
+    if periodos:
+        ultimo = DIR_MTD / f'{periodos[0]["periodo"]}.json'
+        SALIDA.write_text(ultimo.read_text(encoding="utf-8"), encoding="utf-8")
+
+    print(f"Indices regenerados: {[p['periodo'] for p in periodos]} | default {manifest['default']}")
+
+
+def descubrir_periodos() -> list[tuple[str, str]]:
+    """Encuentra TODAS las carpetas {anio}/{mes}/Gestiones con archivos .xls(x).
+
+    Devuelve [(anio, mes_nombre), ...] ordenado cronológicamente. Es lo que
+    permite que el actualizador tome cualquier mes nuevo que el usuario suba a
+    Z: sin tener que indicarlo a mano.
+    """
+    encontrados: list[tuple[str, str]] = []
+    if not BASE_GESTIONES.exists():
+        return encontrados
+    for anio_dir in sorted(BASE_GESTIONES.iterdir()):
+        if not (anio_dir.is_dir() and anio_dir.name.isdigit() and len(anio_dir.name) == 4):
+            continue
+        for mes_dir in sorted(anio_dir.iterdir()):
+            if not mes_dir.is_dir():
+                continue
+            if mes_dir.name.strip().lower() not in _MESES_ES:
+                continue  # ignora carpetas que no son meses
+            gestiones = mes_dir / "Gestiones"
+            if gestiones.is_dir() and any(gestiones.glob("*.xls*")):
+                encontrados.append((anio_dir.name, mes_dir.name))
+    encontrados.sort(key=lambda am: (am[0], _MESES_ES[am[1].strip().lower()]))
+    return encontrados
+
+
+def procesar_todos() -> None:
+    """Procesa todos los meses presentes en Z: y regenera los índices.
+
+    Es el punto de entrada del actualizador de un clic: el usuario sube data a
+    las carpetas y este recorre cada mes con datos, sin omisiones.
+    """
+    periodos = descubrir_periodos()
+    if not periodos:
+        raise SystemExit(f"Sin carpetas con gestiones bajo {BASE_GESTIONES}")
+    print(f"Periodos detectados: {', '.join(f'{a}/{m}' for a, m in periodos)}\n")
+    ok: list[str] = []
+    for anio, mes in periodos:
+        print(f"---------- {anio} / {mes} ----------")
+        try:
+            main(anio, mes)
+            ok.append(f"{anio}-{mes}")
+        except SystemExit as e:
+            print(f"  >> Saltado {anio}/{mes}: {e}")
+        print()
+    # main() ya regenera índices en cada vuelta; al terminar reflejan todo.
+    print(f"== Actualizacion completa: {len(ok)} periodos -> {', '.join(ok)} ==")
 
 
 def main(anio: str | None = None, mes: str | None = None) -> None:
@@ -397,7 +527,7 @@ def main(anio: str | None = None, mes: str | None = None) -> None:
     agg["ticket"] = (agg["recaudo"] / agg["promesas"].clip(lower=1)).round(2)
 
     # ── Metas ─────────────────────────────────────────────────────────────────
-    metas_df = leer_metas()
+    metas_df = leer_metas(mes_nombre)
     if len(metas_df) > 0:
         # Agregar metas por asesor (suma si tiene varias carteras)
         metas_agg = (
@@ -422,37 +552,47 @@ def main(anio: str | None = None, mes: str | None = None) -> None:
         agg[["meta_gestiones", "meta_efectivas", "meta_promesas", "meta_recaudo"]].fillna(0.0)
     )
 
-    # ── Semáforo ──────────────────────────────────────────────────────────────
-    # Progreso esperado basado en días hábiles transcurridos vs mes completo
-    # Estimamos ~22 días hábiles por mes; ajustar si se requiere más precisión
+    # ── Cumplimiento "a la fecha" (ritmo) ─────────────────────────────────────
+    # IMPORTANTE: las metas del archivo tienen unidades MIXTAS:
+    #   · META GESTIONES / EFECTIVAS / PROMESAS  -> son DIARIAS (por día)
+    #   · META RECAUDO                           -> es MENSUAL (mes completo)
+    # Por eso el % de cumplimiento se mide contra lo ESPERADO A LA FECHA:
+    #   - diarias  : esperado = meta_diaria × días procesados
+    #   - mensual  : esperado = meta_mensual × (días procesados ÷ días hábiles)
+    # 100 % = el asesor va exactamente al ritmo necesario para cumplir la meta.
     dias_habiles_mes = 22
-    dias_habiles_transcurridos = len(dias_procesados)
-    pct_esperado = min(dias_habiles_transcurridos / dias_habiles_mes * 100, 100)
+    dias_proc = max(len(dias_procesados), 1)
+    frac_mes = min(dias_proc / dias_habiles_mes, 1.0)
 
+    def pct_diaria(mtd, meta_diaria):
+        """% del ritmo esperado a la fecha para una meta DIARIA."""
+        if meta_diaria and meta_diaria > 0:
+            esperado = meta_diaria * dias_proc
+            return round(mtd / esperado * 100, 1)
+        return None
+
+    def pct_mensual(mtd, meta_mensual):
+        """% del ritmo esperado a la fecha para una meta MENSUAL."""
+        if meta_mensual and meta_mensual > 0:
+            esperado = meta_mensual * frac_mes
+            return round(mtd / max(esperado, 1e-9) * 100, 1)
+        return None
+
+    agg["pct_gestiones"] = agg.apply(lambda r: pct_diaria(r["gestiones"], r["meta_gestiones"]), axis=1)
+    agg["pct_efectivas"] = agg.apply(lambda r: pct_diaria(r["efectivas"], r["meta_efectivas"]), axis=1)
+    agg["pct_promesas"] = agg.apply(lambda r: pct_diaria(r["promesas"], r["meta_promesas"]), axis=1)
+    agg["pct_recaudo"] = agg.apply(lambda r: pct_mensual(r["recaudo"], r["meta_recaudo"]), axis=1)
+
+    # ── Semáforo ──────────────────────────────────────────────────────────────
+    # Promedio de los % de cumplimiento a la fecha (ya prorrateados), comparado
+    # contra 100 % (ir al día). Operativo: gestiones, efectivas y promesas.
     def calcular_semaforo(row):
-        kpis_con_meta = []
-        for mtd, meta in [
-            (row["gestiones"], row["meta_gestiones"]),
-            (row["efectivas"], row["meta_efectivas"]),
-            (row["promesas"], row["meta_promesas"]),
-        ]:
-            if meta > 0:
-                kpis_con_meta.append(mtd / meta * 100)
-        if not kpis_con_meta:
+        pcts = [p for p in (row["pct_gestiones"], row["pct_efectivas"], row["pct_promesas"]) if pd.notna(p)]
+        if not pcts:
             return "sin_meta"
-        pct_promedio = sum(kpis_con_meta) / len(kpis_con_meta)
-        return semaforo(pct_promedio, pct_esperado)
+        return semaforo(sum(pcts) / len(pcts), 100.0)
 
     agg["estado"] = agg.apply(calcular_semaforo, axis=1)
-
-    # ── Porcentajes de cumplimiento ───────────────────────────────────────────
-    def pct(mtd, meta):
-        return round(mtd / meta * 100, 1) if meta > 0 else None
-
-    agg["pct_gestiones"] = agg.apply(lambda r: pct(r["gestiones"], r["meta_gestiones"]), axis=1)
-    agg["pct_efectivas"] = agg.apply(lambda r: pct(r["efectivas"], r["meta_efectivas"]), axis=1)
-    agg["pct_promesas"] = agg.apply(lambda r: pct(r["promesas"], r["meta_promesas"]), axis=1)
-    agg["pct_recaudo"] = agg.apply(lambda r: pct(r["recaudo"], r["meta_recaudo"]), axis=1)
 
     # ── Motor de evaluación entre pares (benchmark de equipo) ─────────────────
     # Sin metas absolutas, evaluamos a cada asesor contra la mediana del equipo.
@@ -546,7 +686,7 @@ def main(anio: str | None = None, mes: str | None = None) -> None:
         "gestores_sin_meta": int(estados.get("sin_meta", 0)),
         "dias_procesados": len(dias_procesados),
         "dias_habiles_mes": dias_habiles_mes,
-        "pct_mes_transcurrido": round(pct_esperado, 1),
+        "pct_mes_transcurrido": round(frac_mes * 100, 1),
     }
 
     benchmarks = {
@@ -589,10 +729,10 @@ def main(anio: str | None = None, mes: str | None = None) -> None:
             "meta_efectivas": int(r["meta_efectivas"]) if r["meta_efectivas"] > 0 else None,
             "meta_promesas": int(r["meta_promesas"]) if r["meta_promesas"] > 0 else None,
             "meta_recaudo": round(float(r["meta_recaudo"]), 2) if r["meta_recaudo"] > 0 else None,
-            "pct_gestiones": r["pct_gestiones"],
-            "pct_efectivas": r["pct_efectivas"],
-            "pct_promesas": r["pct_promesas"],
-            "pct_recaudo": r["pct_recaudo"],
+            "pct_gestiones": None if pd.isna(r["pct_gestiones"]) else float(r["pct_gestiones"]),
+            "pct_efectivas": None if pd.isna(r["pct_efectivas"]) else float(r["pct_efectivas"]),
+            "pct_promesas": None if pd.isna(r["pct_promesas"]) else float(r["pct_promesas"]),
+            "pct_recaudo": None if pd.isna(r["pct_recaudo"]) else float(r["pct_recaudo"]),
         })
 
     # ── Ritmo por hora (MTD) — solo de archivos con formato ISO + hora ────────
@@ -610,10 +750,17 @@ def main(anio: str | None = None, mes: str | None = None) -> None:
     else:
         por_hora_list = []
 
-    # ── Tendencia diaria (gestiones/promesas por día del mes) ─────────────────
+    # ── Tendencia diaria (gestiones/efectivas/promesas/recaudo por día) ───────
+    # Se incluye recaudo por día para poder comparar mes vs mes al mismo punto
+    # del mes (líneas diarias en la vista de Comparativa).
     tendencia = (
         df_mes.groupby(df_mes["FECHA_ARCHIVO"].dt.date)
-        .agg(gestiones=("GESTOR", "size"), efectivas=("efectiva", "sum"), promesas=("es_promesa", "sum"))
+        .agg(
+            gestiones=("GESTOR", "size"),
+            efectivas=("efectiva", "sum"),
+            promesas=("es_promesa", "sum"),
+            recaudo=("MONTO", lambda s: round(float(s[df_mes.loc[s.index, "es_compromiso"] | df_mes.loc[s.index, "es_pago"]].sum()), 2)),
+        )
         .reset_index()
         .rename(columns={"FECHA_ARCHIVO": "fecha"})
         .sort_values("fecha")
@@ -621,7 +768,8 @@ def main(anio: str | None = None, mes: str | None = None) -> None:
     tendencia["efectivas"] = tendencia["efectivas"].astype(int)
     tendencia["promesas"] = tendencia["promesas"].astype(int)
     tendencia_list = [
-        {**r, "fecha": str(r["fecha"])} for r in tendencia.to_dict(orient="records")
+        {**r, "fecha": str(r["fecha"]), "recaudo": round(float(r["recaudo"]), 2)}
+        for r in tendencia.to_dict(orient="records")
     ]
 
     # ── Tendencia diaria por cartera (gestiones/efectivas/promesas) ───────────
@@ -734,7 +882,7 @@ def main(anio: str | None = None, mes: str | None = None) -> None:
         "periodo": f"{anio}-{mes_num}",
         "mes_nombre": mes_nombre,
         "dias_procesados": [str(d) for d in dias_procesados],
-        "pct_mes_transcurrido": round(pct_esperado, 1),
+        "pct_mes_transcurrido": round(frac_mes * 100, 1),
         "resumen": resumen,
         "benchmarks": benchmarks,
         "gestores": gestores,
@@ -748,13 +896,23 @@ def main(anio: str | None = None, mes: str | None = None) -> None:
         "por_cartera": por_cartera_list,
     }
 
-    SALIDA.parent.mkdir(parents=True, exist_ok=True)
-    SALIDA.write_text(json.dumps(salida, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"\nListo -> {SALIDA}")
+    DIR_MTD.mkdir(parents=True, exist_ok=True)
+    periodo_key = f"{anio}-{mes_num}"
+    archivo_periodo = DIR_MTD / f"{periodo_key}.json"
+    archivo_periodo.write_text(json.dumps(salida, ensure_ascii=False, indent=2), encoding="utf-8")
+    print(f"\nListo -> {archivo_periodo}")
+
+    # Regenerar manifiesto + barrel + copia de compatibilidad a partir de TODOS
+    # los períodos presentes en la carpeta (el orden de ejecución no importa).
+    regenerar_indices()
+
     print(f"Gestores: {total} | Elite: {niveles.get('elite',0)} | Solido: {niveles.get('solido',0)} | Promedio: {niveles.get('promedio',0)} | Bajo: {niveles.get('bajo',0)} | Con alerta: {n_alertas}")
     print(f"MTD: {t_gest:,} gestiones | {t_efec:,} efectivas | {t_prom:,} promesas | PTP {resumen['ptp_rate']:.1%} | Contacto {resumen['tasa_contacto']:.1%}")
 
 
 if __name__ == "__main__":
     args = sys.argv[1:]
-    main(args[0] if len(args) > 0 else None, args[1] if len(args) > 1 else None)
+    if args and args[0].lower() in ("--all", "-a", "all", "todos"):
+        procesar_todos()
+    else:
+        main(args[0] if len(args) > 0 else None, args[1] if len(args) > 1 else None)

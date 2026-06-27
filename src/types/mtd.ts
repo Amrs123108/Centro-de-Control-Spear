@@ -111,6 +111,8 @@ export type TendenciaDia = {
   gestiones: number;
   efectivas: number;
   promesas: number;
+  /** Recaudo (comprometido + pagado) del día. Disponible desde jun 2026. */
+  recaudo?: number;
 };
 
 export type Resumen = {

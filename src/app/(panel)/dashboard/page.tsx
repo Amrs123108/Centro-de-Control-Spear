@@ -6,8 +6,8 @@ import {
   Lightbulb,
 } from "lucide-react";
 import Link from "next/link";
-import mtdData from "@/data/mtd_gestores.json";
 import supervisoresData from "@/data/supervisores.json";
+import { cargarMTD } from "@/lib/datos";
 import { obtenerSesion } from "@/lib/auth";
 import { fmtNum, fmtPct } from "@/lib/formato";
 import { GraficoHoras } from "@/components/graficos";
@@ -19,8 +19,6 @@ import { RankingSupervisores } from "@/components/ranking-supervisores";
 import { MatrizCarteras } from "@/components/matriz-carteras";
 import { Revelar } from "@/components/animados";
 import type { Alerta, MTDData } from "@/types/mtd";
-
-const mtd = mtdData as unknown as MTDData;
 
 const DEF_PTP_RESUMEN =
   "PTP (Promise To Pay / promesa de pago): de cada cliente con quien SÍ se logró hablar, qué porcentaje se comprometió a pagar.";
@@ -79,7 +77,13 @@ function Panel({
   );
 }
 
-export default async function DashboardPage() {
+export default async function DashboardPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ periodo?: string }>;
+}) {
+  const { periodo } = await searchParams;
+  const mtd = cargarMTD(periodo);
   const sesion = await obtenerSesion();
   const r = mtd.resumen;
   const bm = mtd.benchmarks;

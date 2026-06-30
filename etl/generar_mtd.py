@@ -506,16 +506,32 @@ def procesar_todos() -> None:
         raise SystemExit(f"Sin carpetas con gestiones bajo {BASE_GESTIONES}")
     print(f"Periodos detectados: {', '.join(f'{a}/{m}' for a, m in periodos)}\n")
     ok: list[str] = []
+    fallidos: list[str] = []
     for anio, mes in periodos:
         print(f"---------- {anio} / {mes} ----------")
         try:
             main(anio, mes)
             ok.append(f"{anio}-{mes}")
         except SystemExit as e:
+            # Mes sin carpeta/archivos: se salta sin marcarlo como error.
             print(f"  >> Saltado {anio}/{mes}: {e}")
+        except Exception as e:
+            # Un mes con un Excel abierto/bloqueado o corrupto NO debe abortar los
+            # demás. Se reporta y se continúa con el resto de las carpetas.
+            import traceback
+            print(f"  >> ERROR en {anio}/{mes}: {e}")
+            traceback.print_exc()
+            fallidos.append(f"{anio}-{mes}")
         print()
-    # main() ya regenera índices en cada vuelta; al terminar reflejan todo.
-    print(f"== Actualizacion completa: {len(ok)} periodos -> {', '.join(ok)} ==")
+    # main() ya regenera índices en cada vuelta; aunque alguno falle, los demás
+    # quedan reflejados. Si nada se procesó, igualamos los índices a lo que haya.
+    if not ok:
+        regenerar_indices()
+    print(f"== Actualizacion completa: {len(ok)} periodos OK -> {', '.join(ok) or '(ninguno)'} ==")
+    if fallidos:
+        print(f"== ATENCION: {len(fallidos)} periodo(s) con error -> {', '.join(fallidos)} ==")
+        print("   Causa frecuente: un archivo .xlsx de ese mes esta ABIERTO en Excel "
+              "o bloqueado. Cierralo y vuelve a ejecutar.")
 
 
 def main(anio: str | None = None, mes: str | None = None) -> None:

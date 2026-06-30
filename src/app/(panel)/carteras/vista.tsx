@@ -6,6 +6,7 @@ import { fmtMoneda, fmtNum, fmtPct } from "@/lib/formato";
 import { GraficoTendencia } from "@/components/graficos";
 import { Barra, ChipNivel, Delta, ScoreBar, Tip } from "@/components/ui";
 import { LogoCartera } from "@/components/logo-cartera";
+import { BloqueMeta, CumplBadge } from "@/components/vs-meta";
 import { NIVEL_META, type MTDData, type Nivel } from "@/types/mtd";
 
 const DEF_PTP = "PTP (Promise To Pay / Promesa de pago): de cada cliente con quien SÍ se habló, cuántos se comprometieron a pagar.";
@@ -25,6 +26,10 @@ const titulo = (n: string) =>
 export default function CarterasVista({ mtd }: { mtd: MTDData }) {
   const todas = useMemo(() => [...mtd.carteras].sort((a, b) => b.score - a.score), [mtd]);
   const bm = mtd.benchmarks;
+  // Meta a la fecha de cartera = meta MENSUAL × fracción del mes transcurrida.
+  const frac = Math.max(mtd.resumen.pct_mes_transcurrido / 100, 1e-4);
+  const espMes = (metaMensual: number | null | undefined) =>
+    metaMensual && metaMensual > 0 ? metaMensual * frac : null;
 
   const [nivel, setNivel] = useState<Nivel | "TODOS">("TODOS");
   const [sel, setSel] = useState(todas[0].cartera);
@@ -100,7 +105,10 @@ export default function CarterasVista({ mtd }: { mtd: MTDData }) {
                     <LogoCartera cartera={x.cartera} alto={24} />
                     <span className="text-sm font-semibold text-ink">{x.cartera}</span>
                   </div>
-                  <ChipNivel nivel={x.nivel} />
+                  <div className="flex items-center gap-2">
+                    <CumplBadge pct={x.cumplimiento} className="text-[11px]" />
+                    <ChipNivel nivel={x.nivel} />
+                  </div>
                 </div>
                 <div className="mt-2"><ScoreBar score={x.score} /></div>
                 <div className="mt-2 flex items-center justify-between text-[11px] text-ink-ter">
@@ -149,6 +157,17 @@ export default function CarterasVista({ mtd }: { mtd: MTDData }) {
               <MiniDato label="Promesas" valor={fmtNum(c.promesas)} />
               <MiniDato label="Pagos" valor={fmtNum(c.pagos)} />
             </div>
+
+            <div className="mt-4">
+              <BloqueMeta
+                filas={[
+                  { label: "Gestiones", actual: c.gestiones, esperado: espMes(c.meta_gestiones), pct: c.pct_gestiones ?? null },
+                  { label: "Efectivas", actual: c.efectivas, esperado: espMes(c.meta_efectivas), pct: c.pct_efectivas ?? null },
+                  { label: "Promesas", actual: c.promesas, esperado: espMes(c.meta_promesas), pct: c.pct_promesas ?? null },
+                ]}
+                cumplimiento={c.cumplimiento ?? null}
+              />
+            </div>
           </div>
 
           <div className="rounded-xl border border-line bg-surface p-5 shadow-card">
@@ -178,6 +197,7 @@ export default function CarterasVista({ mtd }: { mtd: MTDData }) {
                     <th className="pb-2 text-center font-semibold"><Tip texto={DEF_CONTACTO}>Contacto</Tip></th>
                     <th className="pb-2 text-center font-semibold"><Tip texto={DEF_PTP}>PTP</Tip></th>
                     <th className="pb-2 text-right font-semibold">Promesas</th>
+                    <th className="pb-2 text-right font-semibold"><Tip texto="Cumplimiento del asesor vs su meta a la fecha (gestiones, efectivas y promesas).">Cumpl.</Tip></th>
                     <th className="pb-2 font-semibold">Score</th>
                   </tr>
                 </thead>
@@ -195,6 +215,7 @@ export default function CarterasVista({ mtd }: { mtd: MTDData }) {
                       <td className="tnum py-2 text-center text-ink-sec">{fmtPct(g.tasa_contacto, 0)}</td>
                       <td className="tnum py-2 text-center text-ink-sec">{fmtPct(g.ptp_rate, 0)}</td>
                       <td className="tnum py-2 text-right font-semibold text-accent-claro">{fmtNum(g.promesas)}</td>
+                      <td className="py-2 text-right"><CumplBadge pct={g.cumplimiento} /></td>
                       <td className="py-2"><div className="w-24"><ScoreBar score={g.score} /></div></td>
                     </tr>
                   ))}

@@ -27,9 +27,14 @@ export const LOGOS: Record<string, LogoInfo> = {
   KREDIYA: { src: "/carteras/krediya.png" },
   RODELAG: { src: "/carteras/rodelag.png", fill: "#1b6fb3", ratio: 2.4 },
   "BANCO LA HIPOTECARIA": { src: "/carteras/banco-la-hipotecaria.png" },
+  "BANCO DELTA": { src: "/carteras/banco-delta.jpg" },
   "GLOBAL BANK": { src: "/carteras/global-bank.png" },
   AFINITI: { src: "/carteras/afiniti.png" },
   MULTIBANK: { src: "/carteras/multibank.png", fill: "#e11b22", ratio: 2.4 },
+  // Caja de Ahorros: fondo azul sólido, wordmark blanco → chip a sangre del azul
+  // de marca (Recovery reusa el mismo logo, como Banistmo Activa/Recovery).
+  "CAJA DE AHORROS": { src: "/carteras/caja-de-ahorros.png", fill: "#0a5ca8", ratio: 2.4 },
+  "CAJA DE AHORROS RECOVERY": { src: "/carteras/caja-de-ahorros.png", fill: "#0a5ca8", ratio: 2.4 },
 };
 
 export function logoDeCartera(cartera: string): LogoInfo | undefined {

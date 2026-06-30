@@ -57,3 +57,12 @@ export function infoPeriodo(periodo?: string | null): PeriodoInfo | undefined {
   const key = resolverPeriodo(periodo);
   return PERIODOS.find((p) => p.periodo === key);
 }
+
+/** Período inmediatamente anterior al dado (null si es el más antiguo). */
+export function periodoAnterior(periodo?: string | null): string | null {
+  const key = resolverPeriodo(periodo);
+  // PERIODOS está del más reciente al más antiguo → el anterior es idx + 1.
+  const idx = PERIODOS.findIndex((p) => p.periodo === key);
+  const prev = idx >= 0 ? PERIODOS[idx + 1] : undefined;
+  return prev ? prev.periodo : null;
+}

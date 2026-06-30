@@ -2,6 +2,7 @@ import { ArrowDown, ArrowUp, Crown, Minus, Trophy } from "lucide-react";
 import { fmtNum, fmtPct } from "@/lib/formato";
 import { LogoCartera } from "@/components/logo-cartera";
 import { Barra, Tip } from "@/components/ui";
+import { CumplBadge } from "@/components/vs-meta";
 import type { Cartera } from "@/types/mtd";
 
 export const DEF_CONV =
@@ -26,7 +27,48 @@ export type SupAgg = {
   conversion: number;
   /** Cambio relativo reciente de promesas (último tercio vs primer tercio). */
   trend: number;
+  /** Cumplimiento vs meta a la fecha (promedio de gestiones/efectivas/promesas).
+      null = ninguna de sus carteras tiene meta. */
+  cumplimiento: number | null;
+  /** Actual + esperado a la fecha por métrica (solo carteras con meta). */
+  meta: {
+    gestiones: MetaAgg;
+    efectivas: MetaAgg;
+    promesas: MetaAgg;
+  };
 };
+
+/** Agregado de una métrica vs su meta a la fecha. null = sin metas. */
+export type MetaAgg = { actual: number; esperado: number; pct: number } | null;
+
+/* Suma actual y esperado-a-la-fecha de una métrica sobre las carteras que SÍ
+   tienen meta. El esperado se deriva del % que ya trae cada cartera
+   (esperado = actual ÷ (pct/100)), así no necesitamos recalcular la fracción. */
+function aggMeta(
+  carteras: Cartera[],
+  campo: "gestiones" | "efectivas" | "promesas",
+  campoPct: "pct_gestiones" | "pct_efectivas" | "pct_promesas"
+): MetaAgg {
+  let actual = 0;
+  let esperado = 0;
+  let hay = false;
+  for (const c of carteras) {
+    const pct = c[campoPct];
+    if (pct && pct > 0) {
+      actual += c[campo];
+      esperado += c[campo] / (pct / 100);
+      hay = true;
+    }
+  }
+  return hay && esperado > 0 ? { actual, esperado, pct: (actual / esperado) * 100 } : null;
+}
+
+function cumplimientoDe(meta: SupAgg["meta"]): number | null {
+  const pcts = [meta.gestiones, meta.efectivas, meta.promesas]
+    .filter((m): m is { actual: number; esperado: number; pct: number } => m !== null)
+    .map((m) => m.pct);
+  return pcts.length ? pcts.reduce((a, b) => a + b, 0) / pcts.length : null;
+}
 
 /* Tendencia de promesas del supervisor: compara el último tercio de días contra
    el primero, sobre la serie diaria sumada de sus carteras. */
@@ -74,6 +116,8 @@ export function agregarSupervisores(
         efectividad: 0,
         conversion: 0,
         trend: 0,
+        cumplimiento: null,
+        meta: { gestiones: null, efectivas: null, promesas: null },
       };
       mapa.set(sup, g);
     }
@@ -90,6 +134,12 @@ export function agregarSupervisores(
     g.efectividad = g.gestiones > 0 ? g.efectivas / g.gestiones : 0;
     g.conversion = g.gestiones > 0 ? g.promesas / g.gestiones : 0;
     g.trend = tendenciaPromesas(g.carteras);
+    g.meta = {
+      gestiones: aggMeta(g.carteras, "gestiones", "pct_gestiones"),
+      efectivas: aggMeta(g.carteras, "efectivas", "pct_efectivas"),
+      promesas: aggMeta(g.carteras, "promesas", "pct_promesas"),
+    };
+    g.cumplimiento = cumplimientoDe(g.meta);
   }
   return [...mapa.values()];
 }
@@ -102,7 +152,26 @@ export type Totales = {
   score: number;
   efectividad: number;
   conversion: number;
+  /** Cumplimiento del equipo vs meta a la fecha. null = sin metas. */
+  cumplimiento: number | null;
+  meta: { gestiones: MetaAgg; efectivas: MetaAgg; promesas: MetaAgg };
 };
+
+/* Suma los agregados de meta de varios supervisores en uno solo. */
+function sumarMeta(list: SupAgg[], campo: "gestiones" | "efectivas" | "promesas"): MetaAgg {
+  let actual = 0;
+  let esperado = 0;
+  let hay = false;
+  for (const s of list) {
+    const m = s.meta[campo];
+    if (m) {
+      actual += m.actual;
+      esperado += m.esperado;
+      hay = true;
+    }
+  }
+  return hay && esperado > 0 ? { actual, esperado, pct: (actual / esperado) * 100 } : null;
+}
 
 export function totalesEquipo(list: SupAgg[]): Totales {
   const gestiones = list.reduce((s, g) => s + g.gestiones, 0);
@@ -110,6 +179,11 @@ export function totalesEquipo(list: SupAgg[]): Totales {
   const promesas = list.reduce((s, g) => s + g.promesas, 0);
   const asesores = list.reduce((s, g) => s + g.asesores, 0);
   const score = gestiones > 0 ? Math.round(list.reduce((s, g) => s + g.score * g.gestiones, 0) / gestiones) : 0;
+  const meta = {
+    gestiones: sumarMeta(list, "gestiones"),
+    efectivas: sumarMeta(list, "efectivas"),
+    promesas: sumarMeta(list, "promesas"),
+  };
   return {
     gestiones,
     efectivas,
@@ -118,6 +192,8 @@ export function totalesEquipo(list: SupAgg[]): Totales {
     score,
     efectividad: gestiones > 0 ? efectivas / gestiones : 0,
     conversion: gestiones > 0 ? promesas / gestiones : 0,
+    cumplimiento: cumplimientoDe(meta),
+    meta,
   };
 }
 
@@ -185,6 +261,9 @@ function FilaSup({ s, puesto }: { s: SupAgg; puesto: number }) {
         <span>
           <b className="tnum text-accent-claro">{fmtNum(s.promesas)}</b> prom.
         </span>
+        <span>
+          Cumpl. <CumplBadge pct={s.cumplimiento} className="text-[10px]" />
+        </span>
       </div>
     </div>
   );
@@ -225,6 +304,11 @@ function ColumnaGerente({
         <div className="shrink-0 text-right">
           <div className="text-[9px] uppercase tracking-wider text-ink-ter">Score equipo</div>
           <div className={`tnum text-2xl font-extrabold ${ganador ? "text-gold" : "text-ink"}`}>{t.score}</div>
+          {t.cumplimiento !== null && (
+            <div className="text-[9px] text-ink-ter">
+              Cumpl. <CumplBadge pct={t.cumplimiento} className="text-[11px]" />
+            </div>
+          )}
         </div>
       </div>
       <div className="mb-3 grid grid-cols-4 gap-2 text-center">

@@ -19,9 +19,11 @@ Uso:
     python etl/generar_mtd.py              (solo el mes en curso)
     python etl/generar_mtd.py 2026 Junio   (año y mes explícito)
 """
+import calendar
 import json
 import re
 import sys
+import unicodedata
 from datetime import date as date_type
 from datetime import datetime
 from pathlib import Path
@@ -93,17 +95,46 @@ GESTOR_PREDICTIVO = "MARLIN ZELEDON"
 # Cuentas que no son asesores reales: marcador predictivo, cuentas de práctica
 # y personal que no gestiona (supervisión/coordinación). Se excluyen del
 # scoreboard para no contaminar los benchmarks del equipo.
+# OJO: las claves se comparan SIN acentos (CAPACITACIÓN -> CAPACITACION) y se
+# incluye el typo "CAPATICATION" que aparece en algunos archivos.
 GESTORES_EXCLUIDOS = (
-    "MARLIN ZELEDON", "CAPACITACION", "PRUEBA", "TEST", "DEMO",
-    "EVER RODR", "ORIS JARAMILLO", "ANIBAL ABREGO", "ANÍBAL ABREGO",
+    "MARLIN ZELEDON", "CAPACITACION", "CAPATICATION", "PRUEBA", "TEST", "DEMO",
+    "EVER RODR", "ORIS JARAMILLO", "ANIBAL ABREGO",
 )
+
+
+def _sin_acentos(s: str) -> str:
+    return "".join(c for c in unicodedata.normalize("NFD", s) if unicodedata.category(c) != "Mn")
+
+
+def norm_nombre(s) -> str:
+    """Clave canónica para cruzar nombres entre gestiones y metas:
+    MAYÚSCULAS, sin acentos, espacios colapsados. El archivo de metas escribe
+    sin tildes y con espacios irregulares; las gestiones traen tildes."""
+    if not isinstance(s, str):
+        return ""
+    return " ".join(_sin_acentos(s.strip().upper()).split())
+
+
+# Correcciones de typos en el archivo de metas -> nombre canónico de gestiones.
+# Confirmados con Angel (jun 2026). Clave y valor en forma normalizada.
+ALIAS_ASESOR_META = {
+    "ARAMISM MARTINEZ": "ARAMIS MARTINEZ",   # typo "ARAMISM"
+    "YINORIS RAMOS": "YINORI RAMOS",          # gestiones la traen sin la S final
+}
+
+# Nombre de cartera en META CARTERA -> cartera consolidada del panel.
+ALIAS_CARTERA_META = {
+    "BAC CASTIGO": "BAC",
+    "CAJA DE AHORROS ACTIVA": "CAJA DE AHORROS",  # Recovery = castigo, ya calza
+}
 
 
 def normalizar_gestor(nombre: str) -> str | None:
     if not isinstance(nombre, str) or not nombre.strip():
         return None
-    upper = nombre.upper()
-    if any(excl in upper for excl in GESTORES_EXCLUIDOS):
+    clave = norm_nombre(nombre)
+    if any(excl in clave for excl in GESTORES_EXCLUIDOS):
         return None  # excluir del scoreboard
     return nombre.strip().upper()
 
@@ -202,19 +233,21 @@ def leer_dia(filepath: Path, fecha_archivo: date_type | None = None) -> pd.DataF
 
 
 def leer_metas(mes_nombre: str | None = None) -> pd.DataFrame:
-    """Metas del archivo corporativo, filtradas al mes en proceso.
+    """Metas POR ASESOR (hoja 'META DE ASESORES'), filtradas al mes en proceso.
 
     El archivo trae una columna 'FECHA DE LA META' con el nombre del mes
     (p. ej. 'JUNIO'). Filtramos por ese mes para que las metas de un mes no
-    contaminen otro. Si la columna no existe o ningún registro coincide con el
-    mes en proceso, se devuelven metas vacías (asesores quedan 'sin_meta').
+    contaminen otro. Metas gest/efec/prom son DIARIAS; recaudo es MENSUAL.
+    Devuelve además SUPERVISOR y una clave de cruce '_KEY' (nombre normalizado,
+    con typos corregidos) para unir con las gestiones sin fallar por acentos.
     """
-    cols_base = ["ASESOR", "CARTERA", "META GESTIONES", "META PROMESAS", "META EFECTIVAS", "META RECAUDO"]
+    cols_base = ["ASESOR", "CARTERA", "META GESTIONES", "META PROMESAS",
+                 "META EFECTIVAS", "META RECAUDO", "SUPERVISOR", "_KEY"]
     if not METAS_PATH.exists():
         print(f"ADVERTENCIA: No se encontro {METAS_PATH}. Metas omitidas.")
         return pd.DataFrame(columns=cols_base)
     try:
-        df = pd.read_excel(METAS_PATH, dtype=str)
+        df = pd.read_excel(METAS_PATH, sheet_name="META DE ASESORES", dtype=str)
         df.columns = [c.strip().upper() for c in df.columns]
         df = df.dropna(subset=["ASESOR"])
 
@@ -232,11 +265,69 @@ def leer_metas(mes_nombre: str | None = None) -> pd.DataFrame:
                 df[col] = pd.to_numeric(df[col], errors="coerce").fillna(0.0)
             else:
                 df[col] = 0.0
-        df["ASESOR"] = df["ASESOR"].str.strip().str.upper()
+        df["SUPERVISOR"] = (df["SUPERVISOR"].fillna("").str.strip()
+                            if "SUPERVISOR" in df.columns else "")
+        # Clave de cruce: normalizar + corregir typos confirmados
+        df["_KEY"] = df["ASESOR"].map(lambda a: ALIAS_ASESOR_META.get(norm_nombre(a), norm_nombre(a)))
         return df
     except Exception as e:
-        print(f"ADVERTENCIA: No se pudo leer metas: {e}")
+        print(f"ADVERTENCIA: No se pudo leer metas de asesores: {e}")
         return pd.DataFrame(columns=cols_base)
+
+
+def leer_metas_cartera(mes_nombre: str | None = None) -> dict[str, dict]:
+    """Metas POR CARTERA (hoja 'META CARTERA'), filtradas al mes en proceso.
+
+    Las metas de cartera son del MES COMPLETO (no diarias). Devuelve un dict
+    {clave_cartera_normalizada -> {meta_gestiones, meta_efectivas, meta_promesas,
+    meta_recaudo, supervisor}}. La clave aplica ALIAS_CARTERA_META para calzar
+    con los nombres consolidados del panel.
+    """
+    if not METAS_PATH.exists():
+        return {}
+    try:
+        df = pd.read_excel(METAS_PATH, sheet_name="META CARTERA", dtype=str)
+        df.columns = [c.strip().upper() for c in df.columns]
+        df = df.dropna(subset=["CARTERA"])
+        if "FECHA DE LA META" in df.columns and mes_nombre:
+            objetivo = mes_nombre.strip().upper()
+            mes_col = df["FECHA DE LA META"].fillna("").str.strip().str.upper()
+            df = df[mes_col == objetivo]
+        if len(df) == 0:
+            return {}
+        ren = {
+            "META GESTIONES #": "meta_gestiones",
+            "META PROMESAS #": "meta_promesas",
+            "META EFECTIVAS #": "meta_efectivas",
+            "META RECAUDO TOTAL": "meta_recaudo",
+        }
+        out: dict[str, dict] = {}
+        for _, r in df.iterrows():
+            clave = ALIAS_CARTERA_META.get(norm_nombre(r["CARTERA"]), norm_nombre(r["CARTERA"]))
+            def num(col):
+                return float(pd.to_numeric(r.get(col), errors="coerce")) if pd.notna(r.get(col)) else 0.0
+            out[clave] = {
+                "meta_gestiones": num("META GESTIONES #"),
+                "meta_efectivas": num("META EFECTIVAS #"),
+                "meta_promesas": num("META PROMESAS #"),
+                "meta_recaudo": num("META RECAUDO TOTAL"),
+                "supervisor": str(r.get("SUPERVISOR", "") or "").strip(),
+            }
+        return out
+    except Exception as e:
+        print(f"ADVERTENCIA: No se pudo leer metas de cartera: {e}")
+        return {}
+
+
+def peso_dia(d: date_type) -> float:
+    """Peso de un día hábil: L-V = 1.0, sábado = 0.5, domingo = 0.
+    Los sábados se trabajan a media jornada (lo confirma el volumen ~mitad)."""
+    wd = d.weekday()  # 0=lunes ... 5=sábado, 6=domingo
+    if wd == 6:
+        return 0.0
+    if wd == 5:
+        return 0.5
+    return 1.0
 
 
 def nivel_por_score(score: float) -> str:
@@ -526,31 +617,38 @@ def main(anio: str | None = None, mes: str | None = None) -> None:
     agg["promesas_dia"] = (agg["promesas"] / d).round(2)
     agg["ticket"] = (agg["recaudo"] / agg["promesas"].clip(lower=1)).round(2)
 
-    # ── Metas ─────────────────────────────────────────────────────────────────
+    # ── Metas por asesor ──────────────────────────────────────────────────────
+    # El cruce se hace por '_KEY' (nombre normalizado sin acentos + typos
+    # corregidos), NO por el string exacto, para no perder metas por tildes.
+    agg["_KEY"] = agg["GESTOR"].map(norm_nombre)
     metas_df = leer_metas(mes_nombre)
     if len(metas_df) > 0:
-        # Agregar metas por asesor (suma si tiene varias carteras)
+        def primer_no_vacio(s):
+            return next((x for x in s if isinstance(x, str) and x.strip()), "")
         metas_agg = (
-            metas_df.groupby("ASESOR")
+            metas_df.groupby("_KEY")
             .agg(
                 meta_gestiones=("META GESTIONES", "sum"),
                 meta_efectivas=("META EFECTIVAS", "sum"),
                 meta_promesas=("META PROMESAS", "sum"),
                 meta_recaudo=("META RECAUDO", "sum"),
-                cartera_meta=("CARTERA", lambda s: s.iloc[0] if len(s) == 1 else "VARIAS"),
+                supervisor=("SUPERVISOR", primer_no_vacio),
+                cartera_meta=("CARTERA", lambda s: s.iloc[0] if s.nunique() == 1 else "VARIAS"),
             )
             .reset_index()
-            .rename(columns={"ASESOR": "GESTOR"})
         )
-        agg = agg.merge(metas_agg, on="GESTOR", how="left")
+        agg = agg.merge(metas_agg, on="_KEY", how="left")
     else:
         for col in ["meta_gestiones", "meta_efectivas", "meta_promesas", "meta_recaudo"]:
             agg[col] = 0.0
+        agg["supervisor"] = ""
         agg["cartera_meta"] = ""
 
     agg[["meta_gestiones", "meta_efectivas", "meta_promesas", "meta_recaudo"]] = (
         agg[["meta_gestiones", "meta_efectivas", "meta_promesas", "meta_recaudo"]].fillna(0.0)
     )
+    agg["supervisor"] = agg["supervisor"].fillna("") if "supervisor" in agg.columns else ""
+    agg["cartera_meta"] = agg["cartera_meta"].fillna("") if "cartera_meta" in agg.columns else ""
 
     # ── Cumplimiento "a la fecha" (ritmo) ─────────────────────────────────────
     # IMPORTANTE: las metas del archivo tienen unidades MIXTAS:
@@ -560,19 +658,25 @@ def main(anio: str | None = None, mes: str | None = None) -> None:
     #   - diarias  : esperado = meta_diaria × días procesados
     #   - mensual  : esperado = meta_mensual × (días procesados ÷ días hábiles)
     # 100 % = el asesor va exactamente al ritmo necesario para cumplir la meta.
-    dias_habiles_mes = 22
-    dias_proc = max(len(dias_procesados), 1)
-    frac_mes = min(dias_proc / dias_habiles_mes, 1.0)
+    # Días hábiles ponderados: L-V = 1.0, sábado = 0.5, domingo = 0.
+    #   · dias_habiles_mes  = total del mes (denominador de las metas mensuales)
+    #   · dias_transcurridos = lo que va corrido (con sábados a 0.5)
+    ndias_cal = calendar.monthrange(int(anio), int(mes_num))[1]
+    dias_habiles_mes = sum(peso_dia(date_type(int(anio), int(mes_num), dd)) for dd in range(1, ndias_cal + 1))
+    dias_transcurridos = sum(peso_dia(d) for d in dias_procesados) or 1.0
+    frac_mes = min(dias_transcurridos / dias_habiles_mes, 1.0) if dias_habiles_mes else 1.0
 
     def pct_diaria(mtd, meta_diaria):
-        """% del ritmo esperado a la fecha para una meta DIARIA."""
+        """% del ritmo esperado a la fecha para una meta DIARIA.
+        Esperado = meta_diaria × días hábiles transcurridos (sábados a 0.5)."""
         if meta_diaria and meta_diaria > 0:
-            esperado = meta_diaria * dias_proc
-            return round(mtd / esperado * 100, 1)
+            esperado = meta_diaria * dias_transcurridos
+            return round(mtd / max(esperado, 1e-9) * 100, 1)
         return None
 
     def pct_mensual(mtd, meta_mensual):
-        """% del ritmo esperado a la fecha para una meta MENSUAL."""
+        """% del ritmo esperado a la fecha para una meta MENSUAL.
+        Esperado = meta_mensual × (días transcurridos ÷ días hábiles del mes)."""
         if meta_mensual and meta_mensual > 0:
             esperado = meta_mensual * frac_mes
             return round(mtd / max(esperado, 1e-9) * 100, 1)
@@ -583,16 +687,29 @@ def main(anio: str | None = None, mes: str | None = None) -> None:
     agg["pct_promesas"] = agg.apply(lambda r: pct_diaria(r["promesas"], r["meta_promesas"]), axis=1)
     agg["pct_recaudo"] = agg.apply(lambda r: pct_mensual(r["recaudo"], r["meta_recaudo"]), axis=1)
 
-    # ── Semáforo ──────────────────────────────────────────────────────────────
-    # Promedio de los % de cumplimiento a la fecha (ya prorrateados), comparado
-    # contra 100 % (ir al día). Operativo: gestiones, efectivas y promesas.
-    def calcular_semaforo(row):
-        pcts = [p for p in (row["pct_gestiones"], row["pct_efectivas"], row["pct_promesas"]) if pd.notna(p)]
-        if not pcts:
-            return "sin_meta"
-        return semaforo(sum(pcts) / len(pcts), 100.0)
+    # ── Cumplimiento global del asesor (promedio de los % a la fecha) ──────────
+    # Confirmado con Angel: por ahora entran gestiones, efectivas y promesas
+    # (peso igual). El RECAUDO NO entra al score todavía: el "recaudo" actual es
+    # monto comprometido+pagado (no caja real cobrada), por eso da %s inflados;
+    # se incorporará en Etapa 4 con las carpetas de Pagos. SIN tope: así un %
+    # disparado delata metas mal cargadas para corregirlas. 100 % = al ritmo.
+    def cumplimiento_de(row):
+        pcts = [p for p in (row["pct_gestiones"], row["pct_efectivas"],
+                            row["pct_promesas"]) if pd.notna(p)]
+        return round(sum(pcts) / len(pcts), 1) if pcts else None
 
-    agg["estado"] = agg.apply(calcular_semaforo, axis=1)
+    agg["cumplimiento"] = agg.apply(cumplimiento_de, axis=1)
+
+    def estado_de(c):
+        if pd.isna(c):
+            return "sin_meta"
+        if c >= 90:
+            return "cumpliendo"
+        if c >= 70:
+            return "cerca"
+        return "lejos"
+
+    agg["estado"] = agg["cumplimiento"].apply(estado_de)
 
     # ── Motor de evaluación entre pares (benchmark de equipo) ─────────────────
     # Sin metas absolutas, evaluamos a cada asesor contra la mediana del equipo.
@@ -614,11 +731,30 @@ def main(anio: str | None = None, mes: str | None = None) -> None:
     pr_ptp = agg["ptp_rate"].rank(pct=True)
     pr_res = agg["promesas_dia"].rank(pct=True)
     # El resultado (promesas/día) y la conversión (PTP) pesan más que el volumen
-    agg["score"] = (
+    agg["score_equipo"] = (
         100 * (0.35 * pr_res + 0.30 * pr_ptp + 0.20 * pr_con + 0.15 * pr_vol)
     ).round(1)
 
-    agg["nivel"] = agg["score"].apply(nivel_por_score)
+    # ── Score final: por META si la tiene; si no, por mediana del equipo ──────
+    # Confirmado con Angel: meses sin metas (abril/mayo) usan la mediana.
+    # Niveles por cumplimiento de meta: elite ≥110, sólido ≥90, promedio ≥70.
+    def nivel_meta(c):
+        if c >= 110:
+            return "elite"
+        if c >= 90:
+            return "solido"
+        if c >= 70:
+            return "promedio"
+        return "bajo"
+
+    tiene_meta = agg["cumplimiento"].notna()
+    agg["score"] = agg["score_equipo"]
+    agg["score_base"] = "equipo"
+    agg["nivel"] = agg["score_equipo"].apply(nivel_por_score)
+    if tiene_meta.any():  # meses sin metas (p. ej. marzo) quedan solo con mediana
+        agg.loc[tiene_meta, "score"] = agg.loc[tiene_meta, "cumplimiento"].astype(float)
+        agg.loc[tiene_meta, "score_base"] = "meta"
+        agg.loc[tiene_meta, "nivel"] = agg.loc[tiene_meta, "cumplimiento"].apply(nivel_meta)
 
     # Deltas vs la mediana del equipo (para la ficha del asesor)
     agg["delta_contacto"] = (agg["tasa_contacto"] - bm["tasa_contacto"]).round(4)
@@ -685,7 +821,8 @@ def main(anio: str | None = None, mes: str | None = None) -> None:
         "gestores_lejos": int(estados.get("lejos", 0)),
         "gestores_sin_meta": int(estados.get("sin_meta", 0)),
         "dias_procesados": len(dias_procesados),
-        "dias_habiles_mes": dias_habiles_mes,
+        "dias_habiles_mes": round(dias_habiles_mes, 1),
+        "dias_transcurridos": round(dias_transcurridos, 1),
         "pct_mes_transcurrido": round(frac_mes * 100, 1),
     }
 
@@ -733,6 +870,9 @@ def main(anio: str | None = None, mes: str | None = None) -> None:
             "pct_efectivas": None if pd.isna(r["pct_efectivas"]) else float(r["pct_efectivas"]),
             "pct_promesas": None if pd.isna(r["pct_promesas"]) else float(r["pct_promesas"]),
             "pct_recaudo": None if pd.isna(r["pct_recaudo"]) else float(r["pct_recaudo"]),
+            "cumplimiento": None if pd.isna(r["cumplimiento"]) else float(r["cumplimiento"]),
+            "score_base": str(r["score_base"]),
+            "supervisor": str(r.get("supervisor", "") or ""),
         })
 
     # ── Ritmo por hora (MTD) — solo de archivos con formato ISO + hora ────────
@@ -831,9 +971,38 @@ def main(anio: str | None = None, mes: str | None = None) -> None:
         .groupby("cartera_principal")["tiene_alerta"].sum().to_dict()
     )
 
+    # Metas de cartera (mensuales) + supervisor de cada cartera.
+    metas_cartera = leer_metas_cartera(mes_nombre)
+    # Supervisor por cartera de respaldo: el más frecuente entre sus asesores.
+    sup_por_cartera: dict[str, str] = {}
+    con_sup = agg[agg["supervisor"].astype(str).str.strip() != ""]
+    if len(con_sup) > 0:
+        sup_por_cartera = (
+            con_sup.groupby("cartera_principal")["supervisor"]
+            .agg(lambda s: s.value_counts().idxmax()).to_dict()
+        )
+
     por_cartera_list = []
     for _, r in por_cartera.iterrows():
         c = r["cartera"]
+        # Cumplimiento de cartera: metas MENSUALES -> esperado = meta × frac_mes
+        mc = metas_cartera.get(norm_nombre(c))
+        if mc:
+            mcg, mce = mc["meta_gestiones"], mc["meta_efectivas"]
+            mcp, mcr = mc["meta_promesas"], mc["meta_recaudo"]
+            p_g = pct_mensual(r["gestiones"], mcg)
+            p_e = pct_mensual(r["efectivas"], mce)
+            p_p = pct_mensual(r["promesas"], mcp)
+            p_r = pct_mensual(r["monto"], mcr)
+            # Recaudo NO entra al cumplimiento de cartera (igual que el asesor): Etapa 4.
+            pcts_c = [p for p in (p_g, p_e, p_p) if p is not None]
+            cumpl_c = round(sum(pcts_c) / len(pcts_c), 1) if pcts_c else None
+            sup_c = mc["supervisor"] or sup_por_cartera.get(c, "")
+        else:
+            mcg = mce = mcp = mcr = 0.0
+            p_g = p_e = p_p = p_r = None
+            cumpl_c = None
+            sup_c = sup_por_cartera.get(c, "")
         por_cartera_list.append({
             "cartera": c,
             "gestiones": int(r["gestiones"]),
@@ -852,6 +1021,18 @@ def main(anio: str | None = None, mes: str | None = None) -> None:
             "mejor_asesor": mejor_por_cartera.get(c, "—"),
             "asesores_alerta": int(alerta_por_cartera.get(c, 0)),
             "tendencia": tend_por_cartera.get(c, []),
+            # Metas de cartera (mensuales) y cumplimiento a la fecha
+            "meta_gestiones": int(mcg) if mcg > 0 else None,
+            "meta_efectivas": int(mce) if mce > 0 else None,
+            "meta_promesas": int(mcp) if mcp > 0 else None,
+            "meta_recaudo": round(mcr, 2) if mcr > 0 else None,
+            "pct_gestiones": p_g,
+            "pct_efectivas": p_e,
+            "pct_promesas": p_p,
+            "pct_recaudo": p_r,
+            "cumplimiento": cumpl_c,
+            "estado": estado_de(cumpl_c),
+            "supervisor": sup_c,
         })
 
     # ── Distribución de categorías (global MTD) ───────────────────────────────
@@ -874,6 +1055,32 @@ def main(anio: str | None = None, mes: str | None = None) -> None:
         {"etapa": "Pagos", "valor": t_pago, "tasa": round(t_pago / max(t_comp, 1), 4)},
     ]
 
+    # ── Supervisores: cumplimiento de sus asesores Y de sus carteras ──────────
+    # Confirmado con Angel: el supervisor se mide por AMBAS cosas. Promedio
+    # 50/50 por ahora (ajustable). Solo aplica a meses con metas cargadas.
+    sup_set = {g["supervisor"] for g in gestores if g.get("supervisor")}
+    sup_set |= {c["supervisor"] for c in por_cartera_list if c.get("supervisor")}
+    supervisores_list = []
+    for sup in sorted(sup_set):
+        ases = [g for g in gestores if g.get("supervisor") == sup and g.get("cumplimiento") is not None]
+        carts = [c for c in por_cartera_list if c.get("supervisor") == sup and c.get("cumplimiento") is not None]
+        cmpl_ase = round(sum(g["cumplimiento"] for g in ases) / len(ases), 1) if ases else None
+        cmpl_car = round(sum(c["cumplimiento"] for c in carts) / len(carts), 1) if carts else None
+        partes = [x for x in (cmpl_ase, cmpl_car) if x is not None]
+        score_sup = round(sum(partes) / len(partes), 1) if partes else None
+        supervisores_list.append({
+            "supervisor": sup,
+            "n_asesores": len(ases),
+            "cumplimiento_asesores": cmpl_ase,
+            "asesores_cumpliendo": sum(1 for g in ases if g["cumplimiento"] >= 90),
+            "n_carteras": len(carts),
+            "cumplimiento_carteras": cmpl_car,
+            "carteras": sorted({c["cartera"] for c in carts}),
+            "score": score_sup,
+            "nivel": nivel_meta(score_sup) if score_sup is not None else "sin_meta",
+        })
+    supervisores_list.sort(key=lambda x: (x["score"] is None, -(x["score"] or 0)))
+
     # ── Insights automáticos (MTD) ────────────────────────────────────────────
     insights = construir_insights_mtd(resumen, por_cartera_list, agg, n_alertas)
 
@@ -892,6 +1099,7 @@ def main(anio: str | None = None, mes: str | None = None) -> None:
         "insights": insights,
         "por_hora": por_hora_list,
         "tendencia_diaria": tendencia_list,
+        "supervisores": supervisores_list,
         # Compatibilidad con consumidores previos
         "por_cartera": por_cartera_list,
     }

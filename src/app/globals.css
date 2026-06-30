@@ -604,6 +604,7 @@ html.lenis body {
 /* ── Circuito tecnológico (FondoTecno) ─────────────────────────────────────── */
 .fondo-tecno {
   pointer-events: none;
+  transition: filter 0.4s ease, opacity 0.4s ease;
 }
 .pcb-traza {
   opacity: 0.85;
@@ -887,6 +888,40 @@ html.lenis body {
 
 @media (prefers-reduced-motion: reduce) {
   [data-tema="vidrio"] body { animation: none; }
+}
+
+/* ── Modo enfoque ───────────────────────────────────────────────────────────
+   Activado con <html class="enfoque"> (botón de la barra superior). Manda los
+   datos al primer plano: difumina y atenúa el fondo animado y aplana el cromo
+   de los paneles (sheen + sombras). NO toca la nitidez de los números/tablas. */
+html.enfoque .fondo-tecno {
+  filter: blur(16px) brightness(0.4) saturate(0.65);
+  opacity: 0.3;
+}
+/* Atenúa también los gradientes de luz del lienzo */
+html.enfoque[data-tema="vidrio"] body,
+html.enfoque [data-tema="vidrio"] body {
+  background-image: none;
+}
+/* Aplana el vidrio pero conserva translucidez (60%): se elimina el sheen diagonal
+   y las sombras grandes, y se aplica un backdrop-filter fuerte para que el poco
+   fondo que se cuela quede muy difuminado (vidrio esmerilado) y los datos resalten. */
+html.enfoque [data-tema="vidrio"] .shadow-card {
+  background-color: rgba(15, 27, 49, 0.6);
+  background-image: none;
+  border-color: rgba(130, 162, 255, 0.22);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  -webkit-backdrop-filter: blur(22px) saturate(1.1);
+  backdrop-filter: blur(22px) saturate(1.1);
+}
+/* Los tiles internos (bg-canvas) también más sólidos para que no se vea el fondo
+   a través de los sub-bloques de datos. */
+html.enfoque [data-tema="vidrio"] .bg-canvas {
+  background-color: rgba(10, 20, 38, 0.6);
+}
+/* Suaviza las franjas de acento decorativas del tope de las cards */
+html.enfoque .shadow-card > span.absolute.top-0 {
+  opacity: 0.2;
 }
 
 /* Respeto a usuarios con movimiento reducido */

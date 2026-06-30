@@ -46,6 +46,12 @@ export type Gestor = {
   pct_efectivas: number | null;
   pct_promesas: number | null;
   pct_recaudo: number | null;
+  /** Promedio de pct_gestiones/efectivas/promesas (recaudo NO entra aún). null = sin meta. */
+  cumplimiento: number | null;
+  /** "meta" = score por cumplimiento de meta; "equipo" = por mediana del equipo. */
+  score_base: "meta" | "equipo";
+  /** Supervisor (de la hoja de metas). "" si el mes no tiene metas. */
+  supervisor: string;
 };
 
 export type Benchmarks = {
@@ -82,6 +88,30 @@ export type Cartera = {
   mejor_asesor: string;
   asesores_alerta: number;
   tendencia: PuntoTendencia[];
+  /** Metas de cartera (MENSUALES) y cumplimiento a la fecha. null = sin meta. */
+  meta_gestiones?: number | null;
+  meta_efectivas?: number | null;
+  meta_promesas?: number | null;
+  meta_recaudo?: number | null;
+  pct_gestiones?: number | null;
+  pct_efectivas?: number | null;
+  pct_promesas?: number | null;
+  pct_recaudo?: number | null;
+  cumplimiento?: number | null;
+  estado?: EstadoMeta;
+  supervisor?: string;
+};
+
+export type SupervisorMeta = {
+  supervisor: string;
+  n_asesores: number;
+  cumplimiento_asesores: number | null;
+  asesores_cumpliendo: number;
+  n_carteras: number;
+  cumplimiento_carteras: number | null;
+  carteras: string[];
+  score: number | null;
+  nivel: Nivel | "sin_meta";
 };
 
 export type Categoria = {
@@ -140,6 +170,8 @@ export type Resumen = {
   gestores_sin_meta: number;
   dias_procesados: number;
   dias_habiles_mes: number;
+  /** Días hábiles transcurridos PONDERADOS (sábado = 0.5). */
+  dias_transcurridos: number;
   pct_mes_transcurrido: number;
 };
 
@@ -158,6 +190,8 @@ export type MTDData = {
   insights: Insight[];
   por_hora: PorHora[];
   tendencia_diaria: TendenciaDia[];
+  /** Supervisores con cumplimiento de sus asesores y sus carteras (solo meses con metas). */
+  supervisores: SupervisorMeta[];
   /** Alias de compatibilidad: igual a `carteras`. */
   por_cartera: Cartera[];
 };

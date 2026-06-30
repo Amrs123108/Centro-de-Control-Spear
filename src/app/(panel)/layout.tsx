@@ -10,9 +10,13 @@ export default async function PanelLayout({
   const sesion = await obtenerSesion();
   if (!sesion) redirect("/login");
 
+  // El botón "Actualizar" solo opera en local (npm run dev): el sitio publicado
+  // en Vercel no tiene acceso a las gestiones ni a Python.
+  const puedeActualizar = !process.env.VERCEL && process.env.NODE_ENV !== "production";
+
   return (
     <div className="flex min-h-screen flex-col">
-      <BarraComando sesion={sesion} />
+      <BarraComando sesion={sesion} puedeActualizar={puedeActualizar} />
       <div className="flex flex-1">
         <RailIconos />
         <main className="relative min-w-0 flex-1 overflow-x-hidden">

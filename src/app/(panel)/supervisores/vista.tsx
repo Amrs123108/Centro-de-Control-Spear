@@ -5,6 +5,7 @@ import supervisoresData from "@/data/supervisores.json";
 import { fmtNum, fmtPct } from "@/lib/formato";
 import { Barra, Tip } from "@/components/ui";
 import { LogoCartera } from "@/components/logo-cartera";
+import { BloqueMeta, CumplBadge } from "@/components/vs-meta";
 import {
   DEF_CONV,
   DEF_EFECT,
@@ -60,6 +61,11 @@ export default function SupervisoresVista({ mtd }: { mtd: MTDData }) {
           {lista.length} supervisores ·{" "}
           <span className="tnum font-semibold text-ink-sec">{fmtNum(tot.asesores)}</span> asesores ·{" "}
           score equipo <span className="tnum font-semibold text-ink-sec">{tot.score}</span>
+          {tot.cumplimiento !== null && (
+            <>
+              {" "}· cumpl. <CumplBadge pct={tot.cumplimiento} className="text-[11px]" />
+            </>
+          )}
         </div>
       </header>
 
@@ -104,6 +110,9 @@ export default function SupervisoresVista({ mtd }: { mtd: MTDData }) {
                   <Tip texto={DEF_CONV}>Conv.</Tip>
                 </th>
                 <th className="px-3 py-3 text-right font-semibold">Promesas</th>
+                <th className="px-3 py-3 text-right font-semibold">
+                  <Tip texto="Cumplimiento del equipo vs meta a la fecha (gestiones, efectivas y promesas de sus carteras).">Cumpl.</Tip>
+                </th>
                 <th className="px-3 py-3 font-semibold">Score</th>
               </tr>
             </thead>
@@ -134,6 +143,7 @@ export default function SupervisoresVista({ mtd }: { mtd: MTDData }) {
                   <td className="tnum px-3 py-2.5 text-center text-ink-sec">{fmtPct(s.efectividad, 0)}</td>
                   <td className="tnum px-3 py-2.5 text-center text-ink-sec">{fmtPct(s.conversion, 0)}</td>
                   <td className="tnum px-3 py-2.5 text-right font-semibold text-accent-claro">{fmtNum(s.promesas)}</td>
+                  <td className="px-3 py-2.5 text-right"><CumplBadge pct={s.cumplimiento} /></td>
                   <td className="px-3 py-2.5">
                     <div className="flex items-center gap-2">
                       <TendIcono v={s.trend} />
@@ -191,6 +201,16 @@ function FichaSupervisor({ s }: { s: SupAgg }) {
         <Dato label="Conversión" valor={fmtPct(s.conversion, 1)} def={DEF_CONV} />
         <Dato label="Asesores" valor={fmtNum(s.asesores)} />
       </div>
+
+      {/* Cumplimiento del equipo vs su meta a la fecha */}
+      <BloqueMeta
+        filas={[
+          { label: "Gestiones", actual: s.meta.gestiones?.actual ?? s.gestiones, esperado: s.meta.gestiones?.esperado ?? null, pct: s.meta.gestiones?.pct ?? null },
+          { label: "Efectivas", actual: s.meta.efectivas?.actual ?? s.efectivas, esperado: s.meta.efectivas?.esperado ?? null, pct: s.meta.efectivas?.pct ?? null },
+          { label: "Promesas", actual: s.meta.promesas?.actual ?? s.promesas, esperado: s.meta.promesas?.esperado ?? null, pct: s.meta.promesas?.pct ?? null },
+        ]}
+        cumplimiento={s.cumplimiento}
+      />
 
       {/* Mejor asesor por cartera */}
       <div>

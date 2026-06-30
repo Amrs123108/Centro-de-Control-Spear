@@ -107,13 +107,19 @@ export function totalesComparables(A: MTDData, B: MTDData): { corte: number; ta:
 /** Serie diaria alineada por día de mes para el gráfico de líneas. */
 export type PuntoComparativo = { dia: number; actual: number | null; anterior: number | null };
 
-export function serieComparativa(A: MTDData, B: MTDData, ind: IndicadorDia): PuntoComparativo[] {
-  const corte = corteDia(A);
+/** Versión sobre arrays de serie diaria (para componentes que solo reciben la
+   serie, no el MTDData completo). `serieB` puede ser null si no hay mes anterior. */
+export function serieComparativaDe(
+  serieA: MTDData["tendencia_diaria"],
+  serieB: MTDData["tendencia_diaria"] | null | undefined,
+  ind: IndicadorDia
+): PuntoComparativo[] {
   const valor = (d: MTDData["tendencia_diaria"][number]) =>
     ind === "recaudo" ? d.recaudo ?? 0 : (d[ind] ?? 0);
-  const mapA = new Map(A.tendencia_diaria.map((d) => [diaDeMes(d.fecha), valor(d)]));
+  const corte = serieA.length ? Math.max(...serieA.map((d) => diaDeMes(d.fecha))) : 31;
+  const mapA = new Map(serieA.map((d) => [diaDeMes(d.fecha), valor(d)]));
   const mapB = new Map(
-    B.tendencia_diaria.filter((d) => diaDeMes(d.fecha) <= corte).map((d) => [diaDeMes(d.fecha), valor(d)])
+    (serieB ?? []).filter((d) => diaDeMes(d.fecha) <= corte).map((d) => [diaDeMes(d.fecha), valor(d)])
   );
   const puntos: PuntoComparativo[] = [];
   for (let dia = 1; dia <= corte; dia++) {
@@ -121,6 +127,48 @@ export function serieComparativa(A: MTDData, B: MTDData, ind: IndicadorDia): Pun
     const b = mapB.get(dia);
     if (a === undefined && b === undefined) continue; // sin datos ese día (fin de semana)
     puntos.push({ dia, actual: a ?? null, anterior: b ?? null });
+  }
+  return puntos;
+}
+
+export function serieComparativa(A: MTDData, B: MTDData, ind: IndicadorDia): PuntoComparativo[] {
+  return serieComparativaDe(A.tendencia_diaria, B.tendencia_diaria, ind);
+}
+
+/* ── Serie multi-mes alineada por día de mes ─────────────────────────────────
+   Todos los meses superpuestos en un mismo eje día-1 … día-31. Los meses ya
+   cerrados se dibujan COMPLETOS (tienen gestiones todos sus días); el mes actual
+   solo llega hasta su corte porque su serie aún no tiene los días siguientes.
+   Una clave (columna) por mes; null en los días sin datos (fines de semana o
+   futuro), que el gráfico puentea con connectNulls. */
+export type SerieMes = { clave: string; serie: MTDData["tendencia_diaria"] };
+
+export function serieMultiMes(
+  meses: SerieMes[],
+  ind: IndicadorDia
+): Record<string, number | null>[] {
+  const valor = (d: MTDData["tendencia_diaria"][number]) =>
+    ind === "recaudo" ? d.recaudo ?? 0 : (d[ind] ?? 0);
+  const maps = meses.map((m) => ({
+    clave: m.clave,
+    map: new Map(m.serie.map((d) => [diaDeMes(d.fecha), valor(d)])),
+  }));
+  let maxDia = 0;
+  for (const m of maps) for (const k of m.map.keys()) if (k > maxDia) maxDia = k;
+  const puntos: Record<string, number | null>[] = [];
+  for (let dia = 1; dia <= maxDia; dia++) {
+    const punto: Record<string, number | null> = { dia };
+    let any = false;
+    for (const m of maps) {
+      const v = m.map.get(dia);
+      if (v !== undefined) {
+        punto[m.clave] = v;
+        any = true;
+      } else {
+        punto[m.clave] = null;
+      }
+    }
+    if (any) puntos.push(punto);
   }
   return puntos;
 }

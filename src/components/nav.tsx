@@ -14,6 +14,8 @@ import {
 import type { Sesion } from "@/lib/auth";
 import { LogoSpearAnimado } from "@/components/marca";
 import { SelectorPeriodo } from "@/components/selector-periodo";
+import { BotonActualizar } from "@/components/boton-actualizar";
+import { BotonEnfoque } from "@/components/boton-enfoque";
 
 const RUTAS = [
   {
@@ -45,7 +47,13 @@ const ROL_ETIQUETA: Record<string, string> = {
 };
 
 /* ── Barra de comando superior ─────────────────────────────────────────────── */
-export function BarraComando({ sesion }: { sesion: Sesion }) {
+export function BarraComando({
+  sesion,
+  puedeActualizar,
+}: {
+  sesion: Sesion;
+  puedeActualizar: boolean;
+}) {
   const router = useRouter();
 
   async function salir() {
@@ -77,8 +85,10 @@ export function BarraComando({ sesion }: { sesion: Sesion }) {
         </Suspense>
       </div>
 
-      {/* Usuario */}
+      {/* Acciones + usuario */}
       <div className="ml-auto flex items-center gap-3">
+        <BotonEnfoque />
+        <BotonActualizar disponible={puedeActualizar} />
         <div className="hidden text-right leading-tight md:block">
           <div className="text-xs font-semibold text-white">{sesion.nombre}</div>
           <div className="text-[10px] text-white/45">{ROL_ETIQUETA[sesion.rol] ?? sesion.rol}</div>

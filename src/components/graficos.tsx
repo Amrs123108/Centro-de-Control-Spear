@@ -540,6 +540,99 @@ export function GraficoLineasComparativo({
   );
 }
 
+/**
+ * Líneas diarias de TODOS los meses superpuestos (alineados por día de mes).
+ * Una línea por mes; el mes actual resaltado (más grueso, color de acento).
+ * Sin eje Y (más ancho), segmentos rectos (type "linear") y un punto por día
+ * para apreciar las subidas/bajadas. El eje X llega hasta el 31 para no recortar
+ * los meses ya cerrados.
+ */
+export function GraficoLineasMulti({
+  data,
+  series,
+  formato = "num",
+}: {
+  data: Record<string, number | null>[];
+  series: { clave: string; label: string; actual: boolean }[];
+  formato?: "num" | "moneda";
+}) {
+  const p = usePaleta();
+  const ttip = estilosTooltip(p);
+  const { activo, bind } = useHoverActivo();
+  const fmt = (v: number) => (formato === "moneda" ? fmtMoneda(v) : fmtNum(Math.round(v)));
+  // Cada mes con su PROPIO color, distinto y reconocible en la leyenda. Tonos
+  // sobrios (no neón) y bien separados en el círculo cromático para que ninguno
+  // se confunda con otro ni con el fondo oscuro. El mes ACTUAL se reserva el cian
+  // de marca + línea más gruesa, así es siempre el que "salta" a la vista.
+  // `series` llega en orden cronológico (el más antiguo primero, el actual al final).
+  const CIAN_ACTUAL = "#22d3ee";
+  const PALETA_MESES = [
+    "#e0a73e", // oro
+    "#d06b8c", // rosa palo
+    "#9b7ede", // lavanda
+    "#37b89a", // jade
+    "#d98c5f", // terracota
+    "#7aa2f7", // azul acero
+    "#a8b545", // oliva
+    "#cf6a6a", // ladrillo
+  ];
+  let cont = 0;
+  const ordenCerrado = series.map((s) => (s.actual ? -1 : cont++));
+  const colorDe = (i: number) =>
+    series[i].actual ? CIAN_ACTUAL : PALETA_MESES[ordenCerrado[i] % PALETA_MESES.length];
+  return (
+    <div {...bind} className="h-full w-full">
+      <ResponsiveContainer width="100%" height="100%" minHeight={380}>
+        <LineChart data={data} margin={{ top: 16, right: 12, left: 4, bottom: 0 }}>
+          <CartesianGrid strokeDasharray="3 3" stroke={p.line} vertical={false} />
+          <XAxis
+            dataKey="dia"
+            type="number"
+            domain={[1, 31]}
+            ticks={Array.from({ length: 31 }, (_, i) => i + 1)}
+            interval={0}
+            allowDecimals={false}
+            tick={{ fontSize: 9, fill: p.inkTer }}
+            axisLine={{ stroke: p.line }}
+            tickLine={false}
+            tickFormatter={(d) => `${d}`}
+          />
+          {/* Sin eje Y: el tooltip da la magnitud y el gráfico gana ancho. */}
+          <YAxis hide domain={[0, "dataMax"]} />
+          <Tooltip
+            contentStyle={ttip.contentStyle}
+            labelStyle={ttip.labelStyle}
+            itemStyle={ttip.itemStyle}
+            wrapperStyle={ttip.wrapperStyle}
+            active={activo}
+            formatter={(v) => [v == null ? "—" : fmt(Number(v)), ""] as [string, string]}
+            labelFormatter={(d) => `Día ${d}`}
+          />
+          <Legend wrapperStyle={ttip.legendStyle} />
+          {series.map((s, i) => {
+            const c = colorDe(i);
+            return (
+              <Line
+                key={s.clave}
+                type="linear"
+                dataKey={s.clave}
+                name={s.label}
+                stroke={c}
+                strokeWidth={s.actual ? 3.2 : 2}
+                strokeOpacity={s.actual ? 1 : 0.92}
+                dot={{ r: s.actual ? 2.8 : 2, strokeWidth: 0, fill: c }}
+                activeDot={{ r: 5 }}
+                connectNulls
+                isAnimationActive={false}
+              />
+            );
+          })}
+        </LineChart>
+      </ResponsiveContainer>
+    </div>
+  );
+}
+
 export function GraficoCarteras({
   data,
 }: {

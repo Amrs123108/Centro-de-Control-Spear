@@ -6,6 +6,7 @@ import supervisoresData from "@/data/supervisores.json";
 import { fmtMoneda, fmtNum, fmtPct } from "@/lib/formato";
 import { Barra, ChipNivel, Delta, ScoreBar, Tip } from "@/components/ui";
 import { LogoCartera } from "@/components/logo-cartera";
+import { BloqueMeta, CumplBadge } from "@/components/vs-meta";
 import {
   ALERTA_META,
   NIVEL_META,
@@ -18,7 +19,7 @@ import {
 const SUPERVISORES = supervisoresData.supervisores as Record<string, string>;
 const liderDe = (cartera: string) => SUPERVISORES[cartera]?.trim() ?? "";
 
-type Orden = "score" | "gestiones" | "tasa_contacto" | "ptp_rate" | "promesas" | "gestiones_dia" | "dias_activos";
+type Orden = "score" | "gestiones" | "tasa_contacto" | "ptp_rate" | "promesas" | "gestiones_dia" | "dias_activos" | "cumplimiento";
 
 const DEF_PTP = "PTP (Promise To Pay / Promesa de pago): de cada cliente con quien SÍ se habló, cuántos se comprometieron a pagar.";
 const DEF_CONTACTO = "Tasa de contacto: de cada 100 gestiones, en cuántas se logró hablar con el titular.";
@@ -89,8 +90,9 @@ export default function AsesoresVista({ mtd }: { mtd: MTDData }) {
       return true;
     });
     arr = [...arr].sort((a, b) => {
-      const va = a[orden] as number;
-      const vb = b[orden] as number;
+      // cumplimiento puede ser null (asesor sin meta) → al fondo.
+      const va = (a[orden] as number | null) ?? -1;
+      const vb = (b[orden] as number | null) ?? -1;
       return asc ? va - vb : vb - va;
     });
     return arr;
@@ -209,6 +211,7 @@ export default function AsesoresVista({ mtd }: { mtd: MTDData }) {
                 <Th col="tasa_contacto" label="Contacto" orden={orden} asc={asc} onClick={toggle} tip={DEF_CONTACTO} />
                 <Th col="ptp_rate" label="PTP" orden={orden} asc={asc} onClick={toggle} tip={DEF_PTP} />
                 <Th col="promesas" label="Promesas" orden={orden} asc={asc} onClick={toggle} />
+                <Th col="cumplimiento" label="Cumpl." orden={orden} asc={asc} onClick={toggle} tip="Cumplimiento vs meta a la fecha: promedio de gestiones, efectivas y promesas contra el ritmo esperado hasta hoy. ≥100% al día." />
                 <Th col="score" label="Score" orden={orden} asc={asc} onClick={toggle} />
               </tr>
             </thead>
@@ -245,12 +248,13 @@ export default function AsesoresVista({ mtd }: { mtd: MTDData }) {
                   <td className="tnum px-3 py-2.5 text-center text-ink-sec">{fmtPct(g.tasa_contacto, 0)}</td>
                   <td className="tnum px-3 py-2.5 text-center text-ink-sec">{fmtPct(g.ptp_rate, 0)}</td>
                   <td className="tnum px-3 py-2.5 text-right font-semibold text-accent-claro">{fmtNum(g.promesas)}</td>
+                  <td className="px-3 py-2.5 text-right"><CumplBadge pct={g.cumplimiento} /></td>
                   <td className="px-3 py-2.5"><div className="w-24"><ScoreBar score={g.score} /></div></td>
                 </tr>
               ))}
               {lista.length === 0 && (
                 <tr>
-                  <td colSpan={8} className="px-4 py-12 text-center text-sm text-ink-ter">
+                  <td colSpan={9} className="px-4 py-12 text-center text-sm text-ink-ter">
                     Ningún asesor coincide con los filtros.
                   </td>
                 </tr>
@@ -259,7 +263,7 @@ export default function AsesoresVista({ mtd }: { mtd: MTDData }) {
           </table>
         </div>
 
-        <FichaAsesor g={ficha} bm={bm} dias={r.dias_procesados} />
+        <FichaAsesor g={ficha} bm={bm} dias={r.dias_procesados} diasTrans={r.dias_transcurridos} />
       </div>
     </div>
   );
@@ -328,8 +332,21 @@ function Th({
   );
 }
 
-function FichaAsesor({ g, bm, dias }: { g: Gestor; bm: MTDData["benchmarks"]; dias: number }) {
+function FichaAsesor({
+  g,
+  bm,
+  dias,
+  diasTrans,
+}: {
+  g: Gestor;
+  bm: MTDData["benchmarks"];
+  dias: number;
+  /** Días hábiles transcurridos ponderados (para la meta a la fecha). */
+  diasTrans: number;
+}) {
   const m = NIVEL_META[g.nivel];
+  // Meta a la fecha del asesor = meta DIARIA × días hábiles transcurridos.
+  const esp = (metaDiaria: number | null) => (metaDiaria && metaDiaria > 0 ? metaDiaria * diasTrans : null);
   return (
     <aside className="h-fit space-y-4 rounded-xl border border-line bg-surface p-5 shadow-card xl:sticky xl:top-20">
       <div className="flex items-start justify-between gap-3">
@@ -357,6 +374,16 @@ function FichaAsesor({ g, bm, dias }: { g: Gestor; bm: MTDData["benchmarks"]; di
           ))}
         </div>
       )}
+
+      {/* Cumplimiento vs su meta a la fecha (gestiones / efectivas / promesas) */}
+      <BloqueMeta
+        filas={[
+          { label: "Gestiones", actual: g.gestiones, esperado: esp(g.meta_gestiones), pct: g.pct_gestiones },
+          { label: "Efectivas", actual: g.efectivas, esperado: esp(g.meta_efectivas), pct: g.pct_efectivas },
+          { label: "Promesas", actual: g.promesas, esperado: esp(g.meta_promesas), pct: g.pct_promesas },
+        ]}
+        cumplimiento={g.cumplimiento}
+      />
 
       <div className="space-y-2.5">
         <ComparaKPI label="Contacto efectivo" def={DEF_CONTACTO} valor={fmtPct(g.tasa_contacto, 1)} pct={g.tasa_contacto} mediana={bm.tasa_contacto} delta={g.delta_contacto} />

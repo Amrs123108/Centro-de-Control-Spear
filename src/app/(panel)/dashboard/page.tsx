@@ -7,13 +7,15 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import supervisoresData from "@/data/supervisores.json";
-import { cargarMTD } from "@/lib/datos";
+import { cargarMTD, PERIODOS } from "@/lib/datos";
 import { obtenerSesion } from "@/lib/auth";
+import { construirPayloadResumen } from "@/lib/resumen";
+import { ResumenInteractivo } from "@/components/resumen-interactivo";
+import { EvolucionMes } from "@/components/evolucion-mes";
 import { fmtNum, fmtPct } from "@/lib/formato";
 import { GraficoHoras } from "@/components/graficos";
 import { Barra, ChipNivel, ChipsAlerta, Tip } from "@/components/ui";
 import { LogoCartera } from "@/components/logo-cartera";
-import { BentoOperativo } from "@/components/bento-operativo";
 import { TablaSupervisores } from "@/components/tabla-supervisores";
 import { RankingSupervisores } from "@/components/ranking-supervisores";
 import { MatrizCarteras } from "@/components/matriz-carteras";
@@ -84,6 +86,17 @@ export default async function DashboardPage({
 }) {
   const { periodo } = await searchParams;
   const mtd = cargarMTD(periodo);
+  const todosMTD = PERIODOS.map((p) => cargarMTD(p.periodo));
+  // Meses en orden cronológico para la evolución superpuesta (el actual al final).
+  const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+  const mesesEvol = [...todosMTD]
+    .sort((a, b) => a.periodo.localeCompare(b.periodo))
+    .map((m) => ({
+      clave: m.periodo,
+      label: cap(m.mes_nombre),
+      serie: m.tendencia_diaria,
+      actual: m.periodo === mtd.periodo,
+    }));
   const sesion = await obtenerSesion();
   const r = mtd.resumen;
   const bm = mtd.benchmarks;
@@ -92,6 +105,10 @@ export default async function DashboardPage({
   const supervisores = supervisoresData.supervisores as Record<string, string>;
   const gerentes = supervisoresData.gerentes as Record<string, string>;
   const cargos = supervisoresData._cargos as Record<string, string>;
+  // Payload del bloque interactivo (indicadores + cards + fuerza laboral),
+  // precalculado por cartera y en global para que el cliente solo conmute.
+  const payloadResumen = construirPayloadResumen(mtd, todosMTD);
+
   const ranking = mtd.gestores.slice(0, 8);
   const atencion = mtd.gestores
     .filter((g) => g.alertas.length > 0)
@@ -135,19 +152,20 @@ export default async function DashboardPage({
         </div>
       </header>
 
-      {/* PULSO — bento: 3 métricas operativas + evolución del mes */}
-      <BentoOperativo
-        datos={{
-          gestiones: r.total_gestiones,
-          gestionesPorDia: r.gestiones_por_dia,
-          efectivas: r.total_efectivas,
-          tasaContacto: r.tasa_contacto,
-          promesas: r.total_promesas,
-          ptpRate: r.ptp_rate,
-          diasProcesados: r.dias_procesados,
-          serie: mtd.tendencia_diaria,
-        }}
-      />
+      {/* RESUMEN INTERACTIVO — botones de cartera filtran indicadores + cards + fuerza */}
+      <ResumenInteractivo payload={payloadResumen} />
+
+      {/* EVOLUCIÓN DEL MES — todos los meses por día, a todo lo ancho */}
+      <Revelar>
+        <Panel
+          titulo="Evolución del mes"
+          sub="Todos los meses por día · los cerrados completos, el actual avanza"
+        >
+          <div className="min-h-[420px]">
+            <EvolucionMes meses={mesesEvol} />
+          </div>
+        </Panel>
+      </Revelar>
 
       {/* RANKING DE SUPERVISORES — mejor a peor, dividido por gerencia */}
       <Revelar>

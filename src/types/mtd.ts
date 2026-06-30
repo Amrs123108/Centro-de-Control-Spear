@@ -54,6 +54,21 @@ export type Gestor = {
   supervisor: string;
 };
 
+/** Aporte del sistema predictivo (Marlin). Sus números YA están sumados en los
+   totales de la cartera/operación; este bloque los expone aparte para mostrarlos
+   en una línea etiquetada. NO es un asesor evaluado. */
+export type Predictivo = {
+  gestiones: number;
+  efectivas: number;
+  promesas: number;
+  compromisos: number;
+  pagos: number;
+  monto: number;
+  tasa_contacto: number;
+  ptp_rate: number;
+  conversion: number;
+};
+
 export type Benchmarks = {
   tasa_contacto: number;
   ptp_rate: number;
@@ -100,6 +115,8 @@ export type Cartera = {
   cumplimiento?: number | null;
   estado?: EstadoMeta;
   supervisor?: string;
+  /** Aporte del predictivo (Marlin) en esta cartera. null/ausente si no trabajó aquí. */
+  predictivo?: Predictivo | null;
 };
 
 export type SupervisorMeta = {
@@ -173,6 +190,8 @@ export type Resumen = {
   /** Días hábiles transcurridos PONDERADOS (sábado = 0.5). */
   dias_transcurridos: number;
   pct_mes_transcurrido: number;
+  /** Aporte global del predictivo (Marlin), ya incluido en los totales. null si no hubo. */
+  predictivo?: Predictivo | null;
 };
 
 export type MTDData = {

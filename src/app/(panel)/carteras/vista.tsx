@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Banknote, PhoneCall, Target, TrendingUp, Users } from "lucide-react";
+import { Banknote, Bot, PhoneCall, Target, TrendingUp, Users } from "lucide-react";
 import { fmtMoneda, fmtNum, fmtPct } from "@/lib/formato";
 import { GraficoTendencia } from "@/components/graficos";
 import { Barra, ChipNivel, Delta, ScoreBar, Tip } from "@/components/ui";
@@ -149,7 +149,7 @@ export default function CarterasVista({ mtd }: { mtd: MTDData }) {
               <KpiCartera icono={PhoneCall} label="Contacto" def={DEF_CONTACTO} valor={fmtPct(c.tasa_contacto, 1)} delta={c.tasa_contacto - bm.tasa_contacto} tono="cian" />
               <KpiCartera icono={Target} label="PTP" def={DEF_PTP} valor={fmtPct(c.ptp_rate, 1)} delta={c.ptp_rate - bm.ptp_rate} tono="pos" />
               <KpiCartera icono={TrendingUp} label="Conversión" def={DEF_CONV} valor={fmtPct(c.conversion, 1)} delta={c.conversion - bm.conversion} tono="morado" />
-              <KpiCartera icono={Banknote} label="Monto promesado" valor={c.monto > 0 ? fmtMoneda(c.monto) : "—"} sub={`ticket ${fmtMoneda(c.ticket)}`} tono="gold" />
+              <KpiCartera icono={Banknote} label="Monto promesado" valor={c.monto > 0 ? fmtMoneda(c.monto) : "—"} sub={`monto promedio ${fmtMoneda(c.ticket)}`} tono="gold" />
             </div>
 
             <div className="mt-3 grid grid-cols-3 gap-3 text-center">
@@ -219,9 +219,36 @@ export default function CarterasVista({ mtd }: { mtd: MTDData }) {
                       <td className="py-2"><div className="w-24"><ScoreBar score={g.score} /></div></td>
                     </tr>
                   ))}
+                  {c.predictivo && (
+                    <tr className="border-t border-accent/30 bg-accent-soft/30">
+                      <td className="py-2 pr-3">
+                        <div className="flex items-center gap-2">
+                          <span className="flex h-[22px] w-[22px] items-center justify-center rounded bg-accent-soft text-accent-claro">
+                            <Bot className="h-3.5 w-3.5" />
+                          </span>
+                          <div className="leading-tight">
+                            <span className="font-semibold text-ink">Sistema predictivo</span>
+                            <span className="block text-[10px] text-ink-ter">Marlin · marcador automático (no es asesor)</span>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="py-2 text-center text-ink-ter">—</td>
+                      <td className="tnum py-2 text-right text-ink-sec">{fmtNum(c.predictivo.gestiones)}</td>
+                      <td className="tnum py-2 text-center text-ink-sec">{fmtPct(c.predictivo.tasa_contacto, 0)}</td>
+                      <td className="tnum py-2 text-center text-ink-sec">{fmtPct(c.predictivo.ptp_rate, 0)}</td>
+                      <td className="tnum py-2 text-right font-semibold text-accent-claro">{fmtNum(c.predictivo.promesas)}</td>
+                      <td className="py-2 text-right text-ink-ter">—</td>
+                      <td className="py-2 text-ink-ter">—</td>
+                    </tr>
+                  )}
                 </tbody>
               </table>
             </div>
+            {c.predictivo && (
+              <p className="mt-2 text-[10px] text-ink-ter">
+                La línea del sistema predictivo ya está incluida en los totales y metas de la cartera, pero no entra al ranking ni a los promedios de asesores.
+              </p>
+            )}
           </div>
         </div>
       </div>
@@ -303,7 +330,7 @@ function KpiCartera({
       <div className="tnum mt-1 text-lg font-extrabold text-ink">{valor}</div>
       {delta !== undefined ? (
         <div className="mt-0.5 flex items-center gap-1 text-[10px] text-ink-ter">
-          <Delta valor={delta} /> vs equipo
+          <Delta valor={delta} />
         </div>
       ) : (
         sub && <div className="mt-0.5 text-[10px] text-ink-ter">{sub}</div>

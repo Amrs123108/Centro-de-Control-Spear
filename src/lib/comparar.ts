@@ -195,7 +195,7 @@ export function metricasGlobales(A: MTDData, B: MTDData): MetricaGlobal[] {
     { clave: "conversion", label: "Conversión", corto: "Conversión", formato: "pct", decimales: 1, cambio: cambio(ta.conversion, tb.conversion), ayuda: "De cada 100 gestiones, cuántas terminaron en promesa." },
     { clave: "promesas_dia", label: "Promesas / día", corto: "Promesas", formato: "num", decimales: 0, cambio: cambio(ta.promesas_dia, tb.promesas_dia), ayuda: "Resultado: promesas de pago obtenidas por día." },
     { clave: "recaudo_dia", label: "Recaudo / día", corto: "Recaudo", formato: "moneda", decimales: 0, cambio: cambio(ta.recaudo_dia, tb.recaudo_dia), ayuda: "Monto comprometido + pagado por día." },
-    { clave: "ticket", label: "Ticket promedio", corto: "Ticket", formato: "moneda", decimales: 0, cambio: cambio(ta.ticket, tb.ticket), ayuda: "Monto promedio por promesa." },
+    { clave: "ticket", label: "Monto promedio", corto: "Monto prom.", formato: "moneda", decimales: 0, cambio: cambio(ta.ticket, tb.ticket), ayuda: "Monto promedio por promesa." },
   ];
 }
 

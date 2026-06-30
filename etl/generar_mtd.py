@@ -91,16 +91,25 @@ PROYECTO_MAP: dict[str, str] = {
 }
 
 NORM = Normalizador()
+# MARLIN ZELEDON = sistema predictivo (no es un asesor). NO se borra: sus
+# gestiones SÍ cuentan para los totales y las carteras, pero queda FUERA de la
+# lista de asesores evaluados (ranking, fichas, alertas y mediana del equipo).
+# Se identifica por su nombre normalizado (sin acentos, mayúsculas).
 GESTOR_PREDICTIVO = "MARLIN ZELEDON"
-# Cuentas que no son asesores reales: marcador predictivo, cuentas de práctica
-# y personal que no gestiona (supervisión/coordinación). Se excluyen del
-# scoreboard para no contaminar los benchmarks del equipo.
+# Cuentas que NO son asesores reales y que sí se descartan por completo (no
+# suman a nada): cuentas de práctica/pruebas y personal que no gestiona
+# (supervisión/coordinación). Se excluyen para no contaminar los benchmarks.
 # OJO: las claves se comparan SIN acentos (CAPACITACIÓN -> CAPACITACION) y se
 # incluye el typo "CAPATICATION" que aparece en algunos archivos.
 GESTORES_EXCLUIDOS = (
-    "MARLIN ZELEDON", "CAPACITACION", "CAPATICATION", "PRUEBA", "TEST", "DEMO",
+    "CAPACITACION", "CAPATICATION", "PRUEBA", "TEST", "DEMO",
     "EVER RODR", "ORIS JARAMILLO", "ANIBAL ABREGO",
 )
+
+
+def es_gestor_predictivo(nombre) -> bool:
+    """True si la fila pertenece al sistema predictivo (Marlin)."""
+    return isinstance(nombre, str) and GESTOR_PREDICTIVO in norm_nombre(nombre)
 
 
 def _sin_acentos(s: str) -> str:
@@ -185,7 +194,9 @@ def leer_dia(filepath: Path, fecha_archivo: date_type | None = None) -> pd.DataF
 
     df = df[cols_presentes].copy()
 
-    # Limpiar gestor — None para Predictivo
+    # Limpiar gestor — None para cuentas descartadas (práctica/no-asesor).
+    # El predictivo (Marlin) NO se descarta: se conserva y se marca aparte.
+    df["es_predictivo"] = df["GESTOR"].apply(es_gestor_predictivo)
     df["GESTOR"] = df["GESTOR"].apply(normalizar_gestor)
     df = df[df["GESTOR"].notna()]
 
@@ -585,19 +596,53 @@ def main(anio: str | None = None, mes: str | None = None) -> None:
         raise SystemExit("No se pudo leer ningún archivo.")
 
     df_mes = pd.concat(frames, ignore_index=True)
+    if "es_predictivo" not in df_mes.columns:
+        df_mes["es_predictivo"] = False
+    df_mes["es_predictivo"] = df_mes["es_predictivo"].fillna(False)
     dias_procesados = sorted(dias_fechas)
-    print(f"\nTotal filas MTD: {len(df_mes):,} | Dias: {len(dias_procesados)}")
+    n_pred = int(df_mes["es_predictivo"].sum())
+    print(f"\nTotal filas MTD: {len(df_mes):,} | Dias: {len(dias_procesados)} | "
+          f"Predictivo (Marlin): {n_pred:,} filas")
 
-    # ── Agregar por gestor ────────────────────────────────────────────────────
+    # df_mes  = TODO (asesores + predictivo) -> totales, carteras, embudo, tendencias.
+    # df_ases = SOLO asesores reales (sin Marlin) -> ranking, fichas, alertas, mediana.
+    # df_pred = SOLO el predictivo (Marlin) -> línea aparte por cartera y total.
+    df_ases = df_mes[~df_mes["es_predictivo"]].copy()
+    df_pred = df_mes[df_mes["es_predictivo"]].copy()
+
+    def _resumen_pred(df: pd.DataFrame) -> dict | None:
+        """Bloque de números del predictivo (Marlin) para una porción de datos.
+        Devuelve None si no hubo actividad del predictivo en esa porción."""
+        if len(df) == 0:
+            return None
+        g = int(len(df))
+        e = int(df["efectiva"].sum())
+        p = int(df["es_promesa"].sum())
+        comp = int(df["es_compromiso"].sum())
+        pag = int(df["es_pago"].sum())
+        monto = round(float(df.loc[df["es_compromiso"] | df["es_pago"], "MONTO"].sum()), 2)
+        return {
+            "gestiones": g,
+            "efectivas": e,
+            "promesas": p,
+            "compromisos": comp,
+            "pagos": pag,
+            "monto": monto,
+            "tasa_contacto": round(e / max(g, 1), 4),
+            "ptp_rate": round(p / max(e, 1), 4),
+            "conversion": round(p / max(g, 1), 4),
+        }
+
+    # ── Agregar por gestor (SOLO asesores; el predictivo va aparte) ────────────
     agg = (
-        df_mes.groupby("GESTOR")
+        df_ases.groupby("GESTOR")
         .agg(
             gestiones=("GESTOR", "size"),
             efectivas=("efectiva", "sum"),
             promesas=("es_promesa", "sum"),
             compromisos=("es_compromiso", "sum"),
             pagos=("es_pago", "sum"),
-            recaudo=("MONTO", lambda s: round(float(s[df_mes.loc[s.index, "es_compromiso"] | df_mes.loc[s.index, "es_pago"]].sum()), 2)),
+            recaudo=("MONTO", lambda s: round(float(s[df_ases.loc[s.index, "es_compromiso"] | df_ases.loc[s.index, "es_pago"]].sum()), 2)),
             dias_activos=("FECHA_ARCHIVO", lambda s: s.dt.date.nunique()),
         )
         .reset_index()
@@ -605,9 +650,9 @@ def main(anio: str | None = None, mes: str | None = None) -> None:
     agg["efectivas"] = agg["efectivas"].astype(int)
     agg["promesas"] = agg["promesas"].astype(int)
 
-    # Cartera principal por gestor (la de mayor volumen)
+    # Cartera principal por gestor (la de mayor volumen) — solo asesores
     cartera_principal = (
-        df_mes.groupby(["GESTOR", "PROYECTO"])
+        df_ases.groupby(["GESTOR", "PROYECTO"])
         .size()
         .reset_index(name="n")
         .sort_values("n", ascending=False)
@@ -803,15 +848,19 @@ def main(anio: str | None = None, mes: str | None = None) -> None:
     agg["ranking"] = agg.index + 1
 
     # ── Resumen general ───────────────────────────────────────────────────────
-    total = len(agg)
+    # Totales de la OPERACIÓN: incluyen al sistema predictivo (Marlin), por eso
+    # se calculan sobre df_mes (todo) y NO sobre agg (que es solo asesores).
+    total = len(agg)  # asesores evaluados (sin el predictivo)
     estados = agg["estado"].value_counts().to_dict()
     niveles = agg["nivel"].value_counts().to_dict()
-    t_gest = int(agg["gestiones"].sum())
-    t_efec = int(agg["efectivas"].sum())
-    t_prom = int(agg["promesas"].sum())
-    t_comp = int(agg["compromisos"].sum())
-    t_pago = int(agg["pagos"].sum())
-    t_recaudo = round(float(agg["recaudo"].sum()), 2)
+    t_gest = int(len(df_mes))
+    t_efec = int(df_mes["efectiva"].sum())
+    t_prom = int(df_mes["es_promesa"].sum())
+    t_comp = int(df_mes["es_compromiso"].sum())
+    t_pago = int(df_mes["es_pago"].sum())
+    t_recaudo = round(float(df_mes.loc[df_mes["es_compromiso"] | df_mes["es_pago"], "MONTO"].sum()), 2)
+    # Volumen solo de asesores (para el promedio por asesor de la fuerza laboral)
+    t_gest_ases = int(agg["gestiones"].sum())
     n_alertas = int(agg["alertas"].apply(lambda a: len(a) > 0).sum())
     resumen = {
         "total_gestores": total,
@@ -825,7 +874,7 @@ def main(anio: str | None = None, mes: str | None = None) -> None:
         "ptp_rate": round(t_prom / max(t_efec, 1), 4),
         "conversion": round(t_prom / max(t_gest, 1), 4),
         "ticket_promedio": round(t_recaudo / max(t_prom, 1), 2),
-        "gestiones_por_gestor": round(t_gest / max(total, 1), 1),
+        "gestiones_por_gestor": round(t_gest_ases / max(total, 1), 1),
         "gestiones_por_dia": round(t_gest / max(len(dias_procesados), 1), 0),
         "gestores_elite": int(niveles.get("elite", 0)),
         "gestores_solido": int(niveles.get("solido", 0)),
@@ -840,6 +889,9 @@ def main(anio: str | None = None, mes: str | None = None) -> None:
         "dias_habiles_mes": round(dias_habiles_mes, 1),
         "dias_transcurridos": round(dias_transcurridos, 1),
         "pct_mes_transcurrido": round(frac_mes * 100, 1),
+        # Aporte del sistema predictivo (Marlin), ya incluido en los totales de
+        # arriba. Se expone aparte para poder mostrarlo etiquetado.
+        "predictivo": _resumen_pred(df_pred),
     }
 
     benchmarks = {
@@ -950,6 +1002,9 @@ def main(anio: str | None = None, mes: str | None = None) -> None:
         )
 
     # ── Detalle por cartera (con monto, pagos, asesores y score) ──────────────
+    # Las métricas de cartera SÍ incluyen al predictivo (df_mes). El conteo de
+    # asesores, en cambio, se toma solo de los asesores reales (df_ases): Marlin
+    # no suma como "1 asesor" de la cartera aunque sí aporte gestiones.
     por_cartera = (
         df_mes.groupby("PROYECTO")
         .agg(
@@ -959,13 +1014,18 @@ def main(anio: str | None = None, mes: str | None = None) -> None:
             compromisos=("es_compromiso", "sum"),
             pagos=("es_pago", "sum"),
             monto=("MONTO", lambda s: round(float(s[df_mes.loc[s.index, "es_compromiso"] | df_mes.loc[s.index, "es_pago"]].sum()), 2)),
-            num_asesores=("GESTOR", "nunique"),
         )
         .reset_index()
         .sort_values("gestiones", ascending=False)
         .rename(columns={"PROYECTO": "cartera"})
     )
-    for col in ["efectivas", "promesas", "compromisos", "pagos", "num_asesores"]:
+    asesores_por_cartera = df_ases.groupby("PROYECTO")["GESTOR"].nunique()
+    por_cartera["num_asesores"] = (
+        por_cartera["cartera"].map(asesores_por_cartera).fillna(0).astype(int)
+    )
+    # Aporte del predictivo (Marlin) por cartera, para la línea etiquetada.
+    pred_por_cartera = {c: _resumen_pred(g) for c, g in df_pred.groupby("PROYECTO")}
+    for col in ["efectivas", "promesas", "compromisos", "pagos"]:
         por_cartera[col] = por_cartera[col].astype(int)
     por_cartera["tasa_contacto"] = (por_cartera["efectivas"] / por_cartera["gestiones"].clip(lower=1)).round(4)
     por_cartera["ptp_rate"] = (por_cartera["promesas"] / por_cartera["efectivas"].clip(lower=1)).round(4)
@@ -1049,6 +1109,9 @@ def main(anio: str | None = None, mes: str | None = None) -> None:
             "cumplimiento": cumpl_c,
             "estado": estado_de(cumpl_c),
             "supervisor": sup_c,
+            # Aporte del sistema predictivo (Marlin) en esta cartera, ya incluido
+            # en las cifras de arriba. None si el predictivo no trabajó la cartera.
+            "predictivo": pred_por_cartera.get(c),
         })
 
     # ── Distribución de categorías (global MTD) ───────────────────────────────

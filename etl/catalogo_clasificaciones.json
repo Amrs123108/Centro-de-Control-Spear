@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "actualizado": "2026-06-11",
+  "actualizado": "2026-07-01",
   "descripcion": "Catálogo de normalización de clasificaciones de gestión. Las reglas se evalúan EN ORDEN (la primera que coincide gana) sobre el texto en mayúsculas y sin tildes. Para agregar soporte a una cartera nueva: correr normalizar_clasificaciones.py --validar <archivo>, revisar los SIN_MAPEAR y agregar reglas aquí.",
   "categorias": {
     "PAGO_CONFIRMADO": {
@@ -93,9 +93,11 @@
     { "patron": "MANTIENE ACUERDO|RECORDATORIO DE PAGO EFECTIVO|PTP VIGENTE", "categoria": "SEGUIMIENTO_PTP" },
     { "patron": "RECORDATORIO DE PAGO", "categoria": "SEGUIMIENTO_PTP" },
     { "patron": "CONFIRMA PAGO|COMPLETA PAGO|CONFIRMACION DE PAGO|PAGO AL CORREDOR|YA CANCELO", "categoria": "PAGO_CONFIRMADO" },
-    { "patron": "PROMESA|PROMETE PAGAR|COMPROMISO DE PAGO|PAGARA FUERA DE PLAZO|ARREGLO DE PAGO|ACEPTA PERIODO|CAMBIA FECHA DE PAGO|CAMBIO DE FECHA DE PAGO|PRONTO PAGO|^ACEPTA\\b", "categoria": "PROMESA_PAGO" },
+    { "patron": "ACEPTA PERIODO|CAMBIA FECHA DE PAGO|CAMBIO DE FECHA DE PAGO|PRONTO PAGO", "categoria": "CONTACTO_SIN_ACUERDO", "nota": "Efectiva pero no promesa: periodo de gracia, cambio de fecha o pronto pago sin compromiso" },
+    { "patron": "PROMESA|PROMETE PAGAR|COMPROMISO DE PAGO|PAGARA FUERA DE PLAZO|ARREGLO DE PAGO|^ACEPTA\\b", "categoria": "PROMESA_PAGO" },
     { "patron": "RENUENTE|NO PUEDE PAGAR|NO QUIERE PAGAR|PENSARA PROPUESTA|PROBLEMAS ECONOMICOS|SIN COMPROMISO|CUELGA|NEGATIVA DE PAGO|NO PROMESA|CONTACTO SIN ACUERDO|PAGO DEPENDE DE TERCERO|NO ACEPTA|RECHAZO", "categoria": "CONTACTO_SIN_ACUERDO" },
-    { "patron": "RECLAMO|NO CORRESPONDE COBRANZA|CLIENTE AL DIA|CANCELO POLIZA|INVESTIGACION|CORRECCION DE PRIMA|CUENTA CANCELADA|CLIENTE (YA )?CANCELO", "categoria": "DISPUTA_ACLARACION" },
+    { "patron": "NO CORRESPONDE COBRANZA", "categoria": "TRAMITE_ADMIN", "nota": "No es gestion efectiva: la cobranza no corresponde a este cliente" },
+    { "patron": "RECLAMO|CLIENTE AL DIA|CANCELO POLIZA|INVESTIGACION|CORRECCION DE PRIMA|CUENTA CANCELADA|CLIENTE (YA )?CANCELO", "categoria": "DISPUTA_ACLARACION" },
     { "patron": "VOLVER A LLAMAR|LLAMAR MAS TARDE|AGENDAR LLAMADA|LLAMADA AGENDA|REPROGRAMACION", "categoria": "VOLVER_A_LLAMAR" },
     { "patron": "NO ATENDIDA|APAGADO|OCUPADO|NO CONTESTA|NO CONTACTO|SE CORTA|SIN RESPUESTA|NO LOCALIZABLE", "categoria": "NO_CONTACTO" },
     { "patron": "EQUIVOCADO|ERRONEO|FUERA DE SERVICIO|NO PROGRAMADO|ILOCALIZ|FALLECIDO", "categoria": "ILOCALIZABLE" },

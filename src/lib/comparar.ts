@@ -192,7 +192,7 @@ export function metricasGlobales(A: MTDData, B: MTDData): MetricaGlobal[] {
     { clave: "efectivas_dia", label: "Efectivas / día", corto: "Efectivas", formato: "num", decimales: 0, cambio: cambio(ta.efectivas_dia, tb.efectivas_dia), ayuda: "Contactos efectivos logrados por día." },
     { clave: "contacto", label: "Contacto", corto: "Contacto", formato: "pct", decimales: 1, cambio: cambio(ta.tasa_contacto, tb.tasa_contacto), ayuda: "De cada 100 gestiones, en cuántas se logró hablar." },
     { clave: "ptp", label: "PTP", corto: "PTP", formato: "pct", decimales: 1, cambio: cambio(ta.ptp_rate, tb.ptp_rate), ayuda: "De cada contacto efectivo, cuántos prometieron pagar." },
-    { clave: "conversion", label: "Conversión", corto: "Conversión", formato: "pct", decimales: 1, cambio: cambio(ta.conversion, tb.conversion), ayuda: "De cada 100 gestiones, cuántas terminaron en promesa." },
+    { clave: "conversion", label: "Promesa/gest.", corto: "Prom/gest.", formato: "pct", decimales: 1, cambio: cambio(ta.conversion, tb.conversion), ayuda: "De cada 100 gestiones, cuántas terminaron en promesa de pago." },
     { clave: "promesas_dia", label: "Promesas / día", corto: "Promesas", formato: "num", decimales: 0, cambio: cambio(ta.promesas_dia, tb.promesas_dia), ayuda: "Resultado: promesas de pago obtenidas por día." },
     { clave: "recaudo_dia", label: "Recaudo / día", corto: "Recaudo", formato: "moneda", decimales: 0, cambio: cambio(ta.recaudo_dia, tb.recaudo_dia), ayuda: "Monto comprometido + pagado por día." },
     { clave: "ticket", label: "Monto promedio", corto: "Monto prom.", formato: "moneda", decimales: 0, cambio: cambio(ta.ticket, tb.ticket), ayuda: "Monto promedio por promesa." },
@@ -210,7 +210,7 @@ export function veredictoProductividad(A: MTDData, B: MTDData): Veredicto {
   const { ta, tb } = totalesComparables(A, B);
   const motores = [
     { label: "Promesas / día", rel: rel(ta.promesas_dia, tb.promesas_dia) },
-    { label: "Conversión", rel: rel(ta.conversion, tb.conversion) },
+    { label: "Promesa/gest.", rel: rel(ta.conversion, tb.conversion) },
     { label: "Contacto", rel: rel(ta.tasa_contacto, tb.tasa_contacto) },
     { label: "Gestiones / día", rel: rel(ta.gestiones_dia, tb.gestiones_dia) },
     { label: "Recaudo / día", rel: rel(ta.recaudo_dia, tb.recaudo_dia) },

@@ -16,3 +16,9 @@ export function fmtPct(n: number, decimales = 1): string {
     maximumFractionDigits: decimales,
   }).format(n);
 }
+
+/** "1 de cada X" — muestra cuántas gestiones se necesitan para lograr 1 promesa. */
+export function fmtRatio(v: number): string {
+  if (!v || v <= 0) return "—";
+  return `1 de cada ${Math.round(1 / v)}`;
+}

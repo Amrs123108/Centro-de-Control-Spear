@@ -10,7 +10,7 @@
 
 import { useState } from "react";
 import { Crown, PhoneCall, Target, Users } from "lucide-react";
-import { fmtMoneda, fmtNum, fmtPct } from "@/lib/formato";
+import { fmtMoneda, fmtNum, fmtPct, fmtRatio } from "@/lib/formato";
 import { Contador } from "@/components/animados";
 import { MiniBarras } from "@/components/graficos";
 import { Tip } from "@/components/ui";
@@ -25,13 +25,13 @@ const DEF_PTP =
 const DEF_FUERZA =
   "Promedio del cumplimiento de cada asesor: el promedio de sus % de gestiones, efectivas y promesas contra el ritmo esperado a la fecha. El recaudo no entra todavía (Etapa 4). 100% = va al ritmo justo para cumplir la meta del mes.";
 
-type Formato = "num" | "pct" | "moneda";
+type Formato = "num" | "pct" | "moneda" | "ratio";
 type MetaKey = "gestiones" | "efectivas" | "promesas" | "recaudo" | null;
 
 const INDICADORES: { clave: keyof ValoresMes; label: string; formato: Formato; metaKey: MetaKey }[] = [
   { clave: "promesas", label: "Promesas", formato: "num", metaKey: "promesas" },
   { clave: "recaudo", label: "Recaudo", formato: "moneda", metaKey: "recaudo" },
-  { clave: "conversion", label: "Conversión", formato: "pct", metaKey: null },
+  { clave: "conversion", label: "Promesa/gest.", formato: "ratio", metaKey: null },
   { clave: "tasa_contacto", label: "Contacto", formato: "pct", metaKey: null },
   { clave: "gestiones", label: "Gestiones", formato: "num", metaKey: "gestiones" },
   { clave: "efectivas", label: "Efectivas", formato: "num", metaKey: "efectivas" },
@@ -40,6 +40,7 @@ const INDICADORES: { clave: keyof ValoresMes; label: string; formato: Formato; m
 function fmt(v: number, f: Formato): string {
   if (f === "moneda") return fmtMoneda(v);
   if (f === "pct") return fmtPct(v, 1);
+  if (f === "ratio") return fmtRatio(v);
   return fmtNum(Math.round(v));
 }
 

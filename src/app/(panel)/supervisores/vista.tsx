@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import supervisoresData from "@/data/supervisores.json";
-import { fmtNum, fmtPct } from "@/lib/formato";
+import { fmtNum, fmtPct, fmtRatio } from "@/lib/formato";
 import { Barra, Tip } from "@/components/ui";
 import { LogoCartera } from "@/components/logo-cartera";
 import { BloqueMeta, CumplBadge } from "@/components/vs-meta";
@@ -141,7 +141,7 @@ export default function SupervisoresVista({ mtd }: { mtd: MTDData }) {
                   <td className="tnum px-3 py-2.5 text-right text-ink-sec">{fmtNum(s.gestiones)}</td>
                   <td className="tnum px-3 py-2.5 text-right text-ink-sec">{fmtNum(s.efectivas)}</td>
                   <td className="tnum px-3 py-2.5 text-center text-ink-sec">{fmtPct(s.efectividad, 0)}</td>
-                  <td className="tnum px-3 py-2.5 text-center text-ink-sec">{fmtPct(s.conversion, 0)}</td>
+                  <td className="tnum px-3 py-2.5 text-center text-ink-sec">{fmtRatio(s.conversion)}</td>
                   <td className="tnum px-3 py-2.5 text-right font-semibold text-accent-claro">{fmtNum(s.promesas)}</td>
                   <td className="px-3 py-2.5 text-right"><CumplBadge pct={s.cumplimiento} /></td>
                   <td className="px-3 py-2.5">
@@ -198,7 +198,7 @@ function FichaSupervisor({ s }: { s: SupAgg }) {
         <Dato label="Efectivas" valor={fmtNum(s.efectivas)} />
         <Dato label="Promesas" valor={fmtNum(s.promesas)} />
         <Dato label="Efectividad" valor={fmtPct(s.efectividad, 1)} def={DEF_EFECT} />
-        <Dato label="Conversión" valor={fmtPct(s.conversion, 1)} def={DEF_CONV} />
+        <Dato label="Promesa/gest." valor={fmtRatio(s.conversion)} def={DEF_CONV} />
         <Dato label="Asesores" valor={fmtNum(s.asesores)} />
       </div>
 
@@ -232,7 +232,7 @@ function FichaSupervisor({ s }: { s: SupAgg }) {
                   <span className="text-ink-ter">★</span> {c.mejor_asesor && c.mejor_asesor !== "—" ? titulo(c.mejor_asesor) : "—"}
                 </span>
                 <span className="tnum shrink-0 text-[10px] text-ink-ter">
-                  {fmtNum(c.gestiones)} gest · {fmtPct(c.conversion, 0)} conv
+                  {fmtNum(c.gestiones)} gest · {fmtRatio(c.conversion)}
                 </span>
               </div>
               <div className="mt-1.5"><Barra pct={c.score} tono={tonoScore(c.score)} /></div>

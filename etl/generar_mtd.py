@@ -764,9 +764,9 @@ def main(anio: str | None = None, mes: str | None = None) -> None:
     def estado_de(c):
         if pd.isna(c):
             return "sin_meta"
-        if c >= 90:
+        if c >= 100:
             return "cumpliendo"
-        if c >= 70:
+        if c >= 90:
             return "cerca"
         return "lejos"
 

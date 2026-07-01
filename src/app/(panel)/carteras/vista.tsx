@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { Banknote, Bot, PhoneCall, Target, TrendingUp, Users } from "lucide-react";
-import { fmtMoneda, fmtNum, fmtPct } from "@/lib/formato";
+import { fmtMoneda, fmtNum, fmtPct, fmtRatio } from "@/lib/formato";
 import { GraficoTendencia } from "@/components/graficos";
 import { Barra, ChipNivel, Delta, ScoreBar, Tip } from "@/components/ui";
 import { LogoCartera } from "@/components/logo-cartera";
@@ -11,7 +11,7 @@ import { NIVEL_META, type MTDData, type Nivel } from "@/types/mtd";
 
 const DEF_PTP = "PTP (Promise To Pay / Promesa de pago): de cada cliente con quien SÍ se habló, cuántos se comprometieron a pagar.";
 const DEF_CONTACTO = "Tasa de contacto: de cada 100 gestiones, en cuántas se logró hablar con el titular.";
-const DEF_CONV = "Conversión: de cada 100 gestiones realizadas, cuántas terminaron en una promesa de pago.";
+const DEF_CONV = "Promesa por gestión: cuántas gestiones se necesitan en promedio para lograr 1 promesa de pago (1 ÷ conversión).";
 
 const NIVELES: { k: Nivel; label: string }[] = [
   { k: "elite", label: "Élite" },
@@ -148,7 +148,7 @@ export default function CarterasVista({ mtd }: { mtd: MTDData }) {
             <div className="mt-5 grid grid-cols-2 gap-3 md:grid-cols-4">
               <KpiCartera icono={PhoneCall} label="Contacto" def={DEF_CONTACTO} valor={fmtPct(c.tasa_contacto, 1)} delta={c.tasa_contacto - bm.tasa_contacto} tono="cian" />
               <KpiCartera icono={Target} label="PTP" def={DEF_PTP} valor={fmtPct(c.ptp_rate, 1)} delta={c.ptp_rate - bm.ptp_rate} tono="pos" />
-              <KpiCartera icono={TrendingUp} label="Conversión" def={DEF_CONV} valor={fmtPct(c.conversion, 1)} delta={c.conversion - bm.conversion} tono="morado" />
+              <KpiCartera icono={TrendingUp} label="Promesa/gest." def={DEF_CONV} valor={fmtRatio(c.conversion)} delta={c.conversion - bm.conversion} tono="morado" />
               <KpiCartera icono={Banknote} label="Monto promesado" valor={c.monto > 0 ? fmtMoneda(c.monto) : "—"} sub={`monto promedio ${fmtMoneda(c.ticket)}`} tono="gold" />
             </div>
 

@@ -1,12 +1,12 @@
 import { ArrowDown, ArrowUp, Crown, Minus, Trophy } from "lucide-react";
-import { fmtNum, fmtPct } from "@/lib/formato";
+import { fmtNum, fmtPct, fmtRatio } from "@/lib/formato";
 import { LogoCartera } from "@/components/logo-cartera";
 import { Barra, Tip } from "@/components/ui";
 import { CumplBadge } from "@/components/vs-meta";
 import type { Cartera } from "@/types/mtd";
 
 export const DEF_CONV =
-  "Conversión a promesa de pago: de cada 100 gestiones realizadas, en cuántas el cliente se comprometió a pagar (promesas ÷ gestiones). Mide qué tan seguido una gestión termina convirtiéndose en un compromiso de pago.";
+  "Promesa por gestión: cuántas gestiones se necesitan en promedio para lograr 1 promesa de pago. Mientras menor el número, más eficiente el equipo.";
 export const DEF_EFECT =
   "Efectividad: de cada 100 gestiones, en cuántas se logró contacto efectivo con el cliente (efectivas ÷ gestiones).";
 
@@ -256,7 +256,7 @@ function FilaSup({ s, puesto }: { s: SupAgg; puesto: number }) {
         </span>
         <span>
           <Tip texto={DEF_CONV}>Conv. a promesa</Tip>{" "}
-          <b className="tnum text-ink-sec">{fmtPct(s.conversion, 0)}</b>
+          <b className="tnum text-ink-sec">{fmtRatio(s.conversion)}</b>
         </span>
         <span>
           <b className="tnum text-accent-claro">{fmtNum(s.promesas)}</b> prom.

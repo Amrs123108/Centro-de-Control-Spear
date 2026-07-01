@@ -94,7 +94,7 @@ export function MatrizCarteras({
               <Th c="gestiones" label="Volumen" align="left" />
               <Th c="tasa_contacto" label="Contacto" align="center" tip={DEF_CONTACTO} />
               <Th c="ptp_rate" label="PTP" align="center" tip={DEF_PTP} />
-              <Th c="conversion" label="Conversión" align="center" tip={DEF_CONV} />
+              <Th c="conversion" label="Promesa/gest." align="center" tip={DEF_CONV} />
               <Th c="promesas" label="Promesas" align="right" />
               <Th c="monto" label="Monto promesado" align="right" />
               <th className="pb-2 text-center font-semibold">14 días</th>

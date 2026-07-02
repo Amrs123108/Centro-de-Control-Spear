@@ -224,13 +224,16 @@ def leer_dia(filepath: Path, fecha_archivo: date_type | None = None) -> pd.DataF
         else:
             df["FECHA_ARCHIVO"] = pd.NaT
 
-    # Hora: extraer de FECHA_CLAS cuando tiene formato ISO "YYYY-MM-DD HH:MM:SS"
-    # Los archivos en formato "DD/MM/YYYY" (sin hora) quedarán como NaT
+    # Hora y datetime: extraer de FECHA_CLAS cuando tiene formato ISO "YYYY-MM-DD HH:MM:SS"
+    # Los archivos en formato "DD/MM/YYYY" (sin hora) quedarán como NaT.
+    # DATETIME_CLAS conserva el datetime completo para calcular tiempo entre gestiones.
     if "FECHA_CLAS" in df.columns:
         dt_iso = pd.to_datetime(df["FECHA_CLAS"], format="%Y-%m-%d %H:%M:%S", errors="coerce")
         df["HORA"] = dt_iso.dt.hour.where(dt_iso.notna())
+        df["DATETIME_CLAS"] = dt_iso
     else:
         df["HORA"] = pd.NA
+        df["DATETIME_CLAS"] = pd.NaT
 
     # Categorías y flags
     df["categoria"] = df["CLASIFICACION"].fillna("").map(NORM.normalizar)
@@ -678,6 +681,51 @@ def main(anio: str | None = None, mes: str | None = None) -> None:
     agg["promesas_dia"] = (agg["promesas"] / d).round(2)
     agg["ticket"] = (agg["recaudo"] / agg["promesas"].clip(lower=1)).round(2)
 
+    # ── Métricas de tiempo por asesor (solo días con datetime ISO completo) ───
+    # DATETIME_CLAS tiene valor solo en archivos formato "YYYY-MM-DD HH:MM:SS".
+    # Días sin hora quedan NaT y se excluyen sin penalizar al asesor.
+    # Ventana activa = (última gestión − primera gestión del día) − 30 min almuerzo.
+    df_con_dt = df_ases[df_ases["DATETIME_CLAS"].notna()].copy()
+    tiempo_rows = []
+    if len(df_con_dt) > 0:
+        df_con_dt["_fecha"] = df_con_dt["DATETIME_CLAS"].dt.date
+        for (gestor, _fecha), grp in df_con_dt.groupby(["GESTOR", "_fecha"]):
+            dts = sorted(grp["DATETIME_CLAS"].tolist())
+            if len(dts) < 2:
+                continue
+            ventana_min = (dts[-1] - dts[0]).total_seconds() / 60
+            almuerzo_min = 30 if ventana_min > 30 else 0
+            activos_min = max(ventana_min - almuerzo_min, 0)
+            if activos_min <= 0:
+                continue
+            tiempo_rows.append({
+                "GESTOR": gestor,
+                "activos_min": activos_min,
+                "n_gest": len(dts),
+            })
+    if tiempo_rows:
+        df_tpo = pd.DataFrame(tiempo_rows)
+        df_tpo["horas_activas"] = df_tpo["activos_min"] / 60
+        df_tpo["tiempo_prom_min"] = df_tpo["activos_min"] / df_tpo["n_gest"]
+        df_tpo["gestiones_hora"] = df_tpo["n_gest"] / df_tpo["horas_activas"]
+        tpo_agg = (
+            df_tpo.groupby("GESTOR")
+            .agg(
+                horas_activas_dia=("horas_activas", "mean"),
+                tiempo_prom_min=("tiempo_prom_min", "mean"),
+                gestiones_hora=("gestiones_hora", "mean"),
+            )
+            .reset_index()
+        )
+        tpo_agg["horas_activas_dia"] = tpo_agg["horas_activas_dia"].round(2)
+        tpo_agg["tiempo_prom_min"] = tpo_agg["tiempo_prom_min"].round(2)
+        tpo_agg["gestiones_hora"] = tpo_agg["gestiones_hora"].round(2)
+        agg = agg.merge(tpo_agg, on="GESTOR", how="left")
+    else:
+        agg["horas_activas_dia"] = None
+        agg["tiempo_prom_min"] = None
+        agg["gestiones_hora"] = None
+
     # ── Metas por asesor ──────────────────────────────────────────────────────
     # El cruce se hace por '_KEY' (nombre normalizado sin acentos + typos
     # corregidos), NO por el string exacto, para no perder metas por tildes.
@@ -843,6 +891,23 @@ def main(anio: str | None = None, mes: str | None = None) -> None:
 
     agg["alertas"] = agg.apply(alertas_de, axis=1)
 
+    # ── Ausencias por asesor (días hábiles L-V con archivo pero sin gestiones) ─
+    # Solo días donde existe un archivo (dias_procesados). Si no hay archivo, no
+    # podemos saber quién faltó → esos días se ignoran.
+    dias_habiles_con_archivo = sorted(d for d in dias_procesados if d.weekday() < 5)
+    dias_por_asesor_set: dict = (
+        df_ases.groupby("GESTOR")["FECHA_ARCHIVO"]
+        .apply(lambda s: set(s.dt.date.unique()))
+        .to_dict()
+    )
+
+    def ausencias_asesor(gestor: str) -> list:
+        activos = dias_por_asesor_set.get(gestor, set())
+        return [str(d) for d in dias_habiles_con_archivo if d not in activos]
+
+    agg["dias_ausencia_list"] = agg["GESTOR"].apply(ausencias_asesor)
+    agg["dias_ausente"] = agg["dias_ausencia_list"].apply(len)
+
     # ── Ordenar por score desc ────────────────────────────────────────────────
     agg = agg.sort_values(["score", "promesas"], ascending=False).reset_index(drop=True)
     agg["ranking"] = agg.index + 1
@@ -881,6 +946,7 @@ def main(anio: str | None = None, mes: str | None = None) -> None:
         "gestores_promedio": int(niveles.get("promedio", 0)),
         "gestores_bajo": int(niveles.get("bajo", 0)),
         "gestores_con_alerta": n_alertas,
+        "gestores_con_ausencia": int((agg["dias_ausente"] > 0).sum()),
         "gestores_cumpliendo": int(estados.get("cumpliendo", 0)),
         "gestores_cerca": int(estados.get("cerca", 0)),
         "gestores_lejos": int(estados.get("lejos", 0)),
@@ -901,6 +967,33 @@ def main(anio: str | None = None, mes: str | None = None) -> None:
         "gestiones_dia": round(bm["gestiones_dia"], 1),
         "promesas_dia": round(bm["promesas_dia"], 2),
     }
+
+    # ── Helper: funnel por asesor (metas DIARIAS × días transcurridos) ──────────
+    def _funnel_asesor(r) -> list:
+        g, e, p, pag = int(r["gestiones"]), int(r["efectivas"]), int(r["promesas"]), int(r["pagos"])
+        mg = float(r["meta_gestiones"]) * dias_transcurridos if r["meta_gestiones"] > 0 else None
+        me = float(r["meta_efectivas"]) * dias_transcurridos if r["meta_efectivas"] > 0 else None
+        mp = float(r["meta_promesas"]) * dias_transcurridos if r["meta_promesas"] > 0 else None
+        def pct_f(real, meta): return round(real / meta * 100, 1) if meta else None
+        return [
+            {"etapa": "Gestiones", "valor": g, "tasa": 1.0,
+             "meta": round(mg) if mg else None, "pct_meta": pct_f(g, mg)},
+            {"etapa": "Efectivas", "valor": e, "tasa": round(e / max(g, 1), 4),
+             "meta": round(me) if me else None, "pct_meta": pct_f(e, me)},
+            {"etapa": "Promesas", "valor": p, "tasa": round(p / max(e, 1), 4),
+             "meta": round(mp) if mp else None, "pct_meta": pct_f(p, mp)},
+            {"etapa": "Pagos", "valor": pag, "tasa": round(pag / max(p, 1), 4),
+             "meta": None, "pct_meta": None},
+        ]
+
+    def _nan_none(v):
+        try:
+            return None if pd.isna(v) else float(v)
+        except Exception:
+            return None
+
+    def _atd(v: float): return round(v) if v > 0 else None
+    def _pct_f(real, meta): return round(real / meta * 100, 1) if meta else None
 
     # ── Construir lista final de gestores ─────────────────────────────────────
     gestores = []
@@ -941,6 +1034,15 @@ def main(anio: str | None = None, mes: str | None = None) -> None:
             "cumplimiento": None if pd.isna(r["cumplimiento"]) else float(r["cumplimiento"]),
             "score_base": str(r["score_base"]),
             "supervisor": str(r.get("supervisor", "") or ""),
+            # Tiempo entre gestiones (solo días con formato ISO)
+            "horas_activas_dia": None if _nan_none(r.get("horas_activas_dia")) is None else round(float(r["horas_activas_dia"]), 2),
+            "tiempo_prom_min": None if _nan_none(r.get("tiempo_prom_min")) is None else round(float(r["tiempo_prom_min"]), 2),
+            "gestiones_hora": None if _nan_none(r.get("gestiones_hora")) is None else round(float(r["gestiones_hora"]), 2),
+            # Ausencias: días hábiles L-V con archivo pero sin gestiones del asesor
+            "dias_ausente": int(r["dias_ausente"]),
+            "dias_ausencia_list": list(r["dias_ausencia_list"]),
+            # Embudo propio del asesor con su meta a la fecha
+            "funnel": _funnel_asesor(r),
         })
 
     # ── Ritmo por hora (MTD) — solo de archivos con formato ISO + hora ────────
@@ -1079,13 +1181,28 @@ def main(anio: str | None = None, mes: str | None = None) -> None:
             p_g = p_e = p_p = p_r = None
             cumpl_c = None
             sup_c = sup_por_cartera.get(c, "")
+        # Funnel de la cartera con meta a la fecha (metas MENSUALES × frac_mes)
+        g_c, e_c, p_c, pag_c = int(r["gestiones"]), int(r["efectivas"]), int(r["promesas"]), int(r["pagos"])
+        mg_atd_c = mcg * frac_mes if mcg > 0 else None
+        me_atd_c = mce * frac_mes if mce > 0 else None
+        mp_atd_c = mcp * frac_mes if mcp > 0 else None
+        funnel_c = [
+            {"etapa": "Gestiones", "valor": g_c, "tasa": 1.0,
+             "meta": round(mg_atd_c) if mg_atd_c else None, "pct_meta": _pct_f(g_c, round(mg_atd_c) if mg_atd_c else None)},
+            {"etapa": "Efectivas", "valor": e_c, "tasa": round(e_c / max(g_c, 1), 4),
+             "meta": round(me_atd_c) if me_atd_c else None, "pct_meta": _pct_f(e_c, round(me_atd_c) if me_atd_c else None)},
+            {"etapa": "Promesas", "valor": p_c, "tasa": round(p_c / max(e_c, 1), 4),
+             "meta": round(mp_atd_c) if mp_atd_c else None, "pct_meta": _pct_f(p_c, round(mp_atd_c) if mp_atd_c else None)},
+            {"etapa": "Pagos", "valor": pag_c, "tasa": round(pag_c / max(p_c, 1), 4),
+             "meta": None, "pct_meta": None},
+        ]
         por_cartera_list.append({
             "cartera": c,
-            "gestiones": int(r["gestiones"]),
-            "efectivas": int(r["efectivas"]),
-            "promesas": int(r["promesas"]),
+            "gestiones": g_c,
+            "efectivas": e_c,
+            "promesas": p_c,
             "compromisos": int(r["compromisos"]),
-            "pagos": int(r["pagos"]),
+            "pagos": pag_c,
             "monto": float(r["monto"]),
             "num_asesores": int(r["num_asesores"]),
             "tasa_contacto": float(r["tasa_contacto"]),
@@ -1097,6 +1214,7 @@ def main(anio: str | None = None, mes: str | None = None) -> None:
             "mejor_asesor": mejor_por_cartera.get(c, "—"),
             "asesores_alerta": int(alerta_por_cartera.get(c, 0)),
             "tendencia": tend_por_cartera.get(c, []),
+            "funnel": funnel_c,
             # Metas de cartera (mensuales) y cumplimiento a la fecha
             "meta_gestiones": int(mcg) if mcg > 0 else None,
             "meta_efectivas": int(mce) if mce > 0 else None,
@@ -1125,13 +1243,24 @@ def main(anio: str | None = None, mes: str | None = None) -> None:
         for cat, cnt in df_mes["categoria"].value_counts().items()
     ]
 
-    # ── Funnel de cobranza (MTD) ──────────────────────────────────────────────
+    # ── Funnel de cobranza (MTD) con meta a la fecha ─────────────────────────
+    # Meta global = suma de metas diarias de todos los asesores × días hábiles transcurridos
+    total_mg_atd = float(agg["meta_gestiones"].fillna(0).sum()) * dias_transcurridos
+    total_me_atd = float(agg["meta_efectivas"].fillna(0).sum()) * dias_transcurridos
+    total_mp_atd = float(agg["meta_promesas"].fillna(0).sum()) * dias_transcurridos
+
+    def _atd(v: float): return round(v) if v > 0 else None
+    def _pct_f(real: int, meta): return round(real / meta * 100, 1) if meta else None
+
     funnel = [
-        {"etapa": "Gestiones", "valor": t_gest, "tasa": 1.0},
-        {"etapa": "Contactos efectivos", "valor": t_efec, "tasa": round(t_efec / max(t_gest, 1), 4)},
-        {"etapa": "Promesas de pago", "valor": t_prom, "tasa": round(t_prom / max(t_efec, 1), 4)},
-        {"etapa": "Compromisos", "valor": t_comp, "tasa": round(t_comp / max(t_prom, 1), 4)},
-        {"etapa": "Pagos", "valor": t_pago, "tasa": round(t_pago / max(t_comp, 1), 4)},
+        {"etapa": "Gestiones", "valor": t_gest, "tasa": 1.0,
+         "meta": _atd(total_mg_atd), "pct_meta": _pct_f(t_gest, _atd(total_mg_atd))},
+        {"etapa": "Contactos efectivos", "valor": t_efec, "tasa": round(t_efec / max(t_gest, 1), 4),
+         "meta": _atd(total_me_atd), "pct_meta": _pct_f(t_efec, _atd(total_me_atd))},
+        {"etapa": "Promesas de pago", "valor": t_prom, "tasa": round(t_prom / max(t_efec, 1), 4),
+         "meta": _atd(total_mp_atd), "pct_meta": _pct_f(t_prom, _atd(total_mp_atd))},
+        {"etapa": "Pagos", "valor": t_pago, "tasa": round(t_pago / max(t_comp, 1), 4),
+         "meta": None, "pct_meta": None},
     ]
 
     # ── Supervisores: cumplimiento de sus asesores Y de sus carteras ──────────

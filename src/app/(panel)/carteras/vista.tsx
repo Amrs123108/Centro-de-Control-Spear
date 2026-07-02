@@ -7,6 +7,7 @@ import { GraficoTendencia } from "@/components/graficos";
 import { Barra, ChipNivel, Delta, ScoreBar, Tip } from "@/components/ui";
 import { LogoCartera } from "@/components/logo-cartera";
 import { BloqueMeta, CumplBadge } from "@/components/vs-meta";
+import { FunnelVsMeta } from "@/components/funnel-vs-meta";
 import { NIVEL_META, type MTDData, type Nivel } from "@/types/mtd";
 
 const DEF_PTP = "PTP (Promise To Pay / Promesa de pago): de cada cliente con quien SÍ se habló, cuántos se comprometieron a pagar.";
@@ -158,7 +159,10 @@ export default function CarterasVista({ mtd }: { mtd: MTDData }) {
               <MiniDato label="Pagos" valor={fmtNum(c.pagos)} />
             </div>
 
-            <div className="mt-4">
+            <div className="mt-4 space-y-3">
+              {c.funnel && c.funnel.length > 0 && (
+                <FunnelVsMeta funnel={c.funnel} titulo="Embudo vs meta" />
+              )}
               <BloqueMeta
                 filas={[
                   { label: "Gestiones", actual: c.gestiones, esperado: espMes(c.meta_gestiones), pct: c.pct_gestiones ?? null },

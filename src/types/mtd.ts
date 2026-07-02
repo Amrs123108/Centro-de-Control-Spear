@@ -52,6 +52,18 @@ export type Gestor = {
   score_base: "meta" | "equipo";
   /** Supervisor (de la hoja de metas). "" si el mes no tiene metas. */
   supervisor: string;
+  /** Tiempo promedio entre gestiones (min), descontando 30 min de almuerzo por día. null = sin hora en los archivos. */
+  tiempo_prom_min: number | null;
+  /** Horas activas promedio por día (ventana primera–última gestión − almuerzo). null = sin hora. */
+  horas_activas_dia: number | null;
+  /** Gestiones por hora activa promedio. null = sin hora. */
+  gestiones_hora: number | null;
+  /** Días hábiles L-V con archivo pero sin gestiones del asesor. */
+  dias_ausente: number;
+  /** Lista de fechas (YYYY-MM-DD) de ausencia. */
+  dias_ausencia_list: string[];
+  /** Embudo propio del asesor (gestiones→efectivas→promesas→pagos) con meta a la fecha. */
+  funnel: EtapaFunnel[];
 };
 
 /** Aporte del sistema predictivo (Marlin). Sus números YA están sumados en los
@@ -103,6 +115,8 @@ export type Cartera = {
   mejor_asesor: string;
   asesores_alerta: number;
   tendencia: PuntoTendencia[];
+  /** Embudo de la cartera (gestiones→efectivas→promesas→pagos) con meta a la fecha. */
+  funnel?: EtapaFunnel[];
   /** Metas de cartera (MENSUALES) y cumplimiento a la fecha. null = sin meta. */
   meta_gestiones?: number | null;
   meta_efectivas?: number | null;
@@ -138,7 +152,16 @@ export type Categoria = {
   total: number;
 };
 
-export type EtapaFunnel = { etapa: string; valor: number; tasa: number };
+export type EtapaFunnel = {
+  etapa: string;
+  valor: number;
+  /** Conversión respecto a la etapa anterior (0–1). */
+  tasa: number;
+  /** Meta a la fecha (absoluta). null = sin meta. */
+  meta?: number | null;
+  /** % del real vs la meta a la fecha. null = sin meta. */
+  pct_meta?: number | null;
+};
 
 export type Insight = {
   tipo: "alerta" | "oportunidad" | "logro" | "info";
@@ -181,6 +204,7 @@ export type Resumen = {
   gestores_promedio: number;
   gestores_bajo: number;
   gestores_con_alerta: number;
+  gestores_con_ausencia: number;
   gestores_cumpliendo: number;
   gestores_cerca: number;
   gestores_lejos: number;

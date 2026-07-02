@@ -1,5 +1,5 @@
 {
-  "generado": "2026-07-01T16:16:31",
+  "generado": "2026-07-01T20:11:31",
   "periodo": "2026-04",
   "mes_nombre": "Abril",
   "dias_procesados": [
@@ -48,6 +48,7 @@
     "gestores_promedio": 14,
     "gestores_bajo": 12,
     "gestores_con_alerta": 12,
+    "gestores_con_ausencia": 40,
     "gestores_cumpliendo": 0,
     "gestores_cerca": 0,
     "gestores_lejos": 0,
@@ -111,7 +112,42 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 0,
+      "dias_ausencia_list": [],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 3370,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 1708,
+          "tasa": 0.5068,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 1581,
+          "tasa": 0.9256,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 181,
+          "tasa": 0.1145,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 2,
@@ -148,7 +184,49 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 6,
+      "dias_ausencia_list": [
+        "2026-04-01",
+        "2026-04-02",
+        "2026-04-06",
+        "2026-04-07",
+        "2026-04-08",
+        "2026-04-27"
+      ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 2458,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 971,
+          "tasa": 0.395,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 699,
+          "tasa": 0.7199,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 29,
+          "tasa": 0.0415,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 3,
@@ -185,7 +263,47 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 4,
+      "dias_ausencia_list": [
+        "2026-04-07",
+        "2026-04-08",
+        "2026-04-15",
+        "2026-04-28"
+      ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 3829,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 1616,
+          "tasa": 0.422,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 801,
+          "tasa": 0.4957,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 0,
+          "tasa": 0.0,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 4,
@@ -222,7 +340,44 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 1,
+      "dias_ausencia_list": [
+        "2026-04-15"
+      ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 3915,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 1587,
+          "tasa": 0.4054,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 836,
+          "tasa": 0.5268,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 0,
+          "tasa": 0.0,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 5,
@@ -259,7 +414,46 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 3,
+      "dias_ausencia_list": [
+        "2026-04-07",
+        "2026-04-22",
+        "2026-04-29"
+      ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 3368,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 1570,
+          "tasa": 0.4662,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 796,
+          "tasa": 0.507,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 234,
+          "tasa": 0.294,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 6,
@@ -296,7 +490,45 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 2,
+      "dias_ausencia_list": [
+        "2026-04-28",
+        "2026-04-30"
+      ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 3013,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 1072,
+          "tasa": 0.3558,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 628,
+          "tasa": 0.5858,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 82,
+          "tasa": 0.1306,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 7,
@@ -333,7 +565,45 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 2,
+      "dias_ausencia_list": [
+        "2026-04-07",
+        "2026-04-22"
+      ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 3097,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 1058,
+          "tasa": 0.3416,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 579,
+          "tasa": 0.5473,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 6,
+          "tasa": 0.0104,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 8,
@@ -370,7 +640,45 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 2,
+      "dias_ausencia_list": [
+        "2026-04-21",
+        "2026-04-22"
+      ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 2734,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 1047,
+          "tasa": 0.383,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 562,
+          "tasa": 0.5368,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 64,
+          "tasa": 0.1139,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 9,
@@ -407,7 +715,45 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 2,
+      "dias_ausencia_list": [
+        "2026-04-07",
+        "2026-04-15"
+      ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 4101,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 2527,
+          "tasa": 0.6162,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 900,
+          "tasa": 0.3562,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 0,
+          "tasa": 0.0,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 10,
@@ -444,7 +790,44 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 1,
+      "dias_ausencia_list": [
+        "2026-04-01"
+      ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 2659,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 972,
+          "tasa": 0.3656,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 550,
+          "tasa": 0.5658,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 83,
+          "tasa": 0.1509,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 11,
@@ -481,7 +864,44 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 1,
+      "dias_ausencia_list": [
+        "2026-04-15"
+      ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 3956,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 2069,
+          "tasa": 0.523,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 844,
+          "tasa": 0.4079,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 0,
+          "tasa": 0.0,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 12,
@@ -518,7 +938,46 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 3,
+      "dias_ausencia_list": [
+        "2026-04-06",
+        "2026-04-17",
+        "2026-04-23"
+      ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 3018,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 838,
+          "tasa": 0.2777,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 492,
+          "tasa": 0.5871,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 110,
+          "tasa": 0.2236,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 13,
@@ -555,7 +1014,44 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 1,
+      "dias_ausencia_list": [
+        "2026-04-15"
+      ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 4124,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 2506,
+          "tasa": 0.6077,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 830,
+          "tasa": 0.3312,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 0,
+          "tasa": 0.0,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 14,
@@ -592,7 +1088,44 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 1,
+      "dias_ausencia_list": [
+        "2026-04-07"
+      ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 2771,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 1119,
+          "tasa": 0.4038,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 545,
+          "tasa": 0.487,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 168,
+          "tasa": 0.3083,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 15,
@@ -629,7 +1162,44 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 1,
+      "dias_ausencia_list": [
+        "2026-04-27"
+      ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 2617,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 790,
+          "tasa": 0.3019,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 455,
+          "tasa": 0.5759,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 10,
+          "tasa": 0.022,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 16,
@@ -666,7 +1236,44 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 1,
+      "dias_ausencia_list": [
+        "2026-04-21"
+      ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 3437,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 964,
+          "tasa": 0.2805,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 504,
+          "tasa": 0.5228,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 0,
+          "tasa": 0.0,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 17,
@@ -703,7 +1310,45 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 2,
+      "dias_ausencia_list": [
+        "2026-04-17",
+        "2026-04-29"
+      ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 2839,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 797,
+          "tasa": 0.2807,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 458,
+          "tasa": 0.5747,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 0,
+          "tasa": 0.0,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 18,
@@ -740,7 +1385,44 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 1,
+      "dias_ausencia_list": [
+        "2026-04-23"
+      ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 2944,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 765,
+          "tasa": 0.2599,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 471,
+          "tasa": 0.6157,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 0,
+          "tasa": 0.0,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 19,
@@ -779,7 +1461,55 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 12,
+      "dias_ausencia_list": [
+        "2026-04-01",
+        "2026-04-02",
+        "2026-04-06",
+        "2026-04-07",
+        "2026-04-08",
+        "2026-04-09",
+        "2026-04-10",
+        "2026-04-13",
+        "2026-04-14",
+        "2026-04-15",
+        "2026-04-16",
+        "2026-04-17"
+      ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 1289,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 500,
+          "tasa": 0.3879,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 225,
+          "tasa": 0.45,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 1,
+          "tasa": 0.0044,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 20,
@@ -816,7 +1546,46 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 3,
+      "dias_ausencia_list": [
+        "2026-04-20",
+        "2026-04-21",
+        "2026-04-22"
+      ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 1497,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 482,
+          "tasa": 0.322,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 404,
+          "tasa": 0.8382,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 21,
+          "tasa": 0.052,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 21,
@@ -853,7 +1622,44 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 1,
+      "dias_ausencia_list": [
+        "2026-04-23"
+      ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 3060,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 802,
+          "tasa": 0.2621,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 426,
+          "tasa": 0.5312,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 56,
+          "tasa": 0.1315,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 22,
@@ -890,7 +1696,42 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 0,
+      "dias_ausencia_list": [],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 3260,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 905,
+          "tasa": 0.2776,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 473,
+          "tasa": 0.5227,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 0,
+          "tasa": 0.0,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 23,
@@ -927,7 +1768,42 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 0,
+      "dias_ausencia_list": [],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 3369,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 975,
+          "tasa": 0.2894,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 472,
+          "tasa": 0.4841,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 0,
+          "tasa": 0.0,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 24,
@@ -964,7 +1840,42 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 0,
+      "dias_ausencia_list": [],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 2459,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 632,
+          "tasa": 0.257,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 373,
+          "tasa": 0.5902,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 0,
+          "tasa": 0.0,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 25,
@@ -1001,7 +1912,42 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 0,
+      "dias_ausencia_list": [],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 2961,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 791,
+          "tasa": 0.2671,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 407,
+          "tasa": 0.5145,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 3,
+          "tasa": 0.0074,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 26,
@@ -1038,7 +1984,46 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 3,
+      "dias_ausencia_list": [
+        "2026-04-02",
+        "2026-04-06",
+        "2026-04-22"
+      ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 2687,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 798,
+          "tasa": 0.297,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 367,
+          "tasa": 0.4599,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 7,
+          "tasa": 0.0191,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 27,
@@ -1075,7 +2060,42 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 0,
+      "dias_ausencia_list": [],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 2434,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 693,
+          "tasa": 0.2847,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 365,
+          "tasa": 0.5267,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 2,
+          "tasa": 0.0055,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 28,
@@ -1112,7 +2132,42 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 0,
+      "dias_ausencia_list": [],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 2507,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 854,
+          "tasa": 0.3406,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 396,
+          "tasa": 0.4637,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 94,
+          "tasa": 0.2374,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 29,
@@ -1149,7 +2204,42 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 0,
+      "dias_ausencia_list": [],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 1952,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 691,
+          "tasa": 0.354,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 353,
+          "tasa": 0.5109,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 53,
+          "tasa": 0.1501,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 30,
@@ -1186,7 +2276,42 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 0,
+      "dias_ausencia_list": [],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 3399,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 785,
+          "tasa": 0.231,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 383,
+          "tasa": 0.4879,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 15,
+          "tasa": 0.0392,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 31,
@@ -1223,7 +2348,42 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 0,
+      "dias_ausencia_list": [],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 2819,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 737,
+          "tasa": 0.2614,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 362,
+          "tasa": 0.4912,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 24,
+          "tasa": 0.0663,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 32,
@@ -1260,7 +2420,42 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 0,
+      "dias_ausencia_list": [],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 3430,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 1011,
+          "tasa": 0.2948,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 362,
+          "tasa": 0.3581,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 74,
+          "tasa": 0.2044,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 33,
@@ -1297,7 +2492,50 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 7,
+      "dias_ausencia_list": [
+        "2026-04-01",
+        "2026-04-02",
+        "2026-04-06",
+        "2026-04-07",
+        "2026-04-08",
+        "2026-04-09",
+        "2026-04-10"
+      ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 1180,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 491,
+          "tasa": 0.4161,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 206,
+          "tasa": 0.4196,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 47,
+          "tasa": 0.2282,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 34,
@@ -1336,7 +2574,62 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 19,
+      "dias_ausencia_list": [
+        "2026-04-01",
+        "2026-04-02",
+        "2026-04-06",
+        "2026-04-07",
+        "2026-04-08",
+        "2026-04-09",
+        "2026-04-10",
+        "2026-04-15",
+        "2026-04-16",
+        "2026-04-17",
+        "2026-04-20",
+        "2026-04-21",
+        "2026-04-22",
+        "2026-04-23",
+        "2026-04-24",
+        "2026-04-27",
+        "2026-04-28",
+        "2026-04-29",
+        "2026-04-30"
+      ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 155,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 63,
+          "tasa": 0.4065,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 26,
+          "tasa": 0.4127,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 1,
+          "tasa": 0.0385,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 35,
@@ -1373,7 +2666,42 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 0,
+      "dias_ausencia_list": [],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 1845,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 627,
+          "tasa": 0.3398,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 298,
+          "tasa": 0.4753,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 106,
+          "tasa": 0.3557,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 36,
@@ -1412,7 +2740,56 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 13,
+      "dias_ausencia_list": [
+        "2026-04-01",
+        "2026-04-02",
+        "2026-04-06",
+        "2026-04-07",
+        "2026-04-08",
+        "2026-04-09",
+        "2026-04-10",
+        "2026-04-13",
+        "2026-04-14",
+        "2026-04-15",
+        "2026-04-16",
+        "2026-04-17",
+        "2026-04-20"
+      ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 1256,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 352,
+          "tasa": 0.2803,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 130,
+          "tasa": 0.3693,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 0,
+          "tasa": 0.0,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 37,
@@ -1449,7 +2826,42 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 0,
+      "dias_ausencia_list": [],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 3061,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 707,
+          "tasa": 0.231,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 313,
+          "tasa": 0.4427,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 0,
+          "tasa": 0.0,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 38,
@@ -1488,7 +2900,44 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 1,
+      "dias_ausencia_list": [
+        "2026-04-22"
+      ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 1169,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 563,
+          "tasa": 0.4816,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 233,
+          "tasa": 0.4139,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 15,
+          "tasa": 0.0644,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 39,
@@ -1525,7 +2974,42 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 0,
+      "dias_ausencia_list": [],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 2174,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 751,
+          "tasa": 0.3454,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 282,
+          "tasa": 0.3755,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 61,
+          "tasa": 0.2163,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 40,
@@ -1565,7 +3049,55 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 12,
+      "dias_ausencia_list": [
+        "2026-04-01",
+        "2026-04-02",
+        "2026-04-06",
+        "2026-04-07",
+        "2026-04-08",
+        "2026-04-09",
+        "2026-04-10",
+        "2026-04-13",
+        "2026-04-14",
+        "2026-04-15",
+        "2026-04-16",
+        "2026-04-17"
+      ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 1697,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 272,
+          "tasa": 0.1603,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 116,
+          "tasa": 0.4265,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 9,
+          "tasa": 0.0776,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 41,
@@ -1602,7 +3134,52 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 9,
+      "dias_ausencia_list": [
+        "2026-04-01",
+        "2026-04-02",
+        "2026-04-06",
+        "2026-04-07",
+        "2026-04-08",
+        "2026-04-09",
+        "2026-04-10",
+        "2026-04-16",
+        "2026-04-21"
+      ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 1827,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 369,
+          "tasa": 0.202,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 162,
+          "tasa": 0.439,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 0,
+          "tasa": 0.0,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 42,
@@ -1639,7 +3216,42 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 0,
+      "dias_ausencia_list": [],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 2426,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 560,
+          "tasa": 0.2308,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 251,
+          "tasa": 0.4482,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 19,
+          "tasa": 0.0757,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 43,
@@ -1676,7 +3288,42 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 0,
+      "dias_ausencia_list": [],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 2195,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 629,
+          "tasa": 0.2866,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 226,
+          "tasa": 0.3593,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 45,
+          "tasa": 0.1991,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 44,
@@ -1715,7 +3362,42 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 0,
+      "dias_ausencia_list": [],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 1125,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 603,
+          "tasa": 0.536,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 183,
+          "tasa": 0.3035,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 20,
+          "tasa": 0.1093,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 45,
@@ -1752,7 +3434,50 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 7,
+      "dias_ausencia_list": [
+        "2026-04-01",
+        "2026-04-02",
+        "2026-04-06",
+        "2026-04-07",
+        "2026-04-08",
+        "2026-04-09",
+        "2026-04-10"
+      ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 1777,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 333,
+          "tasa": 0.1874,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 143,
+          "tasa": 0.4294,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 1,
+          "tasa": 0.007,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 46,
@@ -1789,7 +3514,42 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 0,
+      "dias_ausencia_list": [],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 1649,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 773,
+          "tasa": 0.4688,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 203,
+          "tasa": 0.2626,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 35,
+          "tasa": 0.1724,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 47,
@@ -1826,7 +3586,44 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 1,
+      "dias_ausencia_list": [
+        "2026-04-27"
+      ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 1404,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 509,
+          "tasa": 0.3625,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 163,
+          "tasa": 0.3202,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 10,
+          "tasa": 0.0613,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 48,
@@ -1863,7 +3660,45 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 2,
+      "dias_ausencia_list": [
+        "2026-04-08",
+        "2026-04-23"
+      ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 1756,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 640,
+          "tasa": 0.3645,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 157,
+          "tasa": 0.2453,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 25,
+          "tasa": 0.1592,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 49,
@@ -1900,7 +3735,42 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 0,
+      "dias_ausencia_list": [],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 1868,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 543,
+          "tasa": 0.2907,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 167,
+          "tasa": 0.3076,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 56,
+          "tasa": 0.3353,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 50,
@@ -1937,7 +3807,42 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 0,
+      "dias_ausencia_list": [],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 2261,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 530,
+          "tasa": 0.2344,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 187,
+          "tasa": 0.3528,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 28,
+          "tasa": 0.1497,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 51,
@@ -1974,7 +3879,51 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 8,
+      "dias_ausencia_list": [
+        "2026-04-06",
+        "2026-04-07",
+        "2026-04-09",
+        "2026-04-20",
+        "2026-04-21",
+        "2026-04-23",
+        "2026-04-29",
+        "2026-04-30"
+      ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 1013,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 239,
+          "tasa": 0.2359,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 99,
+          "tasa": 0.4142,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 17,
+          "tasa": 0.1717,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 52,
@@ -2014,7 +3963,62 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 19,
+      "dias_ausencia_list": [
+        "2026-04-01",
+        "2026-04-02",
+        "2026-04-06",
+        "2026-04-07",
+        "2026-04-08",
+        "2026-04-09",
+        "2026-04-10",
+        "2026-04-13",
+        "2026-04-14",
+        "2026-04-15",
+        "2026-04-16",
+        "2026-04-17",
+        "2026-04-20",
+        "2026-04-23",
+        "2026-04-24",
+        "2026-04-27",
+        "2026-04-28",
+        "2026-04-29",
+        "2026-04-30"
+      ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 47,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 8,
+          "tasa": 0.1702,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 4,
+          "tasa": 0.5,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 0,
+          "tasa": 0.0,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 53,
@@ -2051,7 +4055,45 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 2,
+      "dias_ausencia_list": [
+        "2026-04-27",
+        "2026-04-28"
+      ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 1280,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 254,
+          "tasa": 0.1984,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 107,
+          "tasa": 0.4213,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 25,
+          "tasa": 0.2336,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 54,
@@ -2090,7 +4132,42 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 0,
+      "dias_ausencia_list": [],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 1280,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 478,
+          "tasa": 0.3734,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 115,
+          "tasa": 0.2406,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 11,
+          "tasa": 0.0957,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 55,
@@ -2127,7 +4204,45 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 2,
+      "dias_ausencia_list": [
+        "2026-04-16",
+        "2026-04-22"
+      ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 1941,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 402,
+          "tasa": 0.2071,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 117,
+          "tasa": 0.291,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 1,
+          "tasa": 0.0085,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 56,
@@ -2164,7 +4279,42 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 0,
+      "dias_ausencia_list": [],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 2469,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 444,
+          "tasa": 0.1798,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 127,
+          "tasa": 0.286,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 53,
+          "tasa": 0.4173,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 57,
@@ -2203,7 +4353,42 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 0,
+      "dias_ausencia_list": [],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 1751,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 297,
+          "tasa": 0.1696,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 118,
+          "tasa": 0.3973,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 23,
+          "tasa": 0.1949,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 58,
@@ -2240,7 +4425,50 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 7,
+      "dias_ausencia_list": [
+        "2026-04-01",
+        "2026-04-02",
+        "2026-04-06",
+        "2026-04-07",
+        "2026-04-08",
+        "2026-04-09",
+        "2026-04-10"
+      ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 1574,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 342,
+          "tasa": 0.2173,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 87,
+          "tasa": 0.2544,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 7,
+          "tasa": 0.0805,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 59,
@@ -2280,7 +4508,62 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 19,
+      "dias_ausencia_list": [
+        "2026-04-01",
+        "2026-04-02",
+        "2026-04-06",
+        "2026-04-08",
+        "2026-04-09",
+        "2026-04-10",
+        "2026-04-13",
+        "2026-04-14",
+        "2026-04-15",
+        "2026-04-16",
+        "2026-04-17",
+        "2026-04-20",
+        "2026-04-21",
+        "2026-04-22",
+        "2026-04-23",
+        "2026-04-24",
+        "2026-04-27",
+        "2026-04-28",
+        "2026-04-29"
+      ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 5,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 2,
+          "tasa": 0.4,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 0,
+          "tasa": 0.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 0,
+          "tasa": 0.0,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 60,
@@ -2317,7 +4600,46 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 3,
+      "dias_ausencia_list": [
+        "2026-04-10",
+        "2026-04-13",
+        "2026-04-14"
+      ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 1245,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 303,
+          "tasa": 0.2434,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 83,
+          "tasa": 0.2739,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 19,
+          "tasa": 0.2289,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 61,
@@ -2354,7 +4676,45 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 2,
+      "dias_ausencia_list": [
+        "2026-04-02",
+        "2026-04-24"
+      ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 1314,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 337,
+          "tasa": 0.2565,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 80,
+          "tasa": 0.2374,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 5,
+          "tasa": 0.0625,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 62,
@@ -2393,7 +4753,44 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 1,
+      "dias_ausencia_list": [
+        "2026-04-01"
+      ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 997,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 225,
+          "tasa": 0.2257,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 63,
+          "tasa": 0.28,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 1,
+          "tasa": 0.0159,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     },
     {
       "ranking": 63,
@@ -2433,7 +4830,62 @@
       "pct_recaudo": null,
       "cumplimiento": null,
       "score_base": "equipo",
-      "supervisor": ""
+      "supervisor": "",
+      "horas_activas_dia": null,
+      "tiempo_prom_min": null,
+      "gestiones_hora": null,
+      "dias_ausente": 19,
+      "dias_ausencia_list": [
+        "2026-04-06",
+        "2026-04-07",
+        "2026-04-08",
+        "2026-04-09",
+        "2026-04-10",
+        "2026-04-13",
+        "2026-04-14",
+        "2026-04-15",
+        "2026-04-16",
+        "2026-04-17",
+        "2026-04-20",
+        "2026-04-21",
+        "2026-04-22",
+        "2026-04-23",
+        "2026-04-24",
+        "2026-04-27",
+        "2026-04-28",
+        "2026-04-29",
+        "2026-04-30"
+      ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 138,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 19,
+          "tasa": 0.1377,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 4,
+          "tasa": 0.2105,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 0,
+          "tasa": 0.0,
+          "meta": null,
+          "pct_meta": null
+        }
+      ]
     }
   ],
   "carteras": [
@@ -2586,6 +5038,36 @@
           "gestiones": 1437,
           "efectivas": 556,
           "promesas": 41
+        }
+      ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 149085,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 10247,
+          "tasa": 0.0687,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 4173,
+          "tasa": 0.4072,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 0,
+          "tasa": 0.0,
+          "meta": null,
+          "pct_meta": null
         }
       ],
       "meta_gestiones": null,
@@ -2774,6 +5256,36 @@
           "promesas": 149
         }
       ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 60123,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 11590,
+          "tasa": 0.1928,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 5951,
+          "tasa": 0.5135,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 114,
+          "tasa": 0.0192,
+          "meta": null,
+          "pct_meta": null
+        }
+      ],
       "meta_gestiones": null,
       "meta_efectivas": null,
       "meta_promesas": null,
@@ -2958,6 +5470,36 @@
           "gestiones": 482,
           "efectivas": 242,
           "promesas": 218
+        }
+      ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 39735,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 2734,
+          "tasa": 0.0688,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 2315,
+          "tasa": 0.8467,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 210,
+          "tasa": 0.0907,
+          "meta": null,
+          "pct_meta": null
         }
       ],
       "meta_gestiones": null,
@@ -3146,6 +5688,36 @@
           "promesas": 213
         }
       ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 34604,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 11439,
+          "tasa": 0.3306,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 5504,
+          "tasa": 0.4812,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 927,
+          "tasa": 0.1684,
+          "meta": null,
+          "pct_meta": null
+        }
+      ],
       "meta_gestiones": null,
       "meta_efectivas": null,
       "meta_promesas": null,
@@ -3330,6 +5902,36 @@
           "gestiones": 728,
           "efectivas": 299,
           "promesas": 131
+        }
+      ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 26826,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 4938,
+          "tasa": 0.1841,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 1614,
+          "tasa": 0.3269,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 192,
+          "tasa": 0.119,
+          "meta": null,
+          "pct_meta": null
         }
       ],
       "meta_gestiones": null,
@@ -3518,6 +6120,36 @@
           "promesas": 78
         }
       ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 21173,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 2188,
+          "tasa": 0.1033,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 787,
+          "tasa": 0.3597,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 200,
+          "tasa": 0.2541,
+          "meta": null,
+          "pct_meta": null
+        }
+      ],
       "meta_gestiones": null,
       "meta_efectivas": null,
       "meta_promesas": null,
@@ -3702,6 +6334,36 @@
           "gestiones": 399,
           "efectivas": 132,
           "promesas": 44
+        }
+      ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 20586,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 2684,
+          "tasa": 0.1304,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 1283,
+          "tasa": 0.478,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 240,
+          "tasa": 0.1871,
+          "meta": null,
+          "pct_meta": null
         }
       ],
       "meta_gestiones": null,
@@ -3890,6 +6552,36 @@
           "promesas": 17
         }
       ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 3405,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 479,
+          "tasa": 0.1407,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 127,
+          "tasa": 0.2651,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 53,
+          "tasa": 0.4173,
+          "meta": null,
+          "pct_meta": null
+        }
+      ],
       "meta_gestiones": null,
       "meta_efectivas": null,
       "meta_promesas": null,
@@ -4068,6 +6760,36 @@
           "gestiones": 74,
           "efectivas": 24,
           "promesas": 3
+        }
+      ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 1945,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 403,
+          "tasa": 0.2072,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 117,
+          "tasa": 0.2903,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 1,
+          "tasa": 0.0085,
+          "meta": null,
+          "pct_meta": null
         }
       ],
       "meta_gestiones": null,
@@ -4250,6 +6972,36 @@
           "promesas": 35
         }
       ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 1609,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 505,
+          "tasa": 0.3139,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 415,
+          "tasa": 0.8218,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 21,
+          "tasa": 0.0506,
+          "meta": null,
+          "pct_meta": null
+        }
+      ],
       "meta_gestiones": null,
       "meta_efectivas": null,
       "meta_promesas": null,
@@ -4420,6 +7172,36 @@
           "promesas": 2
         }
       ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 1169,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 243,
+          "tasa": 0.2079,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 63,
+          "tasa": 0.2593,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 1,
+          "tasa": 0.0159,
+          "meta": null,
+          "pct_meta": null
+        }
+      ],
       "meta_gestiones": null,
       "meta_efectivas": null,
       "meta_promesas": null,
@@ -4528,27 +7310,30 @@
     {
       "etapa": "Gestiones",
       "valor": 360260,
-      "tasa": 1.0
+      "tasa": 1.0,
+      "meta": null,
+      "pct_meta": null
     },
     {
       "etapa": "Contactos efectivos",
       "valor": 47450,
-      "tasa": 0.1317
+      "tasa": 0.1317,
+      "meta": null,
+      "pct_meta": null
     },
     {
       "etapa": "Promesas de pago",
       "valor": 22349,
-      "tasa": 0.471
-    },
-    {
-      "etapa": "Compromisos",
-      "valor": 9677,
-      "tasa": 0.433
+      "tasa": 0.471,
+      "meta": null,
+      "pct_meta": null
     },
     {
       "etapa": "Pagos",
       "valor": 1959,
-      "tasa": 0.2024
+      "tasa": 0.2024,
+      "meta": null,
+      "pct_meta": null
     }
   ],
   "insights": [
@@ -4902,6 +7687,36 @@
           "promesas": 41
         }
       ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 149085,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 10247,
+          "tasa": 0.0687,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 4173,
+          "tasa": 0.4072,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 0,
+          "tasa": 0.0,
+          "meta": null,
+          "pct_meta": null
+        }
+      ],
       "meta_gestiones": null,
       "meta_efectivas": null,
       "meta_promesas": null,
@@ -5086,6 +7901,36 @@
           "gestiones": 2613,
           "efectivas": 440,
           "promesas": 149
+        }
+      ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 60123,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 11590,
+          "tasa": 0.1928,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 5951,
+          "tasa": 0.5135,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 114,
+          "tasa": 0.0192,
+          "meta": null,
+          "pct_meta": null
         }
       ],
       "meta_gestiones": null,
@@ -5274,6 +8119,36 @@
           "promesas": 218
         }
       ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 39735,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 2734,
+          "tasa": 0.0688,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 2315,
+          "tasa": 0.8467,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 210,
+          "tasa": 0.0907,
+          "meta": null,
+          "pct_meta": null
+        }
+      ],
       "meta_gestiones": null,
       "meta_efectivas": null,
       "meta_promesas": null,
@@ -5458,6 +8333,36 @@
           "gestiones": 1474,
           "efectivas": 780,
           "promesas": 213
+        }
+      ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 34604,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 11439,
+          "tasa": 0.3306,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 5504,
+          "tasa": 0.4812,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 927,
+          "tasa": 0.1684,
+          "meta": null,
+          "pct_meta": null
         }
       ],
       "meta_gestiones": null,
@@ -5646,6 +8551,36 @@
           "promesas": 131
         }
       ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 26826,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 4938,
+          "tasa": 0.1841,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 1614,
+          "tasa": 0.3269,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 192,
+          "tasa": 0.119,
+          "meta": null,
+          "pct_meta": null
+        }
+      ],
       "meta_gestiones": null,
       "meta_efectivas": null,
       "meta_promesas": null,
@@ -5830,6 +8765,36 @@
           "gestiones": 570,
           "efectivas": 220,
           "promesas": 78
+        }
+      ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 21173,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 2188,
+          "tasa": 0.1033,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 787,
+          "tasa": 0.3597,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 200,
+          "tasa": 0.2541,
+          "meta": null,
+          "pct_meta": null
         }
       ],
       "meta_gestiones": null,
@@ -6018,6 +8983,36 @@
           "promesas": 44
         }
       ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 20586,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 2684,
+          "tasa": 0.1304,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 1283,
+          "tasa": 0.478,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 240,
+          "tasa": 0.1871,
+          "meta": null,
+          "pct_meta": null
+        }
+      ],
       "meta_gestiones": null,
       "meta_efectivas": null,
       "meta_promesas": null,
@@ -6204,6 +9199,36 @@
           "promesas": 17
         }
       ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 3405,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 479,
+          "tasa": 0.1407,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 127,
+          "tasa": 0.2651,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 53,
+          "tasa": 0.4173,
+          "meta": null,
+          "pct_meta": null
+        }
+      ],
       "meta_gestiones": null,
       "meta_efectivas": null,
       "meta_promesas": null,
@@ -6382,6 +9407,36 @@
           "gestiones": 74,
           "efectivas": 24,
           "promesas": 3
+        }
+      ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 1945,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 403,
+          "tasa": 0.2072,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 117,
+          "tasa": 0.2903,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 1,
+          "tasa": 0.0085,
+          "meta": null,
+          "pct_meta": null
         }
       ],
       "meta_gestiones": null,
@@ -6564,6 +9619,36 @@
           "promesas": 35
         }
       ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 1609,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 505,
+          "tasa": 0.3139,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 415,
+          "tasa": 0.8218,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 21,
+          "tasa": 0.0506,
+          "meta": null,
+          "pct_meta": null
+        }
+      ],
       "meta_gestiones": null,
       "meta_efectivas": null,
       "meta_promesas": null,
@@ -6732,6 +9817,36 @@
           "gestiones": 66,
           "efectivas": 11,
           "promesas": 2
+        }
+      ],
+      "funnel": [
+        {
+          "etapa": "Gestiones",
+          "valor": 1169,
+          "tasa": 1.0,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Efectivas",
+          "valor": 243,
+          "tasa": 0.2079,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Promesas",
+          "valor": 63,
+          "tasa": 0.2593,
+          "meta": null,
+          "pct_meta": null
+        },
+        {
+          "etapa": "Pagos",
+          "valor": 1,
+          "tasa": 0.0159,
+          "meta": null,
+          "pct_meta": null
         }
       ],
       "meta_gestiones": null,

@@ -7,6 +7,8 @@ import { fmtMoneda, fmtNum, fmtPct } from "@/lib/formato";
 import { Barra, ChipNivel, Delta, ScoreBar, Tip } from "@/components/ui";
 import { LogoCartera } from "@/components/logo-cartera";
 import { BloqueMeta, CumplBadge } from "@/components/vs-meta";
+import { FunnelVsMeta } from "@/components/funnel-vs-meta";
+import { AusenciaBadge, ListaAusencias } from "@/components/ausencias";
 import {
   ALERTA_META,
   NIVEL_META,
@@ -375,6 +377,18 @@ function FichaAsesor({
         </div>
       )}
 
+      {/* Ausencias del mes */}
+      <div className="flex items-center justify-between rounded-lg border border-line bg-canvas px-3 py-2">
+        <span className="text-[11px] text-ink-ter">Ausencias (L–V)</span>
+        <div className="text-right">
+          <AusenciaBadge dias={g.dias_ausente} />
+          {g.dias_ausente > 0 && <ListaAusencias fechas={g.dias_ausencia_list} />}
+        </div>
+      </div>
+
+      {/* Embudo del asesor vs su meta */}
+      <FunnelVsMeta funnel={g.funnel} titulo="Embudo vs meta" />
+
       {/* Cumplimiento vs su meta a la fecha (gestiones / efectivas / promesas) */}
       <BloqueMeta
         filas={[
@@ -390,6 +404,15 @@ function FichaAsesor({
         <ComparaKPI label="PTP" def={DEF_PTP} valor={fmtPct(g.ptp_rate, 1)} pct={g.ptp_rate} mediana={bm.ptp_rate} delta={g.delta_ptp} />
         <ComparaKPI label="Gestiones/día" valor={fmtNum(g.gestiones_dia)} pct={g.gestiones_dia / (bm.gestiones_dia * 2)} mediana={0.5} delta={g.delta_gestiones_dia} deltaFmt="num" />
       </div>
+
+      {/* Métricas de ritmo (solo cuando hay datos de hora) */}
+      {g.horas_activas_dia != null && (
+        <div className="grid grid-cols-3 gap-2 rounded-lg border border-line bg-canvas p-2 text-center">
+          <Cifra label="Hrs activas/día" valor={`${g.horas_activas_dia}h`} />
+          <Cifra label="Min/gestión" valor={`${g.tiempo_prom_min}m`} />
+          <Cifra label="Gest/hora" valor={`${g.gestiones_hora}`} />
+        </div>
+      )}
 
       <div className="grid grid-cols-3 gap-2 border-t border-line pt-3 text-center">
         <Cifra label="Gestiones" valor={fmtNum(g.gestiones)} />

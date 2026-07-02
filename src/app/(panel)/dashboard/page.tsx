@@ -20,6 +20,7 @@ import { TablaSupervisores } from "@/components/tabla-supervisores";
 import { RankingSupervisores } from "@/components/ranking-supervisores";
 import { MatrizCarteras } from "@/components/matriz-carteras";
 import { Revelar } from "@/components/animados";
+import { ResumenAusencias } from "@/components/ausencias";
 import type { Alerta, MTDData } from "@/types/mtd";
 
 const DEF_PTP_RESUMEN =
@@ -274,6 +275,17 @@ export default async function DashboardPage({
             ) : (
               <p className="py-8 text-center text-sm text-ink-ter">Sin alertas de desempeño este mes.</p>
             )}
+          </Panel>
+        </div>
+
+        {/* AUSENCIAS */}
+        <div className="grid grid-cols-1 gap-4 xl:grid-cols-1">
+          <Panel
+            titulo="Ausencias del mes"
+            sub={`${r.gestores_con_ausencia ?? 0} asesores con al menos 1 día hábil sin gestiones · ${mtd.mes_nombre} MTD`}
+            accion={<Link href="/asesores" className="text-xs font-medium text-accent-claro hover:underline">Ver asesores →</Link>}
+          >
+            <ResumenAusencias gestores={mtd.gestores} mesMTD={mtd.mes_nombre} />
           </Panel>
         </div>
       </div>

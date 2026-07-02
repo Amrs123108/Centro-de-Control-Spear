@@ -120,7 +120,7 @@ export function MatrizCarteras({
                 </td>
                 <td className="py-2.5 text-center"><CeldaCalor valor={c.tasa_contacto} referencia={bm.tasa_contacto} /></td>
                 <td className="py-2.5 text-center"><CeldaCalor valor={c.ptp_rate} referencia={bm.ptp_rate} /></td>
-                <td className="py-2.5 text-center"><CeldaCalor valor={c.conversion} referencia={bm.conversion} /></td>
+                <td className="py-2.5 text-center"><CeldaCalor valor={c.conversion} referencia={bm.conversion} formato="ratio" /></td>
                 <td className="tnum py-2.5 text-right font-semibold text-accent-claro">{fmtNum(c.promesas)}</td>
                 <td className="tnum py-2.5 text-right text-ink">{c.monto > 0 ? fmtMoneda(c.monto) : "—"}</td>
                 <td className="py-2.5"><div className="mx-auto w-20"><Sparkline data={c.tendencia.slice(-14)} /></div></td>

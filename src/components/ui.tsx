@@ -1,5 +1,5 @@
 import { ArrowDown, ArrowUp, Minus } from "lucide-react";
-import { fmtNum, fmtPct } from "@/lib/formato";
+import { fmtNum, fmtPct, fmtRatio } from "@/lib/formato";
 import { Contador } from "@/components/animados";
 import {
   ALERTA_META,
@@ -173,7 +173,7 @@ export function CeldaCalor({
 }: {
   valor: number;
   referencia: number;
-  formato?: "pct" | "num";
+  formato?: "pct" | "num" | "ratio";
 }) {
   const ratio = referencia > 0 ? valor / referencia : 1;
   const clase =
@@ -185,7 +185,11 @@ export function CeldaCalor({
           ? "bg-warn-soft text-warn"
           : "bg-neg-soft text-neg";
   const txt =
-    formato === "pct" ? fmtPct(valor, 1) : fmtNum(Math.round(valor));
+    formato === "pct"
+      ? fmtPct(valor, 1)
+      : formato === "ratio"
+        ? fmtRatio(valor)
+        : fmtNum(Math.round(valor));
   return (
     <span className={`tnum inline-block min-w-[52px] rounded-md px-2 py-1 text-center text-xs font-semibold ${clase}`}>
       {txt}

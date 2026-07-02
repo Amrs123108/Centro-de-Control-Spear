@@ -1,47 +1,21 @@
 "use client";
 
 import { fmtNum } from "@/lib/formato";
-import { tonoCumpl, TEXTO_TONO, FONDO_TONO } from "@/lib/cumplimiento";
 import type { EtapaFunnel } from "@/types/mtd";
 
-/** Muestra cuántas gestiones se pierden en cada etapa como porcentaje. */
-function TasaChip({ tasa, esPrimero }: { tasa: number; esPrimero: boolean }) {
-  if (esPrimero) return null;
-  return (
-    <div className="flex items-center justify-center py-0.5">
-      <span className="text-[9px] text-ink-ter">↓ {Math.round(tasa * 100)}% pasan</span>
-    </div>
-  );
-}
+const FUNNEL_COLORS = [
+  "#2471a3", // azul
+  "#148f77", // teal
+  "#d68910", // dorado
+  "#1e8449", // verde
+  "#c0392b", // rojo
+];
 
-/** Barra de progreso doble: real (sólida) + meta (fantasma). */
-function BarraFunnel({
-  valor,
-  meta,
-  maximo,
-  tono,
-}: {
-  valor: number;
-  meta: number | null | undefined;
-  maximo: number;
-  tono: "pos" | "warn" | "neg";
-}) {
-  const pctReal = Math.min((valor / Math.max(maximo, 1)) * 100, 100);
-  const pctMeta = meta ? Math.min((meta / Math.max(maximo, 1)) * 100, 100) : null;
-  return (
-    <div className="relative h-2 overflow-hidden rounded-full bg-canvas">
-      {pctMeta !== null && (
-        <div
-          className="absolute inset-y-0 left-0 rounded-full border border-dashed border-ink-ter/40 bg-ink-ter/10"
-          style={{ width: `${pctMeta}%` }}
-        />
-      )}
-      <div
-        className={`absolute inset-y-0 left-0 rounded-full ${FONDO_TONO[tono]}`}
-        style={{ width: `${pctReal}%` }}
-      />
-    </div>
-  );
+function tonoPct(pct: number | null | undefined): string {
+  if (pct == null) return "text-ink-ter";
+  if (pct >= 100) return "text-pos";
+  if (pct >= 90) return "text-warn";
+  return "text-neg";
 }
 
 export function FunnelVsMeta({
@@ -52,48 +26,80 @@ export function FunnelVsMeta({
   titulo?: string;
 }) {
   if (!funnel || funnel.length === 0) return null;
-  const maximo = funnel[0].valor;
+
+  const n = funnel.length;
+  // Cada nivel se estrecha un paso en cada lado; total ≈ 20% por lado
+  const step = 20 / n;
+  const bandH = 48; // px por franja
 
   return (
     <div>
       <div className="mb-2 text-[10px] font-bold uppercase tracking-wider text-ink-ter">
         {titulo}
       </div>
-      <div className="space-y-1">
-        {funnel.map((etapa, i) => {
-          const tono = etapa.pct_meta != null
-            ? tonoCumpl(etapa.pct_meta)
-            : "neg";
-          return (
-            <div key={etapa.etapa}>
-              <TasaChip tasa={etapa.tasa} esPrimero={i === 0} />
-              <div className="rounded-lg border border-line/50 bg-canvas px-3 py-2">
-                <div className="mb-1.5 flex items-center justify-between gap-2">
-                  <span className="text-[11px] font-medium text-ink-sec">{etapa.etapa}</span>
-                  <div className="flex items-center gap-2">
-                    <span className="tnum text-sm font-bold text-ink">{fmtNum(etapa.valor)}</span>
-                    {etapa.meta != null && (
-                      <span className="tnum text-[10px] text-ink-ter">
-                        / {fmtNum(etapa.meta)} meta
-                      </span>
-                    )}
-                    {etapa.pct_meta != null && (
-                      <span className={`tnum text-[11px] font-bold ${TEXTO_TONO[tono]}`}>
-                        {Math.round(etapa.pct_meta)}%
-                      </span>
-                    )}
-                  </div>
-                </div>
-                <BarraFunnel
-                  valor={etapa.valor}
-                  meta={etapa.meta}
-                  maximo={maximo}
-                  tono={etapa.meta != null ? tono : "neg"}
-                />
+      <div className="flex items-start gap-3">
+        {/* ── Embudo ── */}
+        <div className="flex-1" style={{ lineHeight: 0 }}>
+          {funnel.map((etapa, i) => {
+            const tL = i * step;
+            const tR = 100 - i * step;
+            const bL = (i + 1) * step;
+            const bR = 100 - (i + 1) * step;
+            const cp = `polygon(${tL}% 0, ${tR}% 0, ${bR}% 100%, ${bL}% 100%)`;
+            return (
+              <div
+                key={etapa.etapa}
+                style={{
+                  height: `${bandH}px`,
+                  clipPath: cp,
+                  backgroundColor: FUNNEL_COLORS[i % FUNNEL_COLORS.length],
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <span
+                  style={{
+                    color: "white",
+                    fontSize: "14px",
+                    fontWeight: "700",
+                    fontVariantNumeric: "tabular-nums",
+                    textShadow: "0 1px 3px rgba(0,0,0,0.45)",
+                  }}
+                >
+                  {fmtNum(etapa.valor)}
+                </span>
               </div>
+            );
+          })}
+        </div>
+
+        {/* ── Columna derecha: etapa / meta / % ── */}
+        <div className="flex shrink-0 flex-col">
+          {funnel.map((etapa, i) => (
+            <div
+              key={etapa.etapa}
+              style={{ height: `${bandH}px` }}
+              className="flex flex-col justify-center gap-0.5"
+            >
+              <span className="text-[10px] leading-tight text-ink-ter">
+                {etapa.etapa}
+              </span>
+              {etapa.meta != null && (
+                <span className="tnum text-[10px] leading-tight text-ink-sec">
+                  meta {fmtNum(etapa.meta)}
+                </span>
+              )}
+              <span
+                className={`tnum text-[13px] font-bold leading-tight ${tonoPct(etapa.pct_meta)}`}
+              >
+                {etapa.pct_meta != null
+                  ? `${Math.round(etapa.pct_meta)}%`
+                  : "—"}
+              </span>
             </div>
-          );
-        })}
+          ))}
+        </div>
       </div>
     </div>
   );

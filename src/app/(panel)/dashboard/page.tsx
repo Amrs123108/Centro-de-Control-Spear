@@ -20,7 +20,7 @@ import { TablaSupervisores } from "@/components/tabla-supervisores";
 import { RankingSupervisores } from "@/components/ranking-supervisores";
 import { MatrizCarteras } from "@/components/matriz-carteras";
 import { Revelar } from "@/components/animados";
-import { ResumenAusencias } from "@/components/ausencias";
+import { ResumenAusencias, ResumenAusenciasHistorico } from "@/components/ausencias";
 import type { Alerta, MTDData } from "@/types/mtd";
 
 const DEF_PTP_RESUMEN =
@@ -278,7 +278,7 @@ export default async function DashboardPage({
           </Panel>
         </div>
 
-        {/* AUSENCIAS */}
+        {/* AUSENCIAS — mes actual */}
         <div className="grid grid-cols-1 gap-4 xl:grid-cols-1">
           <Panel
             titulo="Ausencias del mes"
@@ -286,6 +286,16 @@ export default async function DashboardPage({
             accion={<Link href="/asesores" className="text-xs font-medium text-accent-claro hover:underline">Ver asesores →</Link>}
           >
             <ResumenAusencias gestores={mtd.gestores} mesMTD={mtd.mes_nombre} />
+          </Panel>
+        </div>
+
+        {/* AUSENCIAS HISTÓRICAS — ranking acumulado por todos los meses disponibles */}
+        <div className="grid grid-cols-1 gap-4 xl:grid-cols-1">
+          <Panel
+            titulo="Histórico de ausencias"
+            sub={`Asesores con días sin gestiones en los ${todosMTD.length} períodos registrados · ordenado por total acumulado`}
+          >
+            <ResumenAusenciasHistorico meses={todosMTD} />
           </Panel>
         </div>
       </div>

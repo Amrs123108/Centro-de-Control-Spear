@@ -30,7 +30,7 @@ export function FunnelVsMeta({
   const n = funnel.length;
   // Cada nivel se estrecha un paso en cada lado; total ≈ 20% por lado
   const step = 20 / n;
-  const bandH = 48; // px por franja
+  const bandH = 64; // px por franja
 
   return (
     <div>

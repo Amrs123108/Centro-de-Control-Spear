@@ -6,7 +6,7 @@ import supervisoresData from "@/data/supervisores.json";
 import { fmtMoneda, fmtNum, fmtPct } from "@/lib/formato";
 import { Barra, ChipNivel, Delta, ScoreBar, Tip } from "@/components/ui";
 import { LogoCartera } from "@/components/logo-cartera";
-import { BloqueMeta, CumplBadge } from "@/components/vs-meta";
+import { CumplBadge } from "@/components/vs-meta";
 import { FunnelVsMeta } from "@/components/funnel-vs-meta";
 import { AusenciaBadge, ListaAusencias } from "@/components/ausencias";
 import {
@@ -347,8 +347,6 @@ function FichaAsesor({
   diasTrans: number;
 }) {
   const m = NIVEL_META[g.nivel];
-  // Meta a la fecha del asesor = meta DIARIA × días hábiles transcurridos.
-  const esp = (metaDiaria: number | null) => (metaDiaria && metaDiaria > 0 ? metaDiaria * diasTrans : null);
   return (
     <aside className="h-fit space-y-4 rounded-xl border border-line bg-surface p-5 shadow-card xl:sticky xl:top-20">
       <div className="flex items-start justify-between gap-3">
@@ -389,28 +387,41 @@ function FichaAsesor({
       {/* Embudo del asesor vs su meta */}
       <FunnelVsMeta funnel={g.funnel} titulo="Embudo vs meta" />
 
-      {/* Cumplimiento vs su meta a la fecha (gestiones / efectivas / promesas) */}
-      <BloqueMeta
-        filas={[
-          { label: "Gestiones", actual: g.gestiones, esperado: esp(g.meta_gestiones), pct: g.pct_gestiones },
-          { label: "Efectivas", actual: g.efectivas, esperado: esp(g.meta_efectivas), pct: g.pct_efectivas },
-          { label: "Promesas", actual: g.promesas, esperado: esp(g.meta_promesas), pct: g.pct_promesas },
-        ]}
-        cumplimiento={g.cumplimiento}
-      />
-
       <div className="space-y-2.5">
         <ComparaKPI label="Contacto efectivo" def={DEF_CONTACTO} valor={fmtPct(g.tasa_contacto, 1)} pct={g.tasa_contacto} mediana={bm.tasa_contacto} delta={g.delta_contacto} />
         <ComparaKPI label="PTP" def={DEF_PTP} valor={fmtPct(g.ptp_rate, 1)} pct={g.ptp_rate} mediana={bm.ptp_rate} delta={g.delta_ptp} />
         <ComparaKPI label="Gestiones/día" valor={fmtNum(g.gestiones_dia)} pct={g.gestiones_dia / (bm.gestiones_dia * 2)} mediana={0.5} delta={g.delta_gestiones_dia} deltaFmt="num" />
       </div>
 
-      {/* Métricas de ritmo (solo cuando hay datos de hora) */}
+      {/* Ritmo de trabajo — solo cuando los archivos traen timestamp de hora */}
       {g.horas_activas_dia != null && (
-        <div className="grid grid-cols-3 gap-2 rounded-lg border border-line bg-canvas p-2 text-center">
-          <Cifra label="Hrs activas/día" valor={`${g.horas_activas_dia}h`} />
-          <Cifra label="Min/gestión" valor={`${g.tiempo_prom_min}m`} />
-          <Cifra label="Gest/hora" valor={`${g.gestiones_hora}`} />
+        <div className="rounded-lg border border-line bg-canvas p-3">
+          <div className="mb-2 text-[10px] font-bold uppercase tracking-wider text-ink-ter">
+            Ritmo de trabajo
+          </div>
+          <div className="grid grid-cols-3 gap-2 text-center">
+            <div className="rounded bg-surface px-1 py-2">
+              <div className="tnum text-sm font-bold text-ink">{g.horas_activas_dia}h</div>
+              <div className="mt-0.5 text-[9px] uppercase leading-tight tracking-wider text-ink-ter">
+                hrs activas<br />por día
+              </div>
+            </div>
+            <div className="rounded bg-surface px-1 py-2">
+              <div className="tnum text-sm font-bold text-ink">{g.tiempo_prom_min} min</div>
+              <div className="mt-0.5 text-[9px] uppercase leading-tight tracking-wider text-ink-ter">
+                tiempo entre<br />gestiones
+              </div>
+            </div>
+            <div className="rounded bg-surface px-1 py-2">
+              <div className="tnum text-sm font-bold text-ink">{g.gestiones_hora}</div>
+              <div className="mt-0.5 text-[9px] uppercase leading-tight tracking-wider text-ink-ter">
+                gestiones<br />por hora
+              </div>
+            </div>
+          </div>
+          <p className="mt-2 text-[10px] leading-relaxed text-ink-ter">
+            Ventana: primera a última gestión del día, descontando 30 min de almuerzo.
+          </p>
         </div>
       )}
 
